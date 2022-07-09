@@ -1,0 +1,184 @@
+@import url("datatables.css");
+
+/* >>  W i d t h  << */
+.w-100 { width: 100% !important; }
+.w-90 {width: 90% !important;}
+.w-85 { width: 85% !important; }
+.w-80 { width: 80% !important; }
+.w-75 { width: 75% !important; }
+.w-60 { width: 60% !important; }
+.w-50 { width: 50% !important; }
+.w-40 { width: 40% !important; }
+.w-30 { width: 30% !important; }
+.w-25 { width: 25% !important; }
+/* >>  W i d t h  << */
+
+/* >>  V I E W P O R T   H e i g h t  << */
+.vh-100 { height: 100vh !important; }
+.vh-90 { height: 90vh !important; }
+.vh-85 { height: 85vh !important; }
+.vh-80 { height: 80vh !important; }
+.vh-75 { height: 75vh !important; }
+.vh-60 { height: 60vh !important; }
+.vh-50 { height: 50vh !important; }
+.vh-40 { height: 40vh !important; }
+.vh-30 { height: 30vh !important; }
+.vh-25 { height: 25vh !important; }
+/* >>  V I E W P O R T   H e i g h t  << */
+
+/* >>  V I E W P O R T   W i d t h  << */
+.vw-100 { width: 100vw !important; }
+.vw-90 { width: 90vw !important; }
+.vw-85 { width: 85vw !important; }
+.vw-80 { width: 80vw !important; }
+.vw-75 { width: 75vw !important; }
+.vw-60 { width: 60vw !important; }
+.vw-50 { width: 50vw !important; }
+.vw-40 { width: 40vw !important; }
+.vw-30 { width: 30vw !important; }
+.vw-25 { width: 25vw !important; }
+/* >>  V I E W P O R T   W i d t h  << */
+
+/* =>576px - small (sm) */
+@media (min-width: 576px) {
+	.w-sm-100 { width: 100% !important; }
+	.w-sm-90 { width: 90% !important; }
+	.w-sm-80 { width: 80% !important; }
+	.w-sm-75 { width: 75% !important; }
+	.w-sm-60 { width: 60% !important; }
+	.w-sm-50 { width: 50% !important; }
+	.w-sm-40 { width: 40% !important; }
+	.w-sm-30 { width: 30% !important; }
+	.w-sm-25 { width: 25% !important; }
+
+	.vw-sm-100 { width: 100vw !important; }
+	.vw-sm-90 { width: 90vw !important; }
+	.vw-sm-85 { width: 85vw !important; }
+	.vw-sm-80 { width: 80vw !important; }
+	.vw-sm-75 { width: 75vw !important; }
+	.vw-sm-60 { width: 60vw !important; }
+	.vw-sm-50 { width: 50vw !important; }
+	.vw-sm-40 { width: 40vw !important; }
+	.vw-sm-30 { width: 30vw !important; }
+	.vw-sm-25 { width: 25vw !important; }
+}
+
+/* <768px - less than medium (md) */
+@media (max-width: 768px) {
+	.w-sm-100 { width: 100% !important; }
+	#closeFloat { margin-top: 4rem; }
+	.carousel-bg { width: inherit !important; }
+}
+
+/* =>768px - medium (md) */
+@media (min-width: 768px) {
+	.w-md-100 { width: 100% !important; }
+	.w-md-90 { width: 90% !important; }
+	.w-md-80 {width: 80% !important;}
+	.w-md-75 { width: 75% !important; }
+	.w-md-60 { width: 60% !important; }
+	.w-md-50 { width: 50% !important; }
+	.w-md-40 { width: 40% !important; }
+	.w-md-30 { width: 30% !important; }
+	.w-md-25 { width: 25% !important; }
+
+	.vw-md-100 { width: 100vw !important; }
+	.vw-md-90 { width: 90vw !important; }
+	.vw-md-85 { width: 85vw !important; }
+	.vw-md-80 { width: 80vw !important; }
+	.vw-md-75 { width: 75vw !important; }
+	.vw-md-60 { width: 60vw !important; }
+	.vw-md-50 { width: 50vw !important; }
+	.vw-md-40 { width: 40vw !important; }
+	.vw-md-30 { width: 30vw !important; }
+	.vw-md-25 { width: 25vw !important; }
+
+	.vh-md-100 { height: 100vh !important; }
+	.vh-md-90 { height: 90vh !important; }
+	.vh-md-85 { height: 85vh !important; }
+	.vh-md-80 { height: 80vh !important; }
+	.vh-md-75 { height: 75vh !important; }
+	.vh-md-60 { height: 60vh !important; }
+	.vh-md-50 { height: 50vh !important; }
+	.vh-md-40 { height: 40vh !important; }
+	.vh-md-30 { height: 30vh !important; }
+	.vh-md-25 { height: 25vh !important; }
+
+	.col-md { flex: 1 0 0%; }
+}
+
+/* =>992px - large (lg) */
+@media (min-width: 992px) {
+	.w-lg-100 { width: 100% !important; }
+	.w-lg-90 { width: 90% !important; }
+	.w-lg-80 { width: 80% !important; }
+	.w-lg-75 { width: 75% !important; }
+	.w-lg-60 { width: 60% !important; }
+	.w-lg-50 { width: 50% !important; }
+	.w-lg-40 { width: 40% !important; }
+	.w-lg-30 { width: 30% !important; }
+	.w-lg-25 { width: 25% !important; }
+
+	.vw-lg-100 { width: 100vw !important; }
+	.vw-lg-90 { width: 90vw !important; }
+	.vw-lg-85 { width: 85vw !important; }
+	.vw-lg-80 { width: 80vw !important; }
+	.vw-lg-75 { width: 75vw !important; }
+	.vw-lg-60 { width: 60vw !important; }
+	.vw-lg-50 { width: 50vw !important; }
+	.vw-lg-40 { width: 40vw !important; }
+	.vw-lg-30 { width: 30vw !important; }
+	.vw-lg-25 { width: 25vw !important; }
+}
+
+/* =>992px - extra large (xl) */
+@media (min-width: 1118px) {
+	.w-xl-100 { width: 100% !important; }
+	.w-xl-90 { width: 90% !important; }
+	.w-xl-80 { width: 80% !important; }
+	.w-xl-75 { width: 75% !important; }
+	.w-xl-60 { width: 60% !important; }
+	.w-xl-50 { width: 50% !important; }
+	.w-xl-40 { width: 40% !important; }
+	.w-xl-30 { width: 30% !important; }
+	.w-xl-25 { width: 25% !important; }
+
+	.vw-xl-100 { width: 100vw !important; }
+	.vw-xl-90 { width: 90vw !important; }
+	.vw-xl-85 { width: 85vw !important; }
+	.vw-xl-80 { width: 80vw !important; }
+	.vw-xl-75 { width: 75vw !important; }
+	.vw-xl-60 { width: 60vw !important; }
+	.vw-xl-50 { width: 50vw !important; }
+	.vw-xl-40 { width: 40vw !important; }
+	.vw-xl-30 { width: 30vw !important; }
+	.vw-xl-25 { width: 25vw !important; }
+}
+
+@keyframes appearMenu {
+    0% {
+        opacity: 0;
+        top: -10px;
+    }
+    100% {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+i.fa-solid {
+    pointer-events: none;
+}
+
+.dropdown-toggle.opts::before {
+    display: none;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #656e74;
+    box-shadow: 0px 13px 30px #00000059;
+}
+
+.dropdown-menu.show {
+    animation: appearMenu 0.3s;
+}

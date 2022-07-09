@@ -1,0 +1,60 @@
+<%- include('../includes/header') %> 
+<%- include('../includes/alerts.ejs') %> 
+
+<body>
+    <div class="card">
+        <div class="card-header text-center">
+            NUEVO USUARIO
+        </div>
+        <div class="card-body">
+            <form action="/admin/adduser" method="POST">
+                <div class="form-group">
+                    <label>Nombre del empleado: </label>
+                    <input type="text" class="form-control" name="name" placeholder="Nombre del empleado...." autofocus>
+                </div>
+                <div class="form-group">
+                    <label>Apellido del empleado: </label>
+                    <input type="text" class="form-control" name="lastname" placeholder="Apellido del empleado....">
+                </div>
+                <div class="form-group">
+                    <label>Nombre de usuario: </label>
+                    <input type="text" class="form-control" id="userinput" name="username" placeholder="Ingresa el nombre del usuario...." maxlength="15">
+                </div>
+                <div class="form-group">
+                    <label>Correo electronico: </label>
+                    <input type="email" class="form-control" name="email" placeholder="Ejemplo@gmail.com....">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña: </label>
+                    <input type="password" class="form-control" name="password" placeholder="Ingresa una contraseña....">
+                </div>
+
+                <div class="form-group">
+                    <label>Rol</label>
+                    <select class="custom-select" id="listRol" name="role">
+                            <option value="">Asigna un rol al usuario...</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="coordinador">Coordinador</option>
+                            <option value="usuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="form-group" name="formulario">
+                    <label>Recinto al que pertenece: </label>
+                    <select class="form-control" name="ranch" id="">
+                        <option value="">Asigna el rancho al que pertenece...</option>
+                        <% RanchsBD.forEach(function(rancho){%> 
+                        <option value=" <%= rancho.ranch_name %> "><%= rancho.ranch_name %> </option>
+                        <% }); %> 
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<%- include('../includes/scripts') %>
+<%- include('../includes/footer.ejs') %>

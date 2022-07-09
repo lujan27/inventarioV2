@@ -1,0 +1,153 @@
+const inventoryModel = require('../../models/coordinator/inventoryModel');
+
+function main (req, res) {
+    let data = null;
+
+    inventoryModel.find({})
+    .then((result) => {
+        data = result;
+    })
+    .catch(error => {
+        console.error(error);
+        data = false;
+    })
+    .finally(() => {
+        return res.render('coordinator/index', {
+            doc_title: 'Coordinador',
+            data: data,
+        });
+    });
+}
+
+/**
+ * Función asíncrona para añadir artículos.
+ * Aceptara un array de objetos, cada uno deberá contener
+ * claves llamadas 'name'(String), 'description'(String)
+ * 'quantity'(Number) y 'unit'(String).
+ * @param {*} req 
+ * @param {*} res 
+ * @returns Devuelve una respuesta HTTP con 'true' o 'false'
+ */
+function addItems (req, res) {
+    let items = req.body.items
+
+    if (items.length) {
+        return inventoryModel.aggregate([
+            { $sort: { _id: -1 } },
+            { $limit: 1 },
+            { $project: { _id: 1 } }
+        ])
+        .then(result => {
+            let _id = (result.length) ? parseInt(result[0]._id) : 0;
+
+            items.forEach((item, i) => {
+                if (Object.keys(item).length === 0)
+                    delete items[i];
+                else
+                    item._id = _id + i + 1;
+            });
+
+            return inventoryModel.insertMany(items)
+            .then(() => {
+                return res.send(JSON.stringify({
+                    response: true
+                }))
+            })
+            .catch(error => {
+                console.error(error);
+                return res.send(JSON.stringify({
+                    response: false,
+                    error: error
+                }))
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            return res.send(JSON.stringify({
+                response: false,
+                error: error
+            }))
+        });
+    } else return res.send(JSON.stringify({
+        response: false,
+        error: 'Without data to insert' // Conflict
+    }));
+}
+
+/**
+ * Función asíncrona para "eliminar" artículos.
+ * Aceptara un array de objetos, cada uno deberá contener
+ * claves '_id' refiriéndose a numero identificador y 
+ * 'delete' con valor booleano para elegir la operación.
+ * @param {*} req 
+ * @param {*} res 
+ * @returns Devuelve una respuesta HTTP con 'true' o 'false'
+ */
+function deleteItems (req, res) {
+    let items = req.body.items;
+
+    if (items.length) {
+        return items.forEach(item => {
+            let operation = (item.delete) ? { display: false } : { display: true };
+        
+            inventoryModel.updateOne({ _id: item._id }, { $set: operation })
+            .then(() => {
+                return res.send(JSON.stringify({
+                    response: true
+                }));
+            })
+            .catch((error) => {
+                return res.send(JSON.stringify({
+                    response: false,
+                    error: error
+                }));
+            });
+        })
+    } else return res.send(JSON.stringify({
+        response: false,
+        error: 'Without data to insert' // Conflict
+    }));
+}
+
+/**
+ * Función asíncrona para modificar artículos.
+ * Aceptara un array de objetos, cada uno deberá contener
+ * claves '_id' refiriéndose a numero identificador y 
+ * 'content' que contendrá un objeto con las posibles
+ * claves que se pueden modificar:
+ * 'name'(String), 'description'(String), 'quantity'(Number),
+ * 'unit'(String) y/o 'display'(Boolean).
+ * @param {*} req 
+ * @param {*} res 
+ * @returns Devuelve una respuesta HTTP con 'true' o 'false'
+ */
+function modifyItems (req, res) {
+    let items = req.body.items;
+    
+    if (items.length) {
+        items.forEach(item => {
+            return inventoryModel.updateOne({ _id: item._id }, { $set: item.content })
+            .then(() => {
+                return res.send(JSON.stringify({
+                    response: true
+                }));
+            })
+            .catch((error) => {
+                return res.send(JSON.stringify({
+                    response: false,
+                    error: error
+                }));
+            });
+        });
+    } else return res.send(JSON.stringify({
+        response: false,
+        error: 'Without data to insert' // Conflict
+    }));
+}
+
+module.exports = {
+    main,
+    addItems,
+    deleteItems,
+    modifyItems,
+};

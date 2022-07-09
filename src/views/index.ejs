@@ -1,0 +1,61 @@
+<%- include('includes/header.ejs') %>
+
+<body>
+      <div class="container">
+        <div class="circleOne"></div>
+        <div class="circleTwo"></div>
+        <img class="wave" src="/img/wave.png">
+          <div class="img">
+              <img src="/img/undraw_logistics.svg">
+          </div>
+      
+      <div class="login-container">
+              <form action="/" method="POST">
+                  <img class="avatar" src="/img/avatar_male.svg">
+                  <h2>Bienvenido</h2>
+                  <div class="input-div one">
+                      <div class="i">
+                          <i class="fas fa-user"></i>
+                      </div>
+                      <div>
+                          <h5>Usuario</h5>
+                          <input class="input" type="text" name="username">
+                      </div>
+                  </div>
+  
+                  <div class="input-div two">
+                      <div class="i">
+                          <i class="fas fa-lock"></i>
+                      </div>
+                      <div>
+                          <h5>Contraseña</h5>
+                          <input class="input" type="password" name="password">
+                      </div>
+                  </div>
+                  <!--<a href="#">¿Olvidaste la contraseña?</a>-->
+                  <input type="submit" class="btn" value="Iniciar Sesion">
+                    <%- include('includes/alerts.ejs') %>
+              </form>
+          </div>
+      </div>
+
+        <!--<div class="row">
+            <div class="col-4">
+                <form action="/" method="POST">
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Username</label>
+                      <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">                      
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                      <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>-->
+
+</body>
+
+<%- include('includes/scripts.ejs') %>
+<!--<%- include('includes/footer.ejs') %>---->

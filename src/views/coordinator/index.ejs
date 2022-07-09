@@ -1,0 +1,81 @@
+<%- include('../includes/header.ejs') %>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Inicio Coordinador</h1>
+        </div>
+    </div>
+
+    <div class="content-fluid">
+        <div class="row w-75 mx-auto">
+            <table id="inventoryTable" class="w-100 data-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Unidad</th>
+                        <th>Cantidad</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if(data != null) { %>
+                    <% for(let i in data) { %>
+                    <tr data-id="<%= data[i]._id %>">
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].description %></td>
+                        <td><%= data[i].unit %></td>
+                        <td><%= data[i].quantity %></td>
+                        <td>
+                            <button id="orderItem" class="btn btn-outline-primary" type="button">
+                                Pedido
+                            </button>
+                        </td>
+                    </tr>
+                    <% } %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5">
+                            No existe información
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <% if(data != null) { %>
+            <% for(let i in data) { %>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <div>
+                        <p><%= data[i].name %></p>
+                        <p><%= data[i].description %></p>
+                        <p><%= data[i].unit %></p>
+                        <p><%= data[i].quantity %></p>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <button id="orderItem" class="btn btn-outline-primary" type="button">
+                        Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+        <% } } %>
+    </div>
+
+
+</body>
+
+<%- include('../includes/scripts.ejs') %>
+
+<script src="/js/datatables.js"></script>
+
+<%- include('../includes/footer.ejs') %>

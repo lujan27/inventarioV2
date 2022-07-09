@@ -1,0 +1,201 @@
+<%- include('../includes/header.ejs') %>
+
+<body>
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#register">
+        Registrar empleado
+    </button>
+
+    <!-- Modal Register -->
+    <div id="register" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" 
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered w-90 w-md-75">
+            <div class="modal-content bg-dark rounded-3 shadow-lg">
+                <div class="row my-auto align-content-center px-3">
+                    <div class="container">
+                        <div class="row mt-3">
+                            <div class="col-2"></div>
+                            <div class="col d-flex justify-content-center">
+                                <h4 class="text-light p-0 mt-2">
+                                    Registro de personal
+                                </h4>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center align-content-center">
+                                <button type="button" class="btn btn-outline-light my-auto d-flex close-modal"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa-solid fa-xmark fs-5 my-auto"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-nowrap text-light justify-content-center text-decoration-underline">
+                        <p class="lang" data-lang="es">Los campos obligatorios aparecen marcados con un </p>
+                        <span class="text-danger ps-2"><i class="fa-solid fa-asterisk"></i></span>
+                    </div>
+                    <div class="card-body px-3">
+                        <form method="POST" class="form-registration" autocomplete="off">
+                            <div class="row">
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control mandatory" id="firstname" type="text" placeholder="." 
+                                            maxlength="25" />
+                                        <label for="firstname">
+                                            Nombre(s) <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control mandatory" id="lastname" type="text" placeholder="." 
+                                            maxlength="25" />
+                                        <label for="lastname">
+                                            Apellidos(s) <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control mandatory" id="username" type="text" placeholder="." 
+                                            maxlength="16" required />
+                                        <label for="username">
+                                            Usuario <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control mandatory" id="email" type="email" placeholder="." 
+                                            maxlength="25" required />
+                                        <label for="email">
+                                            E-mail <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 mx-auto col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input class="form-control mandatory" id="password" type="password" placeholder="." 
+                                            maxlength="25" required />
+                                        <label for="password">
+                                            Contraseña <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-control form-select ps-4 mandatory" id="ranch" required>
+                                            <option value="0" selected>- Selecciona Rancho -</option>
+                                            <option value="Pollitos en fuga">pollitos en fuga</option>
+                                            <option value="UTNA">UTNA</option>
+                                        </select>
+                                        <label for="ranch">
+                                            Rancho perteneciente <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-control form-select ps-4 mandatory" id="role" required>
+                                            <option value="0" selected>- Selecciona rol -</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Coordinador">Coordinador</option>
+                                            <option value="Usuario">Usuario (Empleado)</option>
+                                        </select>
+                                        <label for="role">
+                                            Rol <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 mb-5">
+                                <div class="row my-3">
+                                    <button id="submit-register" class="mx-auto w-50 w-md-25 btn btn-success
+                                        text-dark fs-5 btn-block" type="button" disabled>
+                                        Registrar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Lista de empleados</h1>
+        </div>
+    </div>
+
+    <div class="content-fluid">
+        <div class="row w-75 mx-auto">
+            <table id="usersTable" class="w-100 data-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Usuario</th>
+                        <th>E-mail</th>
+                        <th>Rol</th>
+                        <th>Rancho</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if(data != null) { %>
+                    <% for(let i in data) { %>
+                    <tr data-id="<%= data[i]._id %>">
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].lastname %></td>
+                        <td><%= data[i].username %></td>
+                        <td><%= data[i].email %></td>
+                        <td><%= data[i].role %></td>
+                        <td><%= data[i].ranch %></td>
+                        <td>
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle opts"
+                                    data-bs-toggle="dropdown" aria-expanded="false" >
+                                    <i class="fa-solid fa-list"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button type="button" class="btn rounded-0 dropdown-item py-2 text-center">
+                                            <i class="pe-1 text-warning fa-solid fa-pen-to-square"></i> Editar registro
+                                        </button>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <button type="button" class="btn rounded-0 dropdown-item py-2 text-center">
+                                            <i class="pe-1 text-danger fa-solid fa-user-xmark"></i> Dar de baja
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">
+                            No existe información
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<%- include('../includes/scripts.ejs') %>
+
+<script src="/js/datatables.js"></script>
+<script src="/js/form-validation.js"></script>
+
+<%- include('../includes/footer.ejs') %>
