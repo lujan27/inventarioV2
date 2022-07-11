@@ -20,6 +20,43 @@ function main (req, res) {
 }
 
 /**
+ * Función asíncrona para obtener registros de inventario.
+ * La función podrá recibir strings de IDs en un array y se
+ * obtendrán de "ids". La variable "showHidden" booleana se
+ * usa para mostrar registros "eliminados".
+ * Para uso en backend se tendrá que declarar la variable "local"
+ * en el cuerpo de la solicitud para devolver los datos sin 
+ * respuesta HTML.
+ * @param {Array} req.body.ids 
+ * @param {Boolean} req.body.pass 
+ * @param {Boolean} req.body.showHidden 
+ * @param {*} res 
+ * @returns Devuelve una respuesta HTTP con 'true' o 'false'
+ */
+ function getItems (req, res) {
+    let find = { 'display': {'$ne': false} };
+    
+    if (req.body.ids) find['_id'] = req.body.ids;
+    if (req.body.showHidden) delete find['display'];
+
+    return inventoryModel.find(find, project)
+    .then(data => {
+        if(req.body.local) return Promise.resolve(data);
+        return res.status(200).send(JSON.stringify({
+            response: true,
+            data: data
+        }));
+    })
+    .catch(error => {
+        if(req.body.local) return Promise.reject(error);
+        return res.status(200).send(JSON.stringify({
+            response: false,
+            error: error
+        }));
+    })
+}
+
+/**
  * Función asíncrona para añadir artículos.
  * Aceptara un array de objetos, cada uno deberá contener
  * claves llamadas 'name'(String), 'description'(String)
@@ -147,6 +184,7 @@ function modifyItems (req, res) {
 
 module.exports = {
     main,
+    getItems,
     addItems,
     deleteItems,
     modifyItems,

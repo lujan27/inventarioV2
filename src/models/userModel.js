@@ -9,7 +9,8 @@ const UserSchema = new Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     role: {type: String, required: true},
-    ranch: {type: String, required: true}
+    ranch: {type: String, required: true},
+    display: {type: Boolean, default: true}
 });
 
 UserSchema.methods.encryptPassword = async (password) => {

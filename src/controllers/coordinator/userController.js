@@ -1,25 +1,64 @@
 const usersModel = require('../../models/userModel');
+const encryption = require('../encryptionController');
 
 function main (req, res) {
-    let data = null;
-
+    let users = null;
     //  Encontrar usuarios del mismo rancho si es
     // coordinador, si es admin mostrar todos 
-     
-    usersModel.find({}) 
-    .then((result) => {
-        data = result;
+    getUsers({body: { local: true }})
+    .then((data) => {
+        users = data;
     })
     .catch(error => {
         console.error(error);
-        data = false;
+        users = false;
     })
     .finally(() => {
         return res.render('coordinator/users', {
             doc_title: 'Coordinador - Empleados',
-            data: data,
+            data: users,
         });
     });
+}
+
+/**
+ * Función asíncrona para obtener usuarios.
+ * La función podrá recibir strings de IDs en un array y se
+ * obtendrán de "ids". Se mostrara la contraseña declarando
+ * la variable "pass" con valor "true" en la solicitud.
+ * La variable "showHidden" booleana se usa para mostrar registros
+ * "eliminados".
+ * Para uso en backend se tendrá que declarar la variable "local"
+ * en el cuerpo de la solicitud para devolver los datos sin 
+ * respuesta HTML.
+ * @param {Array} req.body.ids 
+ * @param {Boolean} req.body.pass 
+ * @param {Boolean} req.body.showHidden 
+ * @param {*} res 
+ * @returns Devuelve una respuesta HTTP con 'true' o 'false'
+ */
+function getUsers (req, res) {
+    let find = { 'display': {'$ne': false} }
+    let project = (req.body.pass) ? {} : { 'password': false }
+    
+    if (req.body.ids) find['_id'] = req.body.ids;
+    if (req.body.showHidden) delete find['display'];
+
+    return usersModel.find(find, project)
+    .then(data => {
+        if(req.body.local) return Promise.resolve(data);
+        return res.status(200).send(JSON.stringify({
+            response: true,
+            data: data
+        }));
+    })
+    .catch(error => {
+        if(req.body.local) return Promise.reject(error);
+        return res.status(200).send(JSON.stringify({
+            response: false,
+            error: error
+        }));
+    })
 }
 
 /**
@@ -32,26 +71,49 @@ function main (req, res) {
  * @param {*} res 
  * @returns Devuelve una respuesta HTTP con 'true' o 'false'
  */
- function addUsers (req, res) {
+function addUsers (req, res) {
     let users = req.body.users
 
     if (users.length) {
-        return usersModel.aggregate([
-            { $sort: { _id: -1 } },
-            { $limit: 1 },
-            { $project: { _id: 1 } }
-        ])
-        .then(result => {
-            let _id = (result.length) ? parseInt(result[0]._id) : 0;
+        users.forEach(async user => {
+            const {name, lastname, username, email, password, role, ranch} = user;
 
-            users.forEach((item, i) => {
-                if (Object.keys(item).length === 0)
-                    delete users[i];
-                else
-                    item._id = _id + i + 1;
-            });
+            if (name.length <=0){
+                req.flash('danger_msg', 'Digite su nombre');
+                return res.redirect('/coordinator/users');
+            }
+            if (username.length <= 0){
+                req.flash('danger_msg', 'Escriba un nombre de usuario mayor a 4 caracteres');
+                return res.redirect('/coordinator/users');
+            }
+            if (password.length < 4){
+                req.flash('danger_msg', 'Digite mas de 4 caracteres para la contraseña');
+                return res.redirect('/coordinator/users');
+            } 
+            if (role.length <= 0){
+                req.flash('danger_msg', 'Tiene que asignar un rol de usuario');
+                return res.redirect('/coordinator/users');
+            }
+            if (ranch.length <= 0) {
+                req.flash('danger_msg', 'Tiene que asignarle un rancho al usuario');
+                return res.redirect('/coordinator/users');
+            }
 
-            return usersModel.insertMany(users)
+            const emailUser = await usersModel.findOne({email: email}); //Search an actual email to prevent duplicate
+            const uniqueUser = await usersModel.findOne({username: username});
+
+            if(emailUser) {
+                req.flash('danger_msg', 'El correo ya esta registrado');
+                return res.redirect('/coordinator/users');
+            }
+            if(uniqueUser){
+                req.flash('danger_msg', 'El usuario ya esta registrado');
+                return res.redirect('/coordinator/users');
+            }
+            
+            const newUser = new usersModel({name, lastname, username, email, password, role, ranch});
+            newUser.password = await newUser.encryptPassword(password);
+            await newUser.save()
             .then(() => {
                 return res.status(200).send(JSON.stringify({
                     response: true
@@ -64,13 +126,6 @@ function main (req, res) {
                     error: error
                 }))
             });
-        })
-        .catch(error => {
-            console.error(error);
-            return res.status(500).send(JSON.stringify({
-                response: false,
-                error: error
-            }))
         });
     } else return res.status(500).send(JSON.stringify({
         response: false,
@@ -81,8 +136,7 @@ function main (req, res) {
 /**
  * Función asíncrona para "eliminar" artículos.
  * Aceptara un array de objetos, cada uno deberá contener
- * claves '_id' refiriéndose a numero identificador y 
- * 'delete' con valor booleano para elegir la operación.
+ * claves '_id' refiriéndose a numero identificador.
  * @param {*} req 
  * @param {*} res 
  * @returns Devuelve una respuesta HTTP con 'true' o 'false'
@@ -91,10 +145,8 @@ function deleteUsers (req, res) {
     let users = req.body.users;
 
     if (users.length) {
-        return users.forEach(item => {
-            let operation = (item.delete) ? { display: false } : { display: true };
-        
-            usersModel.updateOne({ _id: item._id }, { $set: operation })
+        return users.forEach(async (user) => {        
+            return await usersModel.updateOne({ _id: user._id }, { $set: { display: false } })
             .then(() => {
                 return res.send(JSON.stringify({
                     response: true
@@ -127,23 +179,34 @@ function deleteUsers (req, res) {
  */
 function modifyUsers (req, res) {
     let users = req.body.users;
+
+    if (!users) return res.status(403).send(JSON.stringify({
+        response: false,
+        error: 'Without data to insert' // Conflict
+    }));
     
     if (users.length) {
-        users.forEach(item => {
-            return usersModel.updateOne({ _id: item._id }, { $set: item.content })
+        users.forEach(async (user) => {
+            if ('password' in user.content)
+                user.content.password = await encryption.encryptPassword(user.content.password)
+
+            return await usersModel.updateOne({ _id: user._id }, { $set: user.content })
             .then(() => {
-                return res.send(JSON.stringify({
+                // Quizá remplace flash por notificaciones funcionales con AJAX
+                req.flash('success_msg', 'Se ha guardado correctamente la información');
+                return res.status(200).send(JSON.stringify({
                     response: true
                 }));
             })
             .catch((error) => {
-                return res.send(JSON.stringify({
+                req.flash('danger_msg', 'No se ha podido guardar la información');
+                return res.status(500).send(JSON.stringify({
                     response: false,
                     error: error
                 }));
             });
         });
-    } else return res.send(JSON.stringify({
+    } else return res.status(403).send(JSON.stringify({
         response: false,
         error: 'Without data to insert' // Conflict
     }));
@@ -151,4 +214,8 @@ function modifyUsers (req, res) {
 
 module.exports = {
     main,
+    getUsers,
+    addUsers,
+    deleteUsers,
+    modifyUsers
 }

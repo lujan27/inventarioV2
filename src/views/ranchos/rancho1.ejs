@@ -1,67 +1,94 @@
 <%- include('../includes/header.ejs') %>
+<%- include('../includes/alerts.ejs') %>
 
 <body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Inicio Admin</h1>
+        </div>
+    </div>
+
     <section class="home-section pt-4 mt-4">
         <div class="container mt-2">
         <center>
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <% ranches.forEach(ranch => { %>
                 
-                <li class="nav-item"><a class="nav-link" href="/admin">La Granja</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/rancho1">Pollitos en fuga</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/rancho2">Cubeta</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/rancho3">Los Conos</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/rancho4">Rancho viejo</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/rancho5">La escondida</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
+                
+                <% }); %>
             </ul>
         </center>
+
+            
+
             <div class="subcontenedor">
                 <div class="bloque activo">
                   <div class="justify-content-center row">
-            <table class="table">
-                <thead>
+                    <table class="table table-striped">
+                        <thead class="table-dark">
                     <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Medida</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Recinto</th>
+                    <th scope="col">Materia</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">unidad de medida</th>
                     <th scope="col">Cantidad</th>
-                    <th scope="col">Dejo Materia prima</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col"></th>
-                    <th scope="col">Se entrego</th>
-                    <th colspan="2">Acciones</th>
+                    <th scope="col">Localización</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider">
                     
+                    <% usuarios.forEach(usuario => { %>
+                    <% ranches.forEach(ranch => { %>
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
+                        
+                        <td colspan="1">
+                            <%=usuario.name%> 
+                        </td>
+                        <td colspan="1">
+                            <%=usuario.lastname%> 
+                        </td>
+                        <td colspan="1">
+                            <%=usuario.email%> 
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.ranch_name%> 
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.name_materiaPrima%>
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.description_materiaPrima%>
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.unidad_medida%>
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.quantity%>
+                        </td>
+                        <td colspan="1">
+                            <%=ranch.location%>
+                        </td>
+
+                        
                     </tr>
-                    
-                    <div class="col-md-8 mx-auto pb-4">
-                        <div class="card text-center">
-                            <p>No hay registros de materia prima entrante</p>
-                        </div>
-                    </div>
-                    
+                    <% }); %>
+                   
+                    <% }); %>
                 </tbody>
                 </table>
                 <caption class="pl-2 justify-content-center">Registro de materia prima entrante</caption>
             </div>
-        </div></div>
-        
-                <div class="bloque">2</div>
-                <div class="bloque">3</div>
-                <div class="bloque">4</div>
-                <div class="bloque">5</div>
-                <div class="bloque">6</div>
-            </div>
         </div>
+    </div>
+            
+</div>
+        
+</div>
         
     
         </center>
@@ -69,6 +96,9 @@
     
     
     </section>
+
+    
 </body>
+
 
 <%- include('../includes/scripts.ejs') %>

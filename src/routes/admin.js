@@ -3,40 +3,29 @@ const router = express.Router();
 const User = require('../models/userModel');
 const Ranch = require('../models/ranchModel');
 
-router.get('/admin', (req, res) => {
+router.get('/admin', async(req, res) => {
     const success_msg = req.flash('success_msg');
     const error = req.flash('error');
-    res.render('admin/adminhome', {
-        doc_title: 'Administrador',
+    const usuarios = await User.find();
+    const ranches = await Ranch.find();
+    const userRanch = [usuarios, ranches];
+    console.log('La variable tiene' + userRanch);
+    res.render('admin/adminhome',{
+        doc_title: 'Administrador',  usuarios, ranches, userRanch
     });
 })
+
 
 //Rutas para la vista del administrador
 // router.get('/admin/user/userhome', (req, res) => {
 //     res.render('user/userhome')
 // });
 
-router.get('/admin/ranchos/rancho1', (req, res) => {
-    res.render('ranchos/rancho1')
-});
-
-
-router.get('/admin/ranchos/rancho2', (req, res) => {
-    res.render('ranchos/rancho2')
-});
-
-
-router.get('/admin/ranchos/rancho3', (req, res) => {
-    res.render('ranchos/rancho3')
-});
-
-
-router.get('/admin/ranchos/rancho4', (req, res) => {
-    res.render('ranchos/rancho4')
-});
-
-router.get('/admin/ranchos/rancho5', (req, res) => {
-    res.render('ranchos/rancho5')
+router.get('/admin/ranchos/:id', async(req, res) => {
+    const usuarios = await User.find();
+    const ranches = await Ranch.find();
+    const ranchesid = await Ranch.findById(req.params.id);
+    res.render('ranchos/rancho1', {doc_title: ranchesid.ranch_name, ranchesid, ranches, usuarios})
 });
 // View add user
 router.get('/admin/adduser', async (req, res) => {

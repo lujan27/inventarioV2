@@ -1,4 +1,21 @@
 $(document).ready(() => {
+    const columnOrderable = (selector) => {
+        let order = $(selector).data('column-orderable');
+        let res = [];
+
+        if (order) order = order.split(',');
+        
+        order.forEach(element => {
+            if (element.trim() == '1')
+                return res.push(null);
+            return res.push({ orderable: false });
+        });
+
+        return res;
+    }
+
+    console.log(columnOrderable('.data-table'));
+
     $('.data-table').DataTable({
         // data: [
         //    { ... }, {
@@ -15,15 +32,7 @@ $(document).ready(() => {
         dom: '<"top"f>rt<"bottom"p>',
         responsive: true,
         order: [[0, 'asc']],
-        columns: [
-            null,
-            null,
-            { orderable: false },
-            { orderable: false },
-            null,
-            null,
-            { orderable: false },
-        ],
+        columns: columnOrderable('.data-table'),
         language: {
             "emptyTable":     "No se encontraron registros",
             "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
