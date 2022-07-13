@@ -14,13 +14,16 @@
         <div class="container mt-2">
         <center>
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                
+                <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
+
                 <% ranches.forEach(ranch => { %>
                 
                 <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
                 
                 <% }); %>
             </ul>
-        </center>
+        
 
             
 
@@ -31,45 +34,36 @@
                 <thead>
                     <tr>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Recinto</th>
-                    <th scope="col">Medida</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Dejo Materia prima</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Se entrego</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Rancho</th>
+                    <th scope="col">Ubicacion</th>
                     <th colspan="2">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% userRanch.forEach(usuario => { %>
+                    <% usuarios.forEach(usuario => { %>
                     <tr>
-                        <td>
-                       
-                            <%=usuario.username%> 
-                        
-                        </td>
-                        <td>
-                            
-                        </td>
-                        <td>
-                            <%=usuario.name_ranch%> 
-                        </td>
-                        <td>
-                            <%=usuario.role%>
-                        </td>
-                        <td>
-                            <%=usuario.ranch%>
-                        </td>
-                        <td></td>
-
-                        
+                        <td><%= usuario.name %> </td>
+                        <td><%= usuario.lastname %> </td>
+                        <td><%= usuario.username %> </td>
+                        <td><%= usuario.email %> </td>
+                        <td><%= usuario.role %> </td>
+                        <td><%= usuario.ranch %> </td>
+                        <% if(usuario.results == ''){ %> 
+                            <td>No existe</td>
+                        <% } else {%> 
+                        <td><%= usuario.results[0].location %> </td>
+                        <% } %> 
                     </tr>
                     <% }); %>
                    
                     
                 </tbody>
                 </table>
-                <caption class="pl-2 justify-content-center">Registro de materia prima entrante</caption>
+                
             </div>
         </div>
     </div>
@@ -79,12 +73,11 @@
 </div>
         
     
-        </center>
+        
     
     
     
     </section>
-    <%userRanch%>
 </body>
 
 <%- include('../includes/scripts.ejs') %>

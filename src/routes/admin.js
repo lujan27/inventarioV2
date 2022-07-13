@@ -2,16 +2,26 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
 const Ranch = require('../models/ranchModel');
+const Stock = require('../models/stockModel');
 
 router.get('/admin', async(req, res) => {
     const success_msg = req.flash('success_msg');
     const error = req.flash('error');
-    const usuarios = await User.find();
     const ranches = await Ranch.find();
-    const userRanch = [usuarios, ranches];
-    console.log('La variable tiene' + userRanch);
+    const usuarios = await User.aggregate([
+        {
+            '$lookup': {
+                'from': 'ranches',
+                'localField': 'ranch',
+                'foreignField': 'ranch_name',
+                'as': 'results'
+            }
+        }
+    ]);
+    //console.log(JSON.stringify(usuarios));
+    console.log(usuarios);
     res.render('admin/adminhome',{
-        doc_title: 'Administrador',  usuarios, ranches, userRanch
+        doc_title: 'Administrador',  usuarios, ranches
     });
 })
 
@@ -25,11 +35,17 @@ router.get('/admin/ranchos/:id', async(req, res) => {
     const usuarios = await User.find();
     const ranches = await Ranch.find();
     const ranchesid = await Ranch.findById(req.params.id);
-    res.render('ranchos/rancho1', {doc_title: ranchesid.ranch_name, ranchesid, ranches, usuarios})
+    res.render('ranchos/rancho', {doc_title: ranchesid.ranch_name, ranchesid, ranches, usuarios})
 });
 // View add user
 router.get('/admin/adduser', async (req, res) => {
-    const RanchsBD = await Ranch.find();
+    const RanchsBD = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
     res.render('admin/adduser', {
         RanchsBD, 
         doc_title: 'Añadir Usuario'
@@ -113,6 +129,25 @@ router.post('/admin/addranch', async (req, res) => {
     }
 
     
+});
+
+router.get('/admin/addstock', async (req, res) => {
+    const RanchsBD = await Ranch.find();
+
+    res.render('admin/addstock', {
+        doc_title: 'Añadir Stock',
+        RanchsBD
+    });
+});
+
+router.post('/admin/addstock', async (req, res) => {
+    console.log(req.body);
+    const {ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida} = req.body
+
+    const newStock = new Stock({ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida});
+    await newStock.save();
+    req.flash('success_msg', 'Stock registrado!');
+    res.redirect('/admin');
 });
 
 module.exports = router;

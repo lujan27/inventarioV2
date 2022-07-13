@@ -43,7 +43,7 @@
                     <select class="form-control" name="ranch" id="">
                         <option value="">Asigna el rancho al que pertenece...</option>
                         <% RanchsBD.forEach(function(rancho){%> 
-                        <option value=" <%= rancho.ranch_name %> "><%= rancho.ranch_name %> </option>
+                        <option value="<%= rancho.ranch_name %>"><%= rancho.ranch_name %> </option>
                         <% }); %> 
                     </select>
                 </div>
