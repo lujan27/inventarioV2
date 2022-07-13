@@ -7,7 +7,13 @@ const Stock = require('../models/stockModel');
 router.get('/admin', async(req, res) => {
     const success_msg = req.flash('success_msg');
     const error = req.flash('error');
-    const ranches = await Ranch.find();
+    const ranches = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
     const usuarios = await User.aggregate([
         {
             '$lookup': {
@@ -18,10 +24,22 @@ router.get('/admin', async(req, res) => {
             }
         }
     ]);
+
+    const stockPrin = await Stock.aggregate([
+        {
+          '$match': {
+            'ranch_owner': 'Rancho Principal'
+          }
+        }
+      ]);
     //console.log(JSON.stringify(usuarios));
-    console.log(usuarios);
+    //console.log(usuarios);
+    console.log(stockPrin);
     res.render('admin/adminhome',{
-        doc_title: 'Administrador',  usuarios, ranches
+        doc_title: 'Administrador',
+        usuarios,
+        ranches,
+        stockPrin
     });
 })
 
@@ -32,10 +50,30 @@ router.get('/admin', async(req, res) => {
 // });
 
 router.get('/admin/ranchos/:id', async(req, res) => {
-    const usuarios = await User.find();
-    const ranches = await Ranch.find();
+    const ranches = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
     const ranchesid = await Ranch.findById(req.params.id);
-    res.render('ranchos/rancho', {doc_title: ranchesid.ranch_name, ranchesid, ranches, usuarios})
+
+    const stockid = await Stock.aggregate([
+        {
+          '$match': {
+            'ranch_owner': ranchesid.ranch_name
+          }
+        }
+      ]);
+
+    //console.log(stockid);
+    res.render('ranchos/rancho', {
+        doc_title: ranchesid.ranch_name,
+        ranchesid,
+        ranches,
+        stockid
+    })
 });
 // View add user
 router.get('/admin/adduser', async (req, res) => {

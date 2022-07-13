@@ -6,99 +6,64 @@
     <div class="container-fluid">
         <div class="row">
             <h1>Inicio Admin</h1>
+            <ul>
+                <% stockid.forEach(inventario =>{ %>
+                    <li><%=inventario.ranch_owner %> </li>
+                <% }); %> 
+            </ul>
         </div>
     </div>
-
     <section class="home-section pt-4 mt-4">
         <div class="container mt-2">
-        <center>
+            <center>
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
 
                 <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
-                
+
                 <% ranches.forEach(ranch => { %>
                 
                 <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
                 
                 <% }); %>
             </ul>
-        </center>
-
-            
 
             <div class="subcontenedor">
                 <div class="bloque activo">
                   <div class="justify-content-center row">
-                    <table class="table table-striped">
-                        <thead class="table-dark">
+            <table class="table">
+                <thead>
                     <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Recinto</th>
-                    <th scope="col">Materia</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">unidad de medida</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Localización</th>
+                        <th>Rancho</th>
+                        <th>Materia Prima</th>
+                        <th>Descripcion</th>
+                        <th>Unidad de medida</th>
+                        <th>Cantidad</th>
+                    <th colspan="2">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="table-group-divider">
-                    
-                    <% usuarios.forEach(usuario => { %>
-                    <% ranches.forEach(ranch => { %>
-                    <tr>
-                        
-                        <td colspan="1">
-                            <%=usuario.name%> 
-                        </td>
-                        <td colspan="1">
-                            <%=usuario.lastname%> 
-                        </td>
-                        <td colspan="1">
-                            <%=usuario.email%> 
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.ranch_name%> 
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.name_materiaPrima%>
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.description_materiaPrima%>
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.unidad_medida%>
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.quantity%>
-                        </td>
-                        <td colspan="1">
-                            <%=ranch.location%>
-                        </td>
-
-                        
-                    </tr>
-                    <% }); %>
+                <tbody>
+                    <% stockid.forEach(stock => { %> 
+                        <tr>
+                            <td><%= stock.ranch_owner %> </td>
+                            <td><%= stock.name_materiaPrima %> </td>
+                            <td><%= stock.description_materiaPrima %> </td>
+                            <td><%= stock.unidad_medida %> </td>
+                            <td><%= stock.quantity %> </td>
+                        </tr>
+                        <% }); %> 
                    
-                    <% }); %>
+                    
                 </tbody>
                 </table>
-                <caption class="pl-2 justify-content-center">Registro de materia prima entrante</caption>
+                
             </div>
         </div>
     </div>
             
 </div>
-        
-</div>
-        
-    
-        </center>
-    
-    
-    
     </section>
+
+
 
     
 </body>

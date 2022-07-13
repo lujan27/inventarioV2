@@ -7,6 +7,40 @@
     <div class="container-fluid">
         <div class="row">
             <h1>Inicio Admin</h1>
+
+            <div class="subcontenedor">
+                <div class="bloque activo">
+                  <div class="justify-content-center row">
+                    <h2>Inventario</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rancho</th>
+                        <th>Materia Prima</th>
+                        <th>Descripcion</th>
+                        <th>Unidad de medida</th>
+                        <th>Cantidad</th>
+                    <th colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% stockPrin.forEach(stock => { %> 
+                        <tr>
+                            <td><%= stock.ranch_owner %> </td>
+                            <td><%= stock.name_materiaPrima %> </td>
+                            <td><%= stock.description_materiaPrima %> </td>
+                            <td><%= stock.unidad_medida %> </td>
+                            <td><%= stock.quantity %> </td>
+                        </tr>
+                        <% }); %> 
+                   
+                    
+                </tbody>
+                </table>
+                
+            </div>
+        </div>
+        </div>
         </div>
     </div>
 
@@ -28,6 +62,7 @@
             
 
             <div class="subcontenedor">
+                <h2>Usuarios</h2>
                 <div class="bloque activo">
                   <div class="justify-content-center row">
             <table class="table">
@@ -67,16 +102,12 @@
             </div>
         </div>
     </div>
+
+
             
 </div>
         
 </div>
-        
-    
-        
-    
-    
-    
     </section>
 </body>
 
