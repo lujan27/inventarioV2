@@ -6,7 +6,7 @@ const flash = require('connect-flash/lib/flash');
 router.get('/', (req, res) => {
     const success_msg = req.flash('success_msg')[0];
     res.render('index', {
-        doc_title: 'Index',
+        doc_title: 'Inicio de sesión - Inventario',
     });
 })
 
