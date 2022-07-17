@@ -3,6 +3,10 @@ const inventoryModel = require('../../models/coordinator/inventoryModel');
 function main (req, res) {
     let data = null;
 
+    // Test
+    // const inventories = require('../../test/controllers/inventoriesController.test');
+    // inventories.main()
+
     inventoryModel.find({})
     .then((result) => {
         data = result;
