@@ -41,7 +41,34 @@ router.get('/admin', async(req, res) => {
         ranches,
         stockPrin
     });
-})
+});
+
+
+//Ruta para edicion de registros
+router.get('/admin/edituser/:id', async(req, res)=>{
+
+    const edit = await User.findById(req.params.id);
+    console.log(edit);
+    res.render('admin/edituser' , {doc_title: 'Administrador', edit});
+
+});
+//Ruta para edicion de registros
+router.put('/admin/edituser/:id', async(req, res)=>{
+
+    const {name, lastname, username, email, password, role, ranch} = req.body;
+    await User.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
+    //console.log('La variable tiene', req.params.id, {name, lastname, username, email, password, role, ranch});
+    req.flash('success_msg', 'Usuario Actualizado');
+    res.redirect('/admin');
+});
+
+router.delete('/admin/deleteuser/:id', async(req, res)=>{
+
+    await User.findByIdAndDelete(req.params.id);
+    req.flash('success_msg', 'Usuario Eliminado');
+    res.redirect('/admin');
+});
+
 
 
 //Rutas para la vista del administrador

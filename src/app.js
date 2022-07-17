@@ -1,3 +1,4 @@
+const methodoverride = require('method-override');
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -18,6 +19,7 @@ app.listen(port, () => console.log(`Server running at:\x1b[36m http://localhost:
 // Middlewares
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(methodoverride('_method'));
 app.use(cookieParser('SecretStringForCookies'));
 app.use(session({
     secret: 'mysecretapp',

@@ -3,7 +3,7 @@
 
 
 <body>
-
+    
     <div class="container-fluid">
         <div class="row">
             <h1>Inicio Admin</h1>
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <section class="home-section pt-4 mt-4">
+   
         <div class="container mt-2">
         <center>
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
@@ -92,6 +92,14 @@
                         <% } else {%> 
                         <td><%= usuario.results[0].location %> </td>
                         <% } %> 
+                        <td>
+                            <a href="admin/edituser/<%= usuario._id%>" >EDITAR</a>
+                            <input type="hidden" name="_method" value="delete">
+                            
+                            <form action="admin/deleteuser/<%= usuario._id%>?_method=delete" method="post">
+                            <button type="submit">ELIMINAR</button>
+                            </form>
+                        </td>
                     </tr>
                     <% }); %>
                    
@@ -108,7 +116,7 @@
 </div>
         
 </div>
-    </section>
+
 </body>
 
 <%- include('../includes/scripts.ejs') %>
