@@ -1,4 +1,4 @@
-const usersModel = require('../../models/userModel');
+const usersModel = require('../../models/users/userModel');
 const encryption = require('../encryptionController');
 
 function main (req, res) {

@@ -9,4 +9,6 @@ const StockSchema = new Schema({
     quantity: {type: Number, required: true}
 });
 
+StockSchema.index({ name_materiaPrima: 'text' });
+
 module.exports = mongoose.model('Stock', StockSchema);

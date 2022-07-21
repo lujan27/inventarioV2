@@ -26,8 +26,9 @@
         </div>
     </div>
 
+    <!-- TODO: Mover solo para uso de administrador -->
     <!-- Modal Register -->
-    <div id="modal-user" class="modal fade" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel"
+    <!-- <div id="modal-item" class="modal fade" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel"
         aria-hidden="true" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog modal-xl modal-dialog-centered w-90 w-md-75">
             <div class="modal-content bg-dark rounded-3 shadow-lg">
@@ -36,8 +37,8 @@
                         <div class="row mt-3">
                             <div class="col-2"></div>
                             <div class="col d-flex justify-content-center">
-                                <h4 class="text-light p-0 mt-2 mode-r">Registro de personal</h4>
-                                <h4 class="text-light p-0 mt-2 mode-e d-none">Editar registro</h4>
+                                <h4 class="text-light p-0 mt-2 mode-r">Registro de nuevo articulo</h4>
+                                <h4 class="text-light p-0 mt-2 mode-e d-none">Editar articulo</h4>
                             </div>
                             <div class="col-2 d-flex justify-content-center align-content-center">
                                 <button type="button" class="btn btn-outline-light my-auto d-flex close-modal"
@@ -60,74 +61,41 @@
                                         <input class="form-control mandatory" id="name" type="text" placeholder="." 
                                             maxlength="25" />
                                         <label for="name">
-                                            Nombre(s) <i class="fa-solid fa-asterisk text-danger"></i>
+                                            Nombre del articulo <i class="fa-solid fa-asterisk text-danger"></i>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-control form-select ps-4 mandatory" id="unit" required>
+                                            <option value="0" selected>- Selecciona unidad -</option>
+                                            <option value="KG">Kilogramo (Kg)</option>
+                                            <option value="L">Litro (L)</option>
+                                            <option value="Pieza">Pieza</option>
+                                        </select>
+                                        <label for="unit">
+                                            Unidad de medida <i class="fa-solid fa-asterisk text-danger"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6 col-12 mx-auto">
                                     <div class="form-floating">
-                                        <input class="form-control mandatory" id="lastname" type="text" placeholder="." 
+                                        <input class="form-control mandatory" id="quantity" type="text" placeholder="." 
                                             maxlength="25" />
-                                        <label for="lastname">
-                                            Apellidos(s) <i class="fa-solid fa-asterisk text-danger"></i>
+                                        <label for="quantity">
+                                            Cantidad <i class="fa-solid fa-asterisk text-danger"></i>
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
-                                <div class="mb-3 col-md-6 col-12">
+                                <div class="mb-3 col-md-8 col-12 mx-auto">
                                     <div class="form-floating">
-                                        <input class="form-control mandatory" id="username" type="text" placeholder="." 
-                                            maxlength="16" required />
-                                        <label for="username">
-                                            Usuario <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="email" type="email" placeholder="." 
-                                            maxlength="30" required />
-                                        <label for="email">
-                                            E-mail <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 mx-auto col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="password" type="password" placeholder="." 
-                                            minlength="8" maxlength="25" required />
-                                        <label for="password">
-                                            Contraseña <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select class="form-control form-select ps-4 mandatory" id="ranch" required>
-                                            <option value="0" selected>- Selecciona Rancho -</option>
-                                            <option value="pollitos en fuga">pollitos en fuga</option>
-                                            <option value="UTNA">UTNA</option>
-                                        </select>
-                                        <label for="ranch">
-                                            Rancho perteneciente <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select class="form-control form-select ps-4 mandatory" id="role" required>
-                                            <option value="0" selected>- Selecciona rol -</option>
-                                            <option value="administrador">administrador</option>
-                                            <option value="coordinador">coordinador</option>
-                                            <option value="usuario">usuario</option>
-                                        </select>
-                                        <label for="role">
-                                            Rol <i class="fa-solid fa-asterisk text-danger"></i>
+                                        <textarea class="form-control mandatory" id="description"
+                                            maxlength="255" required></textarea>
+                                        <label for="description">
+                                            Descripción <i class="fa-solid fa-asterisk text-danger"></i>
                                         </label>
                                     </div>
                                 </div>
@@ -150,11 +118,15 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
     <div class="container-fluid">
         <div class="row">
             <h1>Inicio Coordinador</h1>
+        </div>
+        
+        <div class="row">
+            <h3 class="mx-auto">Stock disponible para pedidos</h3>
         </div>
     </div>
 
@@ -175,11 +147,15 @@
                     <% for(let i in data) { %>
                     <tr data-id="<%= data[i]._id %>">
                         <td><%= data[i].name %></td>
-                        <td><%= data[i].description %></td>
+                        <td><%= (data[i].description.length > 25) 
+                            ? data[i].description.slice(0, 25) + '...'
+                            : data[i].description
+                        %></td>
                         <td><%= data[i].unit %></td>
                         <td><%= data[i].quantity %></td>
                         <td>
-                            <div class="btn-group dropstart">
+                            <!-- TODO: Mover solo para uso de administrador -->
+                            <!-- <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-outline-secondary dropdown-toggle opts"
                                     data-bs-toggle="dropdown" aria-expanded="false" >
                                     <i class="fa-solid fa-list"></i>
@@ -187,7 +163,7 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <button type="button" class="btn rounded-0 dropdown-item py-2 text-center edit-mode"
-                                            data-bs-toggle="modal" data-bs-target="#modal-user" data-id="<%= data[i]._id %>">
+                                            data-bs-toggle="modal" data-bs-target="#modal-item" data-id="<%= data[i]._id %>">
                                             <i class="pe-1 text-warning fa-solid fa-pen-to-square"></i> Editar registro
                                         </button>
                                     </li>
@@ -199,7 +175,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <button id="orderItem" class="btn btn-outline-primary" type="button">
                                 Pedido
                             </button>

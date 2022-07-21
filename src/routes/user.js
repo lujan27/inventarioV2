@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Stock = require('../models/stockModel');
-const User = require('../models/userModel')
+const User = require('../models/users/userModel')
 
 router.get('/user/', async (req, res) => {
     const stockUser = await Stock.find({ranch_owner: req.user.ranch});

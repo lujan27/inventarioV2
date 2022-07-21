@@ -14,8 +14,6 @@ $(document).ready(() => {
         return res;
     }
 
-    console.log(columnOrderable('.data-table'));
-
     $('.data-table').DataTable({
         // data: [
         //    { ... }, {
