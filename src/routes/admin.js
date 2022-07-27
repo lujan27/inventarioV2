@@ -4,6 +4,7 @@ const User = require('../models/users/userModel');
 const Ranch = require('../models/ranchModel');
 const Stock = require('../models/stockModel');
 
+// Main view of admin
 router.get('/admin', async(req, res) => {
     const success_msg = req.flash('success_msg');
     const error = req.flash('error');
@@ -44,7 +45,7 @@ router.get('/admin', async(req, res) => {
 });
 
 
-//Ruta para edicion de registros
+// Route for edit users
 router.get('/admin/edituser/:id', async(req, res)=>{
 
     const edit = await User.findById(req.params.id);
@@ -52,7 +53,8 @@ router.get('/admin/edituser/:id', async(req, res)=>{
     res.render('admin/edituser' , {doc_title: 'Administrador', edit});
 
 });
-//Ruta para edicion de registros
+
+// Route type PUT for edit users
 router.put('/admin/edituser/:id', async(req, res)=>{
 
     const {name, lastname, username, email, password, role, ranch} = req.body;
@@ -62,6 +64,7 @@ router.put('/admin/edituser/:id', async(req, res)=>{
     res.redirect('/admin');
 });
 
+// Route for delete users
 router.delete('/admin/deleteuser/:id', async(req, res)=>{
 
     await User.findByIdAndDelete(req.params.id);
@@ -69,13 +72,7 @@ router.delete('/admin/deleteuser/:id', async(req, res)=>{
     res.redirect('/admin');
 });
 
-
-
-//Rutas para la vista del administrador
-// router.get('/admin/user/userhome', (req, res) => {
-//     res.render('user/userhome')
-// });
-
+// Route for view of each ranch by id
 router.get('/admin/ranchos/:id', async(req, res) => {
     const ranches = await Ranch.aggregate([
         {
@@ -102,6 +99,7 @@ router.get('/admin/ranchos/:id', async(req, res) => {
         stockid
     })
 });
+
 // View add user
 router.get('/admin/adduser', async (req, res) => {
     const RanchsBD = await Ranch.aggregate([
@@ -163,13 +161,14 @@ router.post('/admin/adduser', async (req, res) => {
     
 });
 
-// view add new ranch
+// View add new ranch
 router.get('/admin/addranch', (req, res) => {
     res.render('admin/addranch', {
         doc_title: 'Añadir Rancho'
     });
 });
 
+// Route for add a new ranch
 router.post('/admin/addranch', async (req, res) => {
     console.log(req.body);
     const { ranch_name, location } = req.body
@@ -194,6 +193,34 @@ router.post('/admin/addranch', async (req, res) => {
     }
 
     
+});
+
+// View for all users on the system
+router.get('/admin/allusers', async (req, res) => {
+    const ranches = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
+
+    const usuarios = await User.aggregate([
+        {
+            '$lookup': {
+                'from': 'ranches',
+                'localField': 'ranch',
+                'foreignField': 'ranch_name',
+                'as': 'results'
+            }
+        }
+    ]);
+
+    res.render('admin/allusers', {
+        doc_title: 'Usuarios',
+        ranches,
+        usuarios
+    });
 });
 
 router.get('/admin/addstock', async (req, res) => {

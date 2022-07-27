@@ -6,118 +6,62 @@
     
     <div class="container-fluid">
         <div class="row">
-            <h1>Inicio Admin</h1>
+            <h2>Inventario: Rancho Principal</h2>
+            <div class="col-12">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                
+                    <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
 
-            <div class="subcontenedor">
-                <div class="bloque activo">
-                  <div class="justify-content-center row">
-                    <h2>Inventario</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rancho</th>
-                        <th>Materia Prima</th>
-                        <th>Descripcion</th>
-                        <th>Unidad de medida</th>
-                        <th>Cantidad</th>
-                    <th colspan="2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% stockPrin.forEach(stock => { %> 
-                        <tr>
-                            <td><%= stock.ranch_owner %> </td>
-                            <td><%= stock.name_materiaPrima %> </td>
-                            <td><%= stock.description_materiaPrima %> </td>
-                            <td><%= stock.unidad_medida %> </td>
-                            <td><%= stock.quantity %> </td>
-                        </tr>
-                        <% }); %> 
-                   
+                    <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
+    
+                    <% ranches.forEach(ranch => { %>
                     
-                </tbody>
-                </table>
-                
-            </div>
-        </div>
-        </div>
-        </div>
-    </div>
-
-   
-        <div class="container mt-2">
-        <center>
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                
-                <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
-
-                <% ranches.forEach(ranch => { %>
-                
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
-                
-                <% }); %>
-            </ul>
-        
-
-            
-
-            <div class="subcontenedor">
-                <h2>Usuarios</h2>
-                <div class="bloque activo">
-                  <div class="justify-content-center row">
-            <table class="table">
-                <thead>
-                    <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Rol</th>
-                    <th scope="col">Rancho</th>
-                    <th scope="col">Ubicacion</th>
-                    <th colspan="2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% usuarios.forEach(usuario => { %>
-                    <tr>
-                        <td><%= usuario.name %> </td>
-                        <td><%= usuario.lastname %> </td>
-                        <td><%= usuario.username %> </td>
-                        <td><%= usuario.email %> </td>
-                        <td><%= usuario.role %> </td>
-                        <td><%= usuario.ranch %> </td>
-                        <% if(usuario.results == ''){ %> 
-                            <td>No existe</td>
-                        <% } else {%> 
-                        <td><%= usuario.results[0].location %> </td>
-                        <% } %> 
-                        <td>
-                            <a href="admin/edituser/<%= usuario._id%>" >EDITAR</a>
-                            <input type="hidden" name="_method" value="delete">
-                            
-                            <form action="admin/deleteuser/<%= usuario._id%>?_method=delete" method="post">
-                            <button type="submit">ELIMINAR</button>
-                            </form>
-                        </td>
-                    </tr>
+                    <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
+                    
                     <% }); %>
-                   
-                    
-                </tbody>
-                </table>
-                
+                </ul>
+
+                <div class="col-12">                    
+    
+                    <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rancho</th>
+                                <th scope="col">Materia Prima</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Unidad de medida</th>
+                                <th scope="col">Cantidad</th>
+                                <th colspan="2">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% stockPrin.forEach(stock => { %> 
+                                <tr id="id-<%= stock._id%>">
+                                    <td><%= stock.ranch_owner %> </td>
+                                    <td><%= stock.name_materiaPrima %> </td>
+                                    <td><%= stock.description_materiaPrima %> </td>
+                                    <td><%= stock.unidad_medida %> </td>
+                                    <td><%= stock.quantity %> </td>
+                                    <td>
+                                        <button id="orderItem" class="btn btn-outline-primary" type="button">
+                                            Pedido
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% }); %> 
+                           
+                            
+                        </tbody>
+                        </table>
+                </div>
             </div>
+
         </div>
-    </div>
+    </div>  
 
-
-            
-</div>
-        
-</div>
 
 </body>
 
 <%- include('../includes/scripts.ejs') %>
 <%- include('../includes/footer.ejs') %>
+<script src="/js/datatables.js"></script>

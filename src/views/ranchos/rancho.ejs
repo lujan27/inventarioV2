@@ -2,71 +2,65 @@
 <%- include('../includes/alerts.ejs') %>
 
 <body>
-
+    
     <div class="container-fluid">
         <div class="row">
-            <h1>Inicio Admin</h1>
-            <ul>
-                <% stockid.forEach(inventario =>{ %>
-                    <li><%=inventario.ranch_owner %> </li>
-                <% }); %> 
-            </ul>
-        </div>
-    </div>
-    <section class="home-section pt-4 mt-4">
-        <div class="container mt-2">
-            <center>
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-
-                <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
-
-                <% ranches.forEach(ranch => { %>
+            <h2>Inventario: <%= doc_title %>  </h2>
+            <div class="col-12">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                 
-                <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
-                
-                <% }); %>
-            </ul>
+                    <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
 
-            <div class="subcontenedor">
-                <div class="bloque activo">
-                  <div class="justify-content-center row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rancho</th>
-                        <th>Materia Prima</th>
-                        <th>Descripcion</th>
-                        <th>Unidad de medida</th>
-                        <th>Cantidad</th>
-                    <th colspan="2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% stockid.forEach(stock => { %> 
-                        <tr>
-                            <td><%= stock.ranch_owner %> </td>
-                            <td><%= stock.name_materiaPrima %> </td>
-                            <td><%= stock.description_materiaPrima %> </td>
-                            <td><%= stock.unidad_medida %> </td>
-                            <td><%= stock.quantity %> </td>
-                        </tr>
-                        <% }); %> 
-                   
-                    
-                </tbody>
-                </table>
-                
-            </div>
-        </div>
-    </div>
-            
-</div>
-    </section>
-
-
-
+                    <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
     
+                    <% ranches.forEach(ranch => { %>
+                    
+                    <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
+                    
+                    <% }); %>
+                </ul>
+
+                <div class="col-12">
+                    
+                    <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rancho</th>
+                                <th scope="col">Materia Prima</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Unidad de medida</th>
+                                <th scope="col">Cantidad</th>
+                                <th colspan="2">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% stockid.forEach(stock => { %> 
+                                <tr id="id-<%= stock._id%>">
+                                    <td><%= stock.ranch_owner %> </td>
+                                    <td><%= stock.name_materiaPrima %> </td>
+                                    <td><%= stock.description_materiaPrima %> </td>
+                                    <td><%= stock.unidad_medida %> </td>
+                                    <td><%= stock.quantity %> </td>
+                                    <td>
+                                        <button id="orderItem" class="btn btn-outline-primary" type="button">
+                                            Pedido
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% }); %> 
+                           
+                            
+                        </tbody>
+                        </table>
+                </div>
+            </div>
+
+        </div>
+    </div>  
+
+
 </body>
 
 
 <%- include('../includes/scripts.ejs') %>
+<script src="/js/datatables.js"></script>
