@@ -1,69 +1,82 @@
+<%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
 <%- include('../includes/alerts.ejs') %>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <h2>Usuarios: Rancho Principal</h2>
-            <div class="col-12">
-                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                
-                    <li class="nav-item"><a class="nav-link" href="/admin">Rancho principal</a></li>
+    <section class="home-section pt-4 mt-4">
+        <div class="container mt-4">
 
-                    <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-    
+            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
+                    <ul class="dropdown-menu">
+
                     <% ranches.forEach(ranch => { %>
-                    
-                    <li class="nav-item"><a class="nav-link" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
-                    
-                    <% }); %>
-                </ul>
-                <div class="col-12">
-                    <table id="inventoryTable" data-column-orderable="1, 0, 1, 1, 1, 1, 1, 0" class="w-100 data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Rol</th>
-                                <th scope="col">Rancho</th>
-                                <th scope="col">Ubicacion</th>
-                                <th colspan="2">Acciones</th>  
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% usuarios.forEach(usuario => { %>
-                                <tr id="id-<%= usuario._id%>">
-                                    <td><%= usuario.name %> </td>
-                                    <td><%= usuario.lastname %> </td>
-                                    <td><%= usuario.username %> </td>
-                                    <td><%= usuario.email %> </td>
-                                    <td><%= usuario.role %> </td>
-                                    <td><%= usuario.ranch %> </td>
-                                    <% if(usuario.results == ''){ %> 
-                                        <td>No existe</td>
-                                    <% } else {%> 
-                                    <td><%= usuario.results[0].location %> </td>
-                                    <% } %> 
-                                    <td>
-                                        <a href="edituser/<%= usuario._id%>" >EDITAR</a>
-                                        <input type="hidden" name="_method" value="delete">
-                                        
-                                        <form action="deleteuser/<%= usuario._id%>?_method=delete" method="post">
-                                        <button type="submit">ELIMINAR</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 
+                    <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%= ranch.ranch_name %></a></li>
+
+                    <% }); %>
+
+                    </ul>
+                </li>
+            </ul>
+    
+                    <div class="container-fluid pt-4 mt-4">
+                        <div class="subcontenedor">
+                            <div class="bloque activo">
+                            <div class="justify-content-center row">
+                                
+                                <h2>Usuarios</h2>
+                                <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-lg table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Rol</th>
+                                            <th scope="col">Rancho</th>
+                                            <th scope="col">Ubicacion</th>
+                                            <th colspan="2">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% usuarios.forEach(usuario => { %>
+                                        <tr>
+                                            <td><%= usuario.name %> </td>
+                                            <td><%= usuario.lastname %> </td>
+                                            <td><%= usuario.username %> </td>
+                                            <td><%= usuario.email %> </td>
+                                            <td><%= usuario.role %> </td>
+                                            <td><%= usuario.ranch %> </td>
+                                            <% if(usuario.results == ''){ %> 
+                                                <td>No existe</td>
+                                            <% } else {%> 
+                                            <td><%= usuario.results[0].location %> </td>
+                                            <% } %> 
+                                            <td>
+                                                <a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/edituser/<%= usuario._id%>"><i class='bx bxs-edit' ></i>Editar</a>
+                                                <input type="hidden" name="_method" value="delete">
+                                            </td>
+                                            <td>
+                                                <form action="deleteuser/<%= usuario._id%>?_method=delete" method="post">
+                                                    <button type="submit" class="btn btn-outline-danger my-2 my-sm-0"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                    
+                                    </tbody>
+                                    <caption class="pl-2">Lista de usuarios</caption>
+                                </table>
+                            </div>
+                            </div>
+                        </div>        
+                    </div>
+        </div>
+    </section>
+</body>
 <%- include('../includes/scripts.ejs') %>
 <%- include('../includes/footer.ejs') %>
-<script src="/js/datatables.js"></script>

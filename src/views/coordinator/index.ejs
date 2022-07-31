@@ -1,6 +1,14 @@
+<%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
+<%- include('../includes/alerts.ejs') %>
 
 <body>
+
+<section class="home-section pt-4 mt-4">
+    <h1>Inicio Coordinador</h1>
+    <h3 class="mx-auto">Stock disponible para pedidos</h3>
+
+    <div class="container mt-4">
     <button id="btn-modal-confirm" type="button" class="d-none" data-bs-toggle="modal"
         data-bs-target="#modal-confirm" hidden></button>
     <!-- Modal Register -->
@@ -120,20 +128,10 @@
         </div>
     </div> -->
     
-    <div class="container-fluid">
-        <div class="row">
-            <h1>Inicio Coordinador</h1>
-        </div>
-        
-        <div class="row">
-            <h3 class="mx-auto">Stock disponible para pedidos</h3>
-        </div>
-    </div>
-
     <div class="content-fluid">
         <div class="row w-xl-60 w-md-75 w-80 mx-auto">
-            <table id="inventoryTable" data-column-orderable="1, 0, 1, 0, 0" class="w-100 data-table">
-                <thead>
+            <table id="inventoryTable" data-column-orderable="1, 0, 1, 0, 0" class="w-100 data-table table table-lg table-striped">
+                <thead class="thead-dark">
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
@@ -176,8 +174,8 @@
                                     </li>
                                 </ul>
                             </div> -->
-                            <button id="orderItem" class="btn btn-outline-primary" type="button">
-                                Pedido
+                            <button id="orderItem" class="btn btn-outline-dark" type="button">
+                                <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                             </button>
                         </td>
                     </tr>
@@ -194,10 +192,11 @@
         </div>
     </div>
 
+
+</div>
+</section> 
+
 </body>
 
 <%- include('../includes/scripts.ejs') %>
-
-<script src="/js/datatables.js"></script>
-
 <%- include('../includes/footer.ejs') %>

@@ -182,3 +182,8 @@ i.fa-solid {
 .dropdown-menu.show {
     animation: appearMenu 0.3s;
 }
+
+/*color hover dark tablas*/
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: rgba(27, 27, 27, 0.115);
+}

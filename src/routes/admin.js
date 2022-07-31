@@ -47,10 +47,68 @@ router.get('/admin', async(req, res) => {
 
 // Route for edit users
 router.get('/admin/edituser/:id', async(req, res)=>{
+    const ranches = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
+    const usuarios = await User.aggregate([
+        {
+            '$lookup': {
+                'from': 'ranches',
+                'localField': 'ranch',
+                'foreignField': 'ranch_name',
+                'as': 'results'
+            }
+        }
+    ]);
+
+    const stockPrin = await Stock.aggregate([
+        {
+          '$match': {
+            'ranch_owner': 'Rancho Principal'
+          }
+        }
+      ]);
+    //console.log(JSON.stringify(usuarios));
+    //console.log(usuarios);
+    console.log(stockPrin);
 
     const edit = await User.findById(req.params.id);
     console.log(edit);
-    res.render('admin/edituser' , {doc_title: 'Administrador', edit});
+    res.render('admin/edituser' , {
+        doc_title: 'Administrador', 
+        edit,
+        usuarios,
+        ranches,
+        stockPrin
+    });
+
+});
+
+//Ruta vista Home Grafias estadisticas
+router.get('/admin/HomeGraphics', async(req, res)=>{
+    res.render('admin/HomeGraphics' , {
+        doc_title: 'Administrador'
+    });
+
+});
+
+//Ruta vista info del usuario
+router.get('/admin/infouser', async(req, res)=>{
+    res.render('admin/infouser' , {
+        doc_title: 'Administrador'
+    });
+
+});
+
+//Ruta vista Historial
+router.get('/admin/historic', async(req, res)=>{
+    res.render('admin/historic' , {
+        doc_title: 'Administrador'
+    });
 
 });
 

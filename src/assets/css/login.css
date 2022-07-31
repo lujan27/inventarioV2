@@ -11,17 +11,18 @@ body{
 
 .container{
     display: flex;
-    width: 1920%;
-    height: 1080px;
+    width: 100vw;
+    height: 100vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10rem;
+    grid-gap: 12rem;
     padding: 0 2rem;
+    transition: 0.8s;
 }
 
 .circleOne{
-    margin-top: -500px;
-    margin-left: 960px;
+    margin-top: -600px;
+    margin-left: 1080px;
     width: 1000px;
     height: 1000px;
 
@@ -45,8 +46,8 @@ body{
     /*margin-top: -400px;
     margin-left: 1100px;*/
 
-    margin-top: -500px;
-    margin-left: 960px;
+    margin-top: -600px;
+    margin-left: 1080px;
     width: 1000px;
     height: 1000px;
     /*width: 1100px;
@@ -102,11 +103,11 @@ body{
 }
 
 .img img{
-    width: 600px;
+    width: 90%;
 }
 
 .form{
-    width: 460px;
+    width: 100%;
 }
 
 .login-container{
@@ -115,9 +116,8 @@ body{
     text-align: center;
 }
 
-
 .avatar{
-    width: 150px;
+    width: 100px;
 
     /*animation-name: crecio;
     animation-duration: 1.3s;
@@ -144,7 +144,6 @@ form h2{
     animation-duration: 1.5s;
     animation-iteration-count: ease-in-out;
 }
-
 
 .input-div{
     position: relative;
@@ -257,7 +256,7 @@ a:hover{
 .btn{
     display: block;
     width: 100%;
-    height: 80px;
+    height: 65px;
     border-radius: 55px;
     margin: 1rem 0;
     font-size: 1.7rem;
@@ -278,13 +277,15 @@ a:hover{
     transition: .5s;
 }
 
-@media screen and (max-width: 1450px){
+/*Responsive*/
+@media (max-width: 1440px){
     .img img{
         width: 250px;
     }
 
     .container{
         grid-template-columns: 1fr;
+        transition: 0.8s;
     }
 
     .wave{
@@ -310,29 +311,65 @@ a:hover{
     }
 }
 
-@media screen and (max-width: 1280px){
+@media (max-width: 1440px){
+    .img img{
+        width: 550px;
+    }
+
+    .container{
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+        padding-left: 50px;
+        transition: 0.8s;
+    }
+
+    .wave{
+        height: 70%;
+    }
+
+    .circleOne{
+        margin-top: -300px;
+        margin-left: 900px;
+        width: 700px;
+        height: 700px;
+    }
+
+    .circleTwo{
+        margin-top: -300px;
+        margin-left: 900px;
+        width: 700px;
+        height: 700px;
+    }
+
+    .login-container{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px){
     .img{
         display: none;
     }
 
     .container{
         grid-template-columns: 1fr;
+        transition: 0.8s;
     }
 
     .wave{
-        height: 77%;
+        height: 55%;
     }
 
     .circleOne{
         margin-top: -300px;
-        margin-left: 600px;
+        margin-left: 500px;
         width: 800px;
         height: 800px;
     }
 
     .circleTwo{
         margin-top: -300px;
-        margin-left: 600px;
+        margin-left: 500px;
         width: 800px;
         height: 800px;
     }
@@ -342,13 +379,14 @@ a:hover{
     }
 }
 
-@media screen and (max-width: 900px){
+@media (max-width: 900px){
     .img{
         display: none;
     }
 
     .container{
         grid-template-columns: 1fr;
+        transition: 0.8s;
     }
 
     .wave{
@@ -374,13 +412,14 @@ a:hover{
     }
 }
 
-@media screen and (max-width: 800px){
+@media (max-width: 800px){
     .img{
         display: none;
     }
 
     .container{
         grid-template-columns: 1fr;
+        transition: 0.8s;
     }
 
     .wave{
@@ -397,6 +436,35 @@ a:hover{
     .circleTwo{
         margin-top: -300px;
         margin-left: 300px;
+        width: 700px;
+        height: 700px;
+    }
+
+    .login-container{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px){
+    .container{
+        grid-template-columns: 1fr;
+        transition: 0.8s;
+    }
+
+    .wave{
+        height: 50%;
+    }
+
+    .circleOne{
+        margin-top: -300px;
+        margin-left: 350px;
+        width: 700px;
+        height: 700px;
+    }
+
+    .circleTwo{
+        margin-top: -300px;
+        margin-left: 350px;
         width: 700px;
         height: 700px;
     }
