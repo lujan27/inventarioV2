@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/users/userModel');
 const Ranch = require('../models/ranchModel');
 const Stock = require('../models/stockModel');
+const encryption = require('../controllers/encryptionController');
 
 // Main view of admin
 router.get('/admin', async(req, res) => {
@@ -114,8 +115,8 @@ router.get('/admin/historic', async(req, res)=>{
 
 // Route type PUT for edit users
 router.put('/admin/edituser/:id', async(req, res)=>{
-
-    const {name, lastname, username, email, password, role, ranch} = req.body;
+    var {name, lastname, username, email, password, role, ranch} = req.body;
+    password = await encryption.encryptPassword(password);
     await User.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
     //console.log('La variable tiene', req.params.id, {name, lastname, username, email, password, role, ranch});
     req.flash('success_msg', 'Usuario Actualizado');
