@@ -55,19 +55,44 @@
                                                 <td>No existe</td>
                                             <% } else {%> 
                                             <td><%= usuario.results[0].location %> </td>
-                                            <% } %> 
+                                            <% } %>
                                             <td>
-                                                <a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/edituser/<%= usuario._id%>"><i class='bx bxs-edit' ></i>Editar</a>
-                                                <input type="hidden" name="_method" value="delete">
-                                            </td>
-                                            <td>
-                                                <form action="deleteuser/<%= usuario._id%>?_method=delete" method="post">
-                                                    <button type="submit" class="btn btn-outline-danger my-2 my-sm-0"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
-                                                </form>
-                                            </td>
+                                                <div class="btn-group dropstart">
+                                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle opts"
+                                                        data-bs-toggle="dropdown" aria-expanded="false" >
+                                                        <i class="fa-solid fa-list"></i>
+                                                    </button>
+                                                    
+                                                    <ul class="dropdown-menu">
+                                                        <center>
+                                                        <li>
+                                                            <a type="button" style="text-align:center" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
+                                                            <input type="hidden" name="_method" value="delete">
+                                                        </li>
+                                                        </center>
+                                                        
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <center>
+                                                        <li>
+                                                            <a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/edituser/<%= usuario._id%>"><i class='bx bxs-edit' ></i>Editar</a>
+                                                            <input type="hidden" name="_method" value="delete">
+                                                        </li>
+                                                        </center>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <center>
+                                                        <li>
+                                                            <form action="deleteuser/<%= usuario._id%>?_method=delete" method="post">
+                                                                <button type="submit" class="btn btn-outline-danger my-2 my-sm-0"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
+                                                            </form>
+                                                        </li>
+                                                        </center>
+                                                    </ul>
+                                                
+                                                </div>
+                                        </td>
                                         </tr>
                                         <% }); %>
-                                    
+                                   
                                     </tbody>
                                     <caption class="pl-2">Lista de usuarios</caption>
                                 </table>
