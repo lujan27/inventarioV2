@@ -187,3 +187,8 @@ i.fa-solid {
 .table tbody tr:hover td, .table tbody tr:hover th {
     background-color: rgba(27, 27, 27, 0.115);
 }
+
+/*Size Image*/
+.img-profile-size{
+	width: 80%;
+}

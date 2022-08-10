@@ -1,28 +1,67 @@
-<%- include('../includes/header') %> 
-<%- include('../includes/alerts.ejs') %>
+<%- include('../includes/sidebar.ejs') %>
+<%- include('../includes/header.ejs') %>
+
 
 <body>
-    <div class="card">
-        <div class="card-header text-center">
-            NUEVO RANCHO
+
+<section class="home-section pt-4 mt-4">
+    <div class="container mt-2">
+        <%- include('../includes/alerts.ejs') %>
+
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
+                <ul class="dropdown-menu">
+
+                <% RanchsBD.forEach(rancho => { %>
+
+                <li><a class="dropdown-item" href="/admin/ranchos/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
+
+                <% }); %>
+
+                </ul>
+            </li>
+
+        </ul>
+
+        <div class="row pt-4 mt-4">
+            <div class="col-md-8 mx-auto pb-4 mb-4">
+
+                <a href="/admin/allusers" class="btn btn-outline-dark btn-sm mb-4">
+                    <i class='bx bx-arrow-back pr-1'></i>Regresar
+                </a>
+
+                <div class="card">
+                    <div class="card-header text-center">
+                        NUEVO RANCHO
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin/addranch" method="POST">
+                            <div class="form-group">
+                                <label>Nombre del rancho: </label>
+                                <input type="text" class="form-control" name="ranch_name" placeholder="Nombre del rancho...." autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label>Ubicacion: </label>
+                                <input type="text" class="form-control" name="location" placeholder="Ubicacion....">
+                            </div>
+                            
+                            <div class="form-group">
+                                <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+            </div>
         </div>
-        <div class="card-body">
-            <form action="/admin/addranch" method="POST">
-                <div class="form-group">
-                    <label>Nombre del rancho: </label>
-                    <input type="text" class="form-control" name="ranch_name" placeholder="Nombre del rancho...." autofocus>
-                </div>
-                <div class="form-group">
-                    <label>Ubicacion: </label>
-                    <input type="text" class="form-control" name="location" placeholder="Ubicacion....">
-                </div>
-                
-                <div class="form-group">
-                    <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
-                </div>
-            </form>
-        </div>
+
     </div>
+</section>
+ 
 </body>
 
 <%- include('../includes/scripts') %>
+<%- include('../includes/footer.ejs') %>

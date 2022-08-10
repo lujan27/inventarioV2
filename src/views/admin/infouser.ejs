@@ -1,10 +1,69 @@
 <%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
-<%- include('../includes/alerts.ejs') %>
 
 
     <section class="home-section pt-4 mt-4">
-        <h1 class="">Información del usuario</h1>
+        <%- include('../includes/alerts.ejs') %>
+
+        <div class="container">
+
+            <ul class="nav nav-tabs mb-4 pb-4" id="myTab" role="tablist">
+                <li class="nav-item"><a class="nav-link" href="/infouser">Información</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">...</a></li>
+            </ul>
+
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <img src="../img/profile.jpg" class="img-fluid rounded-circle float-start img-profile-size mx-auto d-block">
+                    </div>
+                    <div class="col">
+                        <div class="col-16">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="mt-4">Nombre:</label>
+                                    <h4>Nombre</h4>   
+                                </div>
+                                <div class="col-6">
+                                    <label class="mt-4">Apellido:</label>
+                                    <h4>Apellido</h4>   
+                                </div>
+                            </div>
+        
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="mt-4">Rol:</label>
+                                    <h4>Rol</h4>   
+                                </div>
+                                <div class="col-6">
+                                    <label class="mt-4">Rancho:</label>
+                                    <h4>Rancho</h4>   
+                                </div>
+                            </div>
+        
+                            <div class="row">
+                                <div class="col">
+                                    <label class="mt-4">Nombre de usuario:</label>
+                                    <h4>Usuario</h4>   
+                                </div>
+                            </div>
+        
+                            <div class="row">
+                                <div class="col-8">
+                                    <label class="mt-4">Correo electronico:</label>
+                                    <h4>Correo</h4>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<img src="../img/profile.jpg" class="img-fluid rounded-circle float-start img-profile-size mx-auto d-block">-->
+
+                </div>
+            </div>
+
+            
+        </div>
+
     </section>    
 
 <%- include('../includes/scripts.ejs') %>

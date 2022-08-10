@@ -45,7 +45,6 @@ router.get('/admin', async(req, res) => {
     });
 });
 
-
 // Route for edit users
 router.get('/admin/edituser/:id', async(req, res)=>{
     const ranches = await Ranch.aggregate([
@@ -90,7 +89,7 @@ router.get('/admin/edituser/:id', async(req, res)=>{
 });
 
 //Ruta vista Home Grafias estadisticas
-router.get('/admin/HomeGraphics', async(req, res)=>{
+router.get('/HomeGraphics', async(req, res)=>{
     res.render('admin/HomeGraphics' , {
         doc_title: 'Administrador'
     });
@@ -98,7 +97,7 @@ router.get('/admin/HomeGraphics', async(req, res)=>{
 });
 
 //Ruta vista info del usuario
-router.get('/admin/infouser', async(req, res)=>{
+router.get('/infouser', async(req, res)=>{
     res.render('admin/infouser' , {
         doc_title: 'Administrador'
     });
@@ -221,9 +220,18 @@ router.post('/admin/adduser', async (req, res) => {
 });
 
 // View add new ranch
-router.get('/admin/addranch', (req, res) => {
+router.get('/admin/addranch', async (req, res) => {
+    const RanchsBD = await Ranch.aggregate([
+        {
+            '$match': {
+                ranch_name: {$ne: 'Rancho Principal'}
+            }
+        }
+    ]);
+
     res.render('admin/addranch', {
-        doc_title: 'Añadir Rancho'
+        doc_title: 'Añadir Rancho',
+        RanchsBD
     });
 });
 

@@ -1,53 +1,64 @@
-<%- include('../includes/header.ejs') %>
+    <%- include('../includes/sidebar.ejs') %>
+    <%- include('../includes/header.ejs') %>
 
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <h1>Inicio Usuario</h1>
-        </div>
-    </div>
+    <body>
 
-    <div class="content-fluid">
-        <h1>Inventario en: <%= user.ranch %> </h1>
-        <div class="row w-xl-60 w-md-75 w-80 mx-auto">
-            <table id="inventoryTable" data-column-orderable="1, 0, 1, 0, 0" class="w-100 data-table">
-                <thead>
-                    <tr>
-                        <th>Materia prima</th>
-                        <th>Descripcion</th>
-                        <th>Cantidad</th>
-                        <th>Unidad de medida</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% if(stockUser != null) { %>
-                    <% stockUser.forEach(data => { %> 
-                    <tr data-id="<%= data._id %>">
-                        <td><%= data.name_materiaPrima %></td>
-                        <td><%= data.description_materiaPrima %></td>
-                        <td><%= data.quantity %></td>
-                        <td><%= data.unidad_medida %></td>
-                        <td>
-                            <button id="orderItem" class="btn btn-outline-primary" type="button">
-                                Pedido
-                            </button>
-                        </td>
-                    </tr>
-                    <% }) %>
-                <% } else { %>
-                    <tr>
-                        <td colspan="5">
-                            No existe información
-                        </td>
-                    </tr>
-                <% } %>
-                </tbody>
-            </table>
+    <section class="home-section pt-4 mt-4">
+        <h1>Inicio Usuario</h1>
+        <div class="container mt-4">
+        <%- include('../includes/alerts.ejs') %>
+
+
+            <div class="container-fluid pt-4 mt-4">
+                <div class="subcontenedor">
+                    <div class="bloque activo">
+                        <div class="justify-content-center row">
+            
+                            <h2>Inventario en: </h2>
+                            <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Materia prima</th>
+                                        <th>Descripcion</th>
+                                        <th>Cantidad</th>
+                                        <th>Unidad de medida</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <% if(stockPrin != null) { %>
+                                    <% stockPrin.forEach(data => { %> 
+                                    <tr data-id="<%= data._id %>">
+                                        <td><%= data.name_materiaPrima %></td>
+                                        <td><%= data.description_materiaPrima %></td>
+                                        <td><%= data.quantity %></td>
+                                        <td><%= data.unidad_medida %></td>
+                                        <td>
+                                            <button id="orderItem" class="btn btn-outline-dark" type="button">
+                                                <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5">
+                                            No existe información
+                                        </td>
+                                    </tr>
+                                <% } %>
+                                </tbody>
+                                <caption class="pl-2">Inventario Principal</caption>
+                            </table>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</body>
+    </section>
+
+    </body>
 
 <%- include('../includes/scripts.ejs') %>
-
-<script src="/js/datatables.js"></script>
