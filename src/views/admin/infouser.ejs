@@ -2,68 +2,91 @@
 <%- include('../includes/header.ejs') %>
 
 
-    <section class="home-section pt-4 mt-4">
+    <section class="home-section">
+                    <% if(user){%>
+        <div class="container-fluid sticky-top mb-3 shadow-lg bg-body rounded">
+            <div class="row bg-light py-2">
+                <div class="col-xl-4">
+                    <b> Bienvenido a tu inventario <u><%= user.role%></u> | </b><i><%= user.username%></i>
+                </div>
+            </div>
+            <div class="row bg-dark py-1">
+                <div class="col-xl-1">
+                </div>
+            </div>
+        </div>
         <%- include('../includes/alerts.ejs') %>
 
         <div class="container">
+            <ul class="nav nav-tabs mb-4 pb-2" id="myTab" role="tablist">
+                <li class="nav-item"><a class="nav-link" href="/infouser">Información</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">...</a></li>
+            </ul>
 
-            
-
-            <div class="col">
-                <div class="row">
-                    <% if(user){%>
-                    <div class="col">
-                        <img src="../img/profile.jpg" class="img-fluid rounded-circle float-start img-profile-size mx-auto d-block">
+            <div class="row align-item-center">
+                    <div class="col pt-4">
+                        <img src="../img/profile.jpg" class="image-fluid rounded-circle d-block mx-auto btn"><!--img-profile-size-->
                     </div>
-                    <div class="col">
-                        <div class="col-16">
-                            
-                            <div class="row">
-                                <div class="col-6">
-                                    <label class="mt-4">Nombre:</label>
-                                    <h4 ><%= user.name%></h4>   
+
+                    <div class="col d-block mx-auto mb-4">
+                        <div class="row align-item-center">
+                            <div class="col-16">
+                                <div class="row align-item-center">
+                                    <div class="col-6">
+                                        <label class="mt-4">Nombre:</label>
+                                        <input class="form-control" id="disabledInput" type="text" value="<%= user.name%>" disabled>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-4">Apellido:</label>
+                                        <input class="form-control" id="disabledInput" type="text" value="<%= user.lastname%>" disabled>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <label class="mt-4">Apellido:</label>
-                                    <h4><%= user.lastname%></h4>   
+            
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="mt-4">Rol:</label>
+                                        <input class="form-control" id="disabledInput" type="text" value="<%= user.role%>" disabled>   
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="mt-4">Rancho:</label>
+                                        <input class="form-control" id="disabledInput" type="text" value="<%= user.ranch%>" disabled>
+                                    </div>
                                 </div>
-                            </div>
-        
-                            <div class="row">
-                                <div class="col-6">
-                                    <label class="mt-4">Rol:</label>
-                                    <h4><%= user.role%></h4>   
+            
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="mt-4">Nombre de usuario:</label>
+                                        <input class="form-control" id="disabledInput" type="text" value="<%= user.username%>" disabled>   
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <label class="mt-4">Rancho:</label>
-                                    <h4><%= user.ranch%></h4>   
+            
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="mt-4">Correo electronico:</label>
+                                        <input class="form-control" id="disabledInput" type="email" value="<%= user.email%>" disabled>      
+                                    </div>
                                 </div>
-                            </div>
-        
-                            <div class="row">
+    
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="mt-4">Contraseña:</label>
+                                        <input class="form-control" id="disabledInput" type="password" value="contraseña" disabled>      
+                                    </div>
+                                </div>
+    
                                 <div class="col">
-                                    <label class="mt-4">Nombre de usuario:</label>
-                                    <h4><%= user.username%></h4>   
+                                    <div class="row pt-4">
+                                        <button type="button" class="btn btn-dark"><i class='bx bxs-edit'></i> Editar</button>
+                                    </div>
                                 </div>
+                                
                             </div>
-        
-                            <div class="row">
-                                <div class="col-8">
-                                    <label class="mt-4">Correo electronico:</label>
-                                    <h4><%= user.email%></h4>
-                                </div>
-                            </div>
-                            
                         </div>
                     </div>
                     <!--<img src="../img/profile.jpg" class="img-fluid rounded-circle float-start img-profile-size mx-auto d-block">-->
-                     <% }; %>
-                </div>
+                    <% }; %>
             </div>
-
-            
         </div>
-        
     </section>    
 
 <%- include('../includes/scripts.ejs') %>
