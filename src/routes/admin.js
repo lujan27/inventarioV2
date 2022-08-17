@@ -108,7 +108,7 @@ router.get('/HomeGraphics', async(req, res)=>{
 });
 
 //Ruta vista info del usuario
-router.get('/admin/infouser/:id', async(req, res)=>{
+router.get('/infouser/:id', async(req, res)=>{
         const user = await User.findById(req.params.id);
         console.log(user);
         res.render('admin/infouser' , {
