@@ -6,7 +6,6 @@
     </div>
 
     <ul class="nav-list">
-
                 <li class="side">
                     <a href="/HomeGraphics">
                         <i class='bx bxs-home'></i>
@@ -51,7 +50,8 @@
                 </li>
 
         <li class="profile">
-            <a  href="/infouser">
+            <% if(user){%>
+            <a href="/infouser/<%= user._id%>">
                 <div class="profile-details">
                 <img src="img/profile.jpg" alt="profileImg">
                 <div class="name_job">
@@ -66,6 +66,7 @@
             </a>
             <span class="tooltip">Salir</span>
         </li>
+        <% }; %>
     </ul>
 
 </div>

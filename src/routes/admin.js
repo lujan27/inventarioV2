@@ -47,6 +47,17 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
     });
 });
 
+// Route for info users
+// router.get('/admin/infouser/:id', async(req, res)=>{
+//     const user = await User.findById(req.params._id);
+//     console.log(user);
+//     res.render('admin/infouser' , {
+//         doc_title: 'Administrador', 
+//         edit
+//     });
+
+// });
+
 // Route for edit users
 router.get('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     const ranches = await Ranch.aggregate([
@@ -99,13 +110,16 @@ router.get('/HomeGraphics', async(req, res)=>{
 });
 
 //Ruta vista info del usuario
-router.get('/infouser', async(req, res)=>{
-    res.render('admin/infouser' , {
-        doc_title: 'Administrador'
+router.get('/infouser/:id', async(req, res)=>{
+        const user = await User.findById(req.params.id);
+        console.log(user);
+        res.render('admin/infouser' , {
+            doc_title: 'Administrador', 
+            user
+        });
+    
+    
     });
-
-});
-
 //Ruta vista Historial
 router.get('/admin/historic', async(req, res)=>{
     res.render('admin/historic' , {

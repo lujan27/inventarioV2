@@ -271,7 +271,7 @@ ul {
 }
 
 .home-section{
-  position:relative;/*absolute*/
+  position: fixed;/*relative, absolute*/
   height: 100%;
   top: 0;
   bottom: 0;
@@ -279,11 +279,15 @@ ul {
   width: calc(100% - 78px);
   transition: all 0.5s ease;
   z-index: 1;
+  overflow:auto;
+  overflow-x:hidden;
 }
 .sidebar.open ~ .home-section{
   left: 250px;
   width: calc(100% - 250px);
   height: 100%;
+  overflow:auto;
+  overflow-x:hidden;
 }
 
 .home-section .text{
