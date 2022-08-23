@@ -1,0 +1,53 @@
+<%- include('../includes/sidebar.ejs') %>
+<%- include('../includes/header.ejs') %>
+
+
+<body>
+
+<section class="home-section pt-4 mt-4">
+    <div class="container mt-2">
+        <%- include('../includes/alerts.ejs') %>
+
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
+                <ul class="dropdown-menu">
+
+                <% RanchsBD.forEach(rancho => { %>
+
+                <li><a class="dropdown-item" href="/admin/ranchos/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
+
+                <% }); %>
+
+                </ul>
+            </li>
+
+        </ul>
+
+        <div class="text-center">
+            <table id="inventoryTable" data-column-orderable="1, 1, 0" class="w-100 data-table table table-lg table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% catalogue.forEach(prod => { %> 
+                    <tr>
+                        <td><%= prod.nameProduct %></td>
+                        <td><%= prod.descriptionProduct%></td>
+                        <td><button class="btn-success"> + </button></td>
+                    </tr>
+                    <% }); %> 
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+</body>
+<%- include('../includes/scripts.ejs') %>
+<%- include('../includes/footer.ejs') %>

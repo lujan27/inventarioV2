@@ -3,10 +3,12 @@ const router = express.Router();
 const User = require('../models/users/userModel');
 const Ranch = require('../models/ranchModel');
 const Stock = require('../models/stockModel');
+const MainCat = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
+const {isAuthAdmin} = require('../config/sessionAdmin');
 
 // Main view of admin
-router.get('/admin', async(req, res) => {
+router.get('/admin', isAuthAdmin, async(req, res) => {
     const success_msg = req.flash('success_msg');
     const error = req.flash('error');
     const ranches = await Ranch.aggregate([
@@ -46,7 +48,7 @@ router.get('/admin', async(req, res) => {
 });
 
 // Route for edit users
-router.get('/admin/edituser/:id', async(req, res)=>{
+router.get('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -113,7 +115,7 @@ router.get('/admin/historic', async(req, res)=>{
 });
 
 // Route type PUT for edit users
-router.put('/admin/edituser/:id', async(req, res)=>{
+router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     var {name, lastname, username, email, password, role, ranch} = req.body;
     password = await encryption.encryptPassword(password);
     await User.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
@@ -123,7 +125,7 @@ router.put('/admin/edituser/:id', async(req, res)=>{
 });
 
 // Route for delete users
-router.delete('/admin/deleteuser/:id', async(req, res)=>{
+router.delete('/admin/deleteuser/:id', isAuthAdmin, async(req, res)=>{
 
     await User.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Usuario Eliminado');
@@ -131,7 +133,7 @@ router.delete('/admin/deleteuser/:id', async(req, res)=>{
 });
 
 // Route for view of each ranch by id
-router.get('/admin/ranchos/:id', async(req, res) => {
+router.get('/admin/ranchos/:id', isAuthAdmin, async(req, res) => {
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -159,7 +161,7 @@ router.get('/admin/ranchos/:id', async(req, res) => {
 });
 
 // View add user
-router.get('/admin/adduser', async (req, res) => {
+router.get('/admin/adduser', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.aggregate([
         {
             '$match': {
@@ -174,7 +176,7 @@ router.get('/admin/adduser', async (req, res) => {
 });
 
 // Post add user
-router.post('/admin/adduser', async (req, res) => {
+router.post('/admin/adduser', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const {name, lastname, username, email, password, role, ranch} = req.body;
     
@@ -220,7 +222,7 @@ router.post('/admin/adduser', async (req, res) => {
 });
 
 // View add new ranch
-router.get('/admin/addranch', async (req, res) => {
+router.get('/admin/addranch', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.aggregate([
         {
             '$match': {
@@ -236,7 +238,7 @@ router.get('/admin/addranch', async (req, res) => {
 });
 
 // Route for add a new ranch
-router.post('/admin/addranch', async (req, res) => {
+router.post('/admin/addranch', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const { ranch_name, location } = req.body
     if(ranch_name.length <= 3){
@@ -263,7 +265,7 @@ router.post('/admin/addranch', async (req, res) => {
 });
 
 // View for all users on the system
-router.get('/admin/allusers', async (req, res) => {
+router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -290,7 +292,8 @@ router.get('/admin/allusers', async (req, res) => {
     });
 });
 
-router.get('/admin/addstock', async (req, res) => {
+// view add stock
+router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.find();
 
     res.render('admin/addstock', {
@@ -299,7 +302,8 @@ router.get('/admin/addstock', async (req, res) => {
     });
 });
 
-router.post('/admin/addstock', async (req, res) => {
+// post add stock
+router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const {ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida} = req.body
 
@@ -307,6 +311,47 @@ router.post('/admin/addstock', async (req, res) => {
     await newStock.save();
     req.flash('success_msg', 'Stock registrado!');
     res.redirect('/admin');
+});
+
+// view main catalogue
+router.get('/admin/maincatalogue', isAuthAdmin, async (req, res) => {
+    const RanchsBD = await Ranch.find();
+
+    res.render('admin/maincatalogue', {
+        doc_title: 'Main catalogue',
+        RanchsBD
+    });
+})
+
+// post main catalogue
+router.post('/admin/addmaincatalogue', isAuthAdmin, async (req, res) => {
+    //console.log(req.body);
+    const {nameProduct, descriptionProduct} = req.body;
+
+    const catalogue = await MainCat.findOne({nameProduct: nameProduct});
+
+    if(catalogue){
+        req.flash('danger_msg', 'El producto ya existe');
+        res.redirect('/admin/maincatalogue');
+    } else {
+        const newCatalogue = new MainCat({nameProduct, descriptionProduct});
+        await newCatalogue.save();
+        req.flash('success_msg', 'Producto agregado al catalogo');
+        res.redirect('/admin');
+    }
+    
+});
+
+// view orders
+router.get('/admin/orders', async (req, res) => {
+    const RanchsBD = await Ranch.find();
+    const catalogue = await MainCat.find();
+
+    res.render('admin/adminOrder', {
+        doc_title: 'Pedidos',
+        RanchsBD,
+        catalogue
+    });
 });
 
 module.exports = router;

@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/users/userModel');
 const Ranch = require('../models/ranchModel');
 const Stock = require('../models/stockModel');
+const { isAuthUser } = require('../config/sessionUser');
 
 router.get('/user', async (req, res) => {
     const ranches = await Ranch.aggregate([
