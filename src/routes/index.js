@@ -3,6 +3,13 @@ const router = express.Router();
 const passport = require('passport');
 const flash = require('connect-flash/lib/flash');
 
+//Cerrar sesión
+router.get('/admin/Cerrar', async (req, res)=>{
+    req.session.destroy();
+    res.redirect('/');
+    
+});
+
 router.get('/', (req, res) => {
     const success_msg = req.flash('success_msg')[0];
     res.render('index', {

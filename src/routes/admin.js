@@ -278,6 +278,8 @@ router.post('/admin/addranch', isAuthAdmin, async (req, res) => {
     
 });
 
+
+
 // View for all users on the system
 router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
     const ranches = await Ranch.aggregate([

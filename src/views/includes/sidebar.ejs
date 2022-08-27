@@ -50,23 +50,23 @@
                 </li>
 
         <li class="profile">
-            <% if(user){%>
             <a href="/infouser/<%= user._id%>">
                 <div class="profile-details">
                 <img src="img/profile.jpg" alt="profileImg">
-                <div class="name_job">
-                    <div class="name">Usuario</div>
-                    <!--<div class="job">Web designer</div>-->
-                </div>
+                <% if(user){%>
+                    <div class="name_job">
+                        <div class="name"><%= user.name%> <%= user.lastname%></div>
+                        <!--<div class="job">Web designer</div>-->
+                    </div>
+                    <% }; %>
                 </div>
             </a>
-            <a href="/Cerrar">
+            <a href="/admin/Cerrar">
                 <i class='bx bx-log-out' id="log_out" ></i>
                 <span class="link_out" id="log_out"></span>
             </a>
             <span class="tooltip">Salir</span>
         </li>
-        <% }; %>
     </ul>
 
 </div>
