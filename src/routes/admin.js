@@ -278,12 +278,7 @@ router.post('/admin/addranch', isAuthAdmin, async (req, res) => {
     
 });
 
-//Cerrar sesión
-router.get('/admin/Cerrar', async (req, res)=>{
-    req.session.destroy();
-    res.redirect('/');
-    
-});
+
 
 // View for all users on the system
 router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
