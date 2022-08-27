@@ -38,16 +38,67 @@
                 <tbody>
                     <% catalogue.forEach(prod => { %> 
                     <tr>
-                        <td><%= prod.nameProduct %></td>
-                        <td><%= prod.descriptionProduct%></td>
-                        <td><button class="btn-success"> + </button></td>
-                    </tr>
+                        <td id="productName"><%= prod.nameProduct %></td>
+                        <td id="productDescription"><%= prod.descriptionProduct%></td>
+                        <td><button id="btnSave" onclick="createOrder()" class="btn-success"> Agregar </button></td>
+                            
                     <% }); %> 
+                    </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="row">
+            <form action="">
+                <h3>Pedidos</h3>
+                <div id="formOrder" class="form-group">
+                    
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
     </section>
+    <script>
+        function createOrder(){
+            const formOrder = document.getElementById('formOrder'); //Obtienes el div del formulario
+
+            const product = document.getElementById('productName'); //Obtienes los valores de la tabla
+            
+            const labelProduct = document.createElement('label'); //Crea una etiqueta
+            labelProduct.textContent = 'Nombre: '; //Definimos el texto de la etiqueta
+            const inputProduct = document.createElement('input'); //Crea un input
+            inputProduct.name = 'nameProduct'; //Defines la propiedad name del elemento
+            inputProduct.value = product.textContent; //Defines la propiedad value del elementos
+
+            const labelQuant = document.createElement('label');
+            labelQuant.textContent = ' Cantidad: ';
+            const inputQuant = document.createElement('input');
+
+            const labelTxtA = document.createElement('label');
+            labelTxtA.textContent = ' Comentarios: ';
+            const txtAreaDes = document.createElement('textarea');
+
+            const hr = document.createElement('hr');//Crea un salto de linea
+
+            formOrder.appendChild(labelProduct);//Agrega el elemento creado dentro del div de form
+            formOrder.appendChild(inputProduct);
+
+            formOrder.appendChild(labelQuant);
+            formOrder.appendChild(inputQuant);
+
+            formOrder.appendChild(labelTxtA);
+            formOrder.appendChild(txtAreaDes);
+
+            formOrder.appendChild(hr);
+
+            console.log(inputProduct);
+            console.log(product);
+        }
+    </script>
 </body>
 <%- include('../includes/scripts.ejs') %>
 <%- include('../includes/footer.ejs') %>
