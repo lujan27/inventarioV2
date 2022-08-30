@@ -31,29 +31,32 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
-                        <th colspan="2">Acciones</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% catalogue.forEach(prod => { %> 
+                    <% catalogue.forEach((prod, i) => { %> 
                     <tr>
-                        <td id="productName"><%= prod.nameProduct %></td>
-                        <td id="productDescription"><%= prod.descriptionProduct%></td>
-                        <td><button id="btnSave" onclick="createOrder()" class="btn-success"> Agregar </button></td>
-                            
-                    <% }); %> 
+                        <td class="product-name" data-id="<%= i %>"><%= prod.nameProduct %></td>
+                        <td class="product-description"><%= prod.descriptionProduct%></td>
+                        <td><button class="btn btn-success btnOrder" data-id="<%= i %>">Agregar</button></td>
                     </tr>
+                    <% }); %>
                 </tbody>
             </table>
+        </div>
+
+        <div>
+
         </div>
 
         <div class="row">
             <form action="">
                 <h3>Pedidos</h3>
-                <div id="formOrder" class="form-group">
-                    
+                <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
                 </div>
+
                 <div class="form-group">
                     <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
                 </div>
@@ -62,43 +65,10 @@
         </div>
     </div>
     </section>
-    <script>
-        function createOrder(){
-            const formOrder = document.getElementById('formOrder'); //Obtienes el div del formulario
-
-            const product = document.getElementById('productName'); //Obtienes los valores de la tabla
-            
-            const labelProduct = document.createElement('label'); //Crea una etiqueta
-            labelProduct.textContent = 'Nombre: '; //Definimos el texto de la etiqueta
-            const inputProduct = document.createElement('input'); //Crea un input
-            inputProduct.name = 'nameProduct'; //Defines la propiedad name del elemento
-            inputProduct.value = product.textContent; //Defines la propiedad value del elementos
-
-            const labelQuant = document.createElement('label');
-            labelQuant.textContent = ' Cantidad: ';
-            const inputQuant = document.createElement('input');
-
-            const labelTxtA = document.createElement('label');
-            labelTxtA.textContent = ' Comentarios: ';
-            const txtAreaDes = document.createElement('textarea');
-
-            const hr = document.createElement('hr');//Crea un salto de linea
-
-            formOrder.appendChild(labelProduct);//Agrega el elemento creado dentro del div de form
-            formOrder.appendChild(inputProduct);
-
-            formOrder.appendChild(labelQuant);
-            formOrder.appendChild(inputQuant);
-
-            formOrder.appendChild(labelTxtA);
-            formOrder.appendChild(txtAreaDes);
-
-            formOrder.appendChild(hr);
-
-            console.log(inputProduct);
-            console.log(product);
-        }
-    </script>
 </body>
 <%- include('../includes/scripts.ejs') %>
+
+<!-- Se genero js en src/assets/js/admin/adminOrder.js -->
+<script src="/js/admin/adminOrder.js"></script>
+
 <%- include('../includes/footer.ejs') %>
