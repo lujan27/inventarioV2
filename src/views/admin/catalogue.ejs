@@ -8,9 +8,14 @@
     <div class="container mt-2">
         <%- include('../includes/alerts.ejs') %>
 
+        <h2>Catalogo de productos</h2>
+        <% switch(user.role){
+            case 'administrador': %> 
+
         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
             <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+            <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
                 <ul class="dropdown-menu">
@@ -19,13 +24,36 @@
 
                 <li><a class="dropdown-item" href="/admin/ranchos/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
 
-                <% }); %>
+                <% }) %>
 
                 </ul>
             </li>
 
         </ul>
+        <% break
 
+        case 'coordinador': %>
+            <!-- Añadir las diferentes rutas para el coordinador como usuarios, inventario etc. -->
+        <% break
+
+        case 'usuario': %>
+            <!-- Hacer lo mismo que con el coordinador -->
+        <%break
+         } %> 
+
+        <% if (user.role == 'administrador') { %> 
+        <div class="container-fluid row">
+            
+            <div class="col-2">
+                <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
+                    <i class='bx bx-spa'></i>
+                    Agregar producto al catalogo
+                </a>
+            </div>
+
+        </div>
+        <% } %> 
+        
         <div class="text-center">
             <table id="inventoryTable" data-column-orderable="1, 1, 0" class="w-100 data-table table table-lg table-striped">
                 <thead class="thead-dark">
@@ -51,24 +79,26 @@
 
         </div>
 
+        <% if(user.role != 'administrador'){ %>
         <div class="row">
-            <form action="">
-                <h3>Pedidos</h3>
+            <form action="/addorder" method="POST">
+                <h3>Realizar Pedidos</h3>
                 <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
+                    <input type="text" value="<%=doc_title%>" name="module" hidden> <!-- No eliminar permite obtener el nombre de la pagina actual -->
                 </div>
-
                 <div class="form-group">
                     <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
                 </div>
                 <br>
             </form>
         </div>
+        <% }%>
     </div>
     </section>
 </body>
 <%- include('../includes/scripts.ejs') %>
 
 <!-- Se genero js en src/assets/js/admin/adminOrder.js -->
-<script src="/js/admin/adminOrder.js"></script>
+<script src="/js/admin/Order.js"></script>
 
 <%- include('../includes/footer.ejs') %>

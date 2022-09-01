@@ -11,6 +11,7 @@
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                 <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+                <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
                     <ul class="dropdown-menu">
@@ -43,15 +44,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% stockPrin.forEach(stock => { %> 
+                                    <% stockPrin.forEach((stock, i) => { %> 
                                         <tr id="id-<%= stock._id%>">
                                             <td><%= stock.ranch_owner %> </td>
-                                            <td><%= stock.name_materiaPrima %> </td>
-                                            <td><%= stock.description_materiaPrima %> </td>
+                                            <td class="product-name" data-id="<%= i %>"><%= stock.name_materiaPrima %> </td>
+                                            <td class="product-description"><%= stock.description_materiaPrima %> </td>
                                             <td><%= stock.unidad_medida %> </td>
                                             <td><%= stock.quantity %> </td>
                                             <td>
-                                                <button id="orderItem" class="btn btn-outline-dark" type="button">
+                                                <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>">
                                                     <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                                                 </button>
                                             </td>
@@ -67,6 +68,21 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="row">
+                <form action="/addorder" method="POST">
+                    <h3>Realizar Pedidos</h3>
+                    <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
+                        <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
+                            <input type="text" value="<%=doc_title%>" name="module" hidden>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                    </div>
+                    <br>
+                </form>
+            </div> -->
 
             </div>
 
@@ -77,4 +93,5 @@
 </body>
 
 <%- include('../includes/scripts.ejs') %>
+<script src="/js/admin/Order.js"></script>
 <%- include('../includes/footer.ejs') %>

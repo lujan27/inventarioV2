@@ -11,6 +11,6 @@ const catalogueSchema = new Schema({
     versionKey: false
 });
 
-catalogueSchema.plugin(AutoIncrement);
+catalogueSchema.plugin(AutoIncrement, {id: 'id_MainCat', inc_field: '_id'});
 
 module.exports = mongoose.model('MainCatalogue', catalogueSchema);

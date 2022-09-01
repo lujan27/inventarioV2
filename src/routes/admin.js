@@ -6,6 +6,7 @@ const Stock = require('../models/stockModel');
 const MainCat = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
 const {isAuthAdmin} = require('../config/sessionAdmin');
+const Order = require('../models/ordersModel');
 
 // Main view of admin
 router.get('/admin', isAuthAdmin, async(req, res) => {
@@ -329,7 +330,7 @@ router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
     res.redirect('/admin');
 });
 
-// view main catalogue
+// view add main catalogue
 router.get('/admin/maincatalogue', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.find();
 
@@ -353,21 +354,10 @@ router.post('/admin/addmaincatalogue', isAuthAdmin, async (req, res) => {
         const newCatalogue = new MainCat({nameProduct, descriptionProduct});
         await newCatalogue.save();
         req.flash('success_msg', 'Producto agregado al catalogo');
-        res.redirect('/admin');
+        res.redirect('/admin/maincatalogue');
     }
     
 });
 
-// view orders
-router.get('/admin/orders', async (req, res) => {
-    const RanchsBD = await Ranch.find();
-    const catalogue = await MainCat.find();
-
-    res.render('admin/adminOrder', {
-        doc_title: 'Pedidos',
-        RanchsBD,
-        catalogue
-    });
-});
 
 module.exports = router;

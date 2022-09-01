@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const AutoIncrement = require('mongoose-sequence')(mongoose); // <--------- Obligatorio
 
-const RanchSchema = new Schema(
+const OrderSchema = new Schema(
     {
-        _id: { type: Number },      // <--------- Obligatorio
+        _id: { type: Number},      // <--------- Obligatorio
         items: { type: Array, required: true },
         order_date: { type: Date, default: Date.now() },
-        status: { type: String, trim: true, default: 'Pedido prueba' }
+        module: {type: String},
+        userOrder: {type: String},
+        status: { type: String, trim: true }
     },
     {
         _id: false,         // <--------- Obligatorio
@@ -15,6 +17,6 @@ const RanchSchema = new Schema(
     }
 );
 
-RanchSchema.plugin(AutoIncrement); // <--------- Obligatorio
+OrderSchema.plugin(AutoIncrement, {id: 'id_Order', inc_field: '_id'}); // <--------- Obligatorio
 
-module.exports = mongoose.model('Orders', RanchSchema);
+module.exports = mongoose.model('Orders', OrderSchema);
