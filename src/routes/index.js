@@ -5,6 +5,7 @@ const flash = require('connect-flash/lib/flash');
 const Order = require('../models/ordersModel');
 const Ranch = require('../models/ranchModel');
 const MainCat = require('../models/mainCatalogueModel');
+const {isAuthLogged} = require('../config/sessionOn');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -55,7 +56,8 @@ router.get('/catalogue', async (req, res) => {
 
 router.post('/addorder', async (req, res) => {
     // console.log(req.body);
-    const {items, module} = req.body;
+    const {pdOrd, qntyOrd, noteOrd, module} = req.body;
+    const items = {pdOrd, qntyOrd, noteOrd};
 
     switch(req.user.role){
         case 'administrador':
@@ -74,6 +76,7 @@ router.post('/addorder', async (req, res) => {
 
     
     const userOrder = req.user.username;
+    const userRanch = req.user.ranch;
 
     const newOrder = new Order(
 
@@ -81,7 +84,9 @@ router.post('/addorder', async (req, res) => {
             items, 
             status,
             module,              
-            userOrder}
+            userOrder,
+            userRanch
+        }
 
         );
 
@@ -105,6 +110,31 @@ router.post('/addorder', async (req, res) => {
             break;
     } //Agregar mas case para redirigir a los usuarios dependiendo del nombre que tenga su pagina de pedidos
     
-})
+});
+
+//Ruta vista Historial
+router.get('/ordersDone', async(req, res)=>{
+    
+    switch(req.user.role){
+        case 'administrador':
+            ordersH = await Order.find();
+            break;
+        case 'coordinador':
+            status = 'Pendiente revisión'
+            break;
+        case 'usuario':
+            status = 'Solicitado'
+            break;
+        default: 
+            status = 'En proceso'
+            break;
+    }
+
+    res.render('historic' , {
+        doc_title: 'Pedidos Realizados',
+        ordersH
+    });
+
+});
 
 module.exports = router;

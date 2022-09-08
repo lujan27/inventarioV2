@@ -1,0 +1,61 @@
+<%- include('includes/sidebar.ejs') %>
+<%- include('includes/header.ejs') %>
+
+<body>
+
+    <div class="container mt-4">
+
+<div class="container-fluid pt-4 mt-4">
+    <div class="subcontenedor">
+        <div class="bloque activo">
+          <div class="justify-content-center row">
+
+            <h2>Pedidos:</h2>
+                <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 1, 1, 0" class="w-100 data-table table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Material</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Nota</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Rancho</th>
+                            <th scope="col">Estatus</th>
+                            <th scope="col">Fecha</th>
+                            <th colspan="2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ordersH.forEach(data => { %> 
+                            <tr id="id-<%= %>">                                
+                                <td><%= data.items[0].pdOrd %> </td>
+                                <td><%= data.items[0].qntyOrd %> </td>
+                                <td><%= data.items[0].noteOrd %> </td>
+                                <td><%= data.userOrder %> </td>
+                                <td><%= data.userRanch %> </td>
+                                <td><%= data.status %> </td>
+                                <td><%= data.order_date %> </td>
+                                
+                                <td>
+                                    <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%=  %>">
+                                        <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }); %> 
+                    
+                            
+
+                    </tbody>
+                    <caption class="pl-2">Tabla Pedidos</caption>
+                </table>
+          </div>
+        </div>
+    </div>
+</div> 
+
+</div>
+
+</body>
+
+<%- include('includes/scripts.ejs') %>
+<%- include('includes/footer.ejs') %>

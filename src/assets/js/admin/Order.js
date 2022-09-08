@@ -12,7 +12,7 @@ const createOrder = (e) => {
                 <div class="col-4 m-auto py-2">
                     <div class="form-floating">
                         <input class="form-control prod-name" id="prod-name-${itemID}"
-                            type="text" placeholder="." value="${productName.textContent}" name="items" readonly/>
+                            type="text" placeholder="." value="${productName.textContent}" name="pdOrd" readonly/>
                         <label for="prod-name-${itemID}">
                             Nombre
                         </label>
@@ -22,7 +22,7 @@ const createOrder = (e) => {
                 <div class="col-3 col-lg-2 m-auto py-2">
                     <div class="form-floating">
                         <input class="form-control prod-qty" id="prod-qty-${itemID}"
-                            type="number" placeholder="." value="0" min="0" max="9999" name="items"/>
+                            type="number" placeholder="." value="0" min="0" max="9999" name="qntyOrd"/>
                         <label for="prod-qty-${itemID}">
                             Cantidad
                         </label>
@@ -32,7 +32,7 @@ const createOrder = (e) => {
                 <div class="col-4 col-lg-5 m-auto py-2">
                     <div class="form-floating">
                         <textarea class="form-control prod-notes" id="prod-notes-${itemID}"
-                            cols="30" rows="10" name="items"></textarea>
+                            cols="30" rows="10" name="noteOrd"></textarea>
                         <label for="prod-notes-${itemID}">
                             Notas / Comentarios
                         </label>

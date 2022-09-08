@@ -5,7 +5,7 @@ const Ranch = require('../models/ranchModel');
 const Stock = require('../models/stockModel');
 const { isAuthUser } = require('../config/sessionUser');
 
-router.get('/user', async (req, res) => {
+router.get('/user', isAuthUser, async (req, res) => {
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -27,7 +27,7 @@ router.get('/user', async (req, res) => {
     const stockPrin = await Stock.aggregate([
         {
           '$match': {
-            'ranch_owner': 'Rancho Principal'
+            'ranch_owner': req.user.ranch
           }
         }
       ]);
