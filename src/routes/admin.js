@@ -121,13 +121,7 @@ router.get('/infouser/:id', async(req, res)=>{
     
     
     });
-//Ruta vista Historial
-router.get('/admin/historic', async(req, res)=>{
-    res.render('admin/historic' , {
-        doc_title: 'Administrador'
-    });
 
-});
 
 // Route type PUT for edit users
 router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
