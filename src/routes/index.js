@@ -55,9 +55,14 @@ router.get('/catalogue', async (req, res) => {
 });
 
 router.post('/addorder', async (req, res) => {
-    // console.log(req.body);
     const {pdOrd, qntyOrd, noteOrd, module} = req.body;
-    const items = {pdOrd, qntyOrd, noteOrd};
+    const items = pdOrd.forEach((elem, i) => {
+        return {
+            pdOrd: elem,
+            qntyOrd: qntyOrd[i],
+            noteOrd: noteOrd[i]
+        }
+    });
 
     switch(req.user.role){
         case 'administrador':
@@ -73,24 +78,18 @@ router.post('/addorder', async (req, res) => {
             status = 'En proceso'
             break;
     }
-
     
     const userOrder = req.user.username;
     const userRanch = req.user.ranch;
 
-    const newOrder = new Order(
+    const newOrder = new Order({
+        items, 
+        status,
+        module,
+        userOrder,
+        userRanch
+    });
 
-        {
-            items, 
-            status,
-            module,              
-            userOrder,
-            userRanch
-        }
-
-        );
-
-        
     await newOrder.save();
 
     req.flash('success_msg', 'Peticion realizada');
