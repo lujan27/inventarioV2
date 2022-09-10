@@ -26,14 +26,11 @@ router.get('/user', isAuthUser, async (req, res) => {
 
     const stockPrin = await Stock.aggregate([
         {
-          '$match': {
-            'ranch_owner': req.user.ranch
-          }
+            '$match': {
+                'ranch_owner': req.user.ranch
+            }
         }
-      ]);
-    //console.log(JSON.stringify(usuarios));
-    //console.log(usuarios);
-    console.log(stockPrin);
+    ]);
     res.render('user/userhome', {
         doc_title: 'Usuario',
         usuarios,

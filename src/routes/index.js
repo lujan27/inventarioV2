@@ -54,15 +54,8 @@ router.get('/catalogue', async (req, res) => {
     });
 });
 
-router.post('/addorder', async (req, res) => {
-    const {pdOrd, qntyOrd, noteOrd, module} = req.body;
-    const items = pdOrd.forEach((elem, i) => {
-        return {
-            pdOrd: elem,
-            qntyOrd: qntyOrd[i],
-            noteOrd: noteOrd[i]
-        }
-    });
+router.post('/add-order', async (req, res) => {
+    const {items, module} = req.body
 
     switch(req.user.role){
         case 'administrador':
@@ -108,11 +101,10 @@ router.post('/addorder', async (req, res) => {
             res.redirect('/catalogue');
             break;
     } //Agregar mas case para redirigir a los usuarios dependiendo del nombre que tenga su pagina de pedidos
-    
 });
 
 //Ruta vista Historial
-router.get('/ordersDone', async(req, res)=>{
+router.get('/orders-done', async(req, res)=>{
     
     switch(req.user.role){
         case 'administrador':
