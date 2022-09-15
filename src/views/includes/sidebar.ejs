@@ -7,7 +7,7 @@
 
     <ul class="nav-list">
                 <li class="side">
-                    <a href="/infouser/<%= user._id%>">
+                    <a href="/infoUser/<%= user._id%>">
                         <i class='bx bxs-home'></i>
                         <span class="links_name">Inicio</span>
                     </a>
@@ -38,7 +38,7 @@
                 
                     <% if(user.role == 'administrador'){ %>
                         <li class="side">
-                        <a href="/admin/allusers">
+                        <a href="/admin/allUsers">
                             <i class='bx bxs-data'></i>
                             <span class="links_name">Administración</span>
                         </a>                
@@ -77,7 +77,7 @@
                 </li>
 
         <li class="profile">
-            <a href="/infouser/<%= user._id%>">
+            <a href="/infoUser/<%= user._id%>">
                 <div class="profile-details">
                 <img src="img/profile.jpg" alt="profileImg">
                 <% if(user){%>

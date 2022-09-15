@@ -8,7 +8,7 @@ const ordersController = require('../controllers/coordinator/ordersController');
 
 router
 
-.get('/coordinator', isAuthCoord, inventoryController.main)
+// .get('/coordinator', isAuthCoord, inventoryController.main)
 .post('/coordinator/add-items', isAuthCoord, inventoryController.addItems)
 .post('/coordinator/delete-items', isAuthCoord, inventoryController.deleteItems)
 .post('/coordinator/modify-items', isAuthCoord, inventoryController.modifyItems)
@@ -19,6 +19,6 @@ router
 .post('/coordinator/employees/delete-users', isAuthCoord, userController.deleteUsers)
 .post('/coordinator/employees/modify-users', isAuthCoord, userController.modifyUsers)
 
-.get('/coordinator/orders', isAuthCoord, ordersController.main)
+.get('/coordinator', isAuthCoord, ordersController.main)
 
 module.exports = router;

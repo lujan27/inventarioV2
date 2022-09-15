@@ -9,7 +9,7 @@
         <div class="container mt-4">
             
                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/allUsers">Usuarios</a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
                     <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
                     <li class="nav-item dropdown">
@@ -18,7 +18,7 @@
             
                         <% ranches.forEach(ranch => { %>
             
-                            <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
+                            <li><a class="dropdown-item" href="/admin/ranches/<%=ranch._id%>"><%=ranch.ranch_name%></a></li>
             
                         <% }); %>
             
