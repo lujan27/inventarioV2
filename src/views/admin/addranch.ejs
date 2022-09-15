@@ -9,7 +9,7 @@
         <%- include('../includes/alerts.ejs') %>
 
         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-            <li class="nav-item"><a class="nav-link" href="/admin/allUsers">Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
@@ -17,7 +17,7 @@
 
                 <% RanchsBD.forEach(rancho => { %>
 
-                <li><a class="dropdown-item" href="/admin/ranches/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
+                <li><a class="dropdown-item" href="/admin/ranchos/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
 
                 <% }); %>
 
@@ -29,7 +29,7 @@
         <div class="row pt-4 mt-4">
             <div class="col-md-8 mx-auto pb-4 mb-4">
 
-                <a href="/admin/allUsers" class="btn btn-outline-dark btn-sm mb-4">
+                <a href="/admin/allusers" class="btn btn-outline-dark btn-sm mb-4">
                     <i class='bx bx-arrow-back pr-1'></i>Regresar
                 </a>
 
@@ -38,7 +38,7 @@
                         NUEVO RANCHO
                     </div>
                     <div class="card-body">
-                        <form action="/admin/addRanch" method="POST">
+                        <form action="/admin/addranch" method="POST">
                             <div class="form-group">
                                 <label>Nombre del rancho: </label>
                                 <input type="text" class="form-control" name="ranch_name" placeholder="Nombre del rancho...." autofocus>

@@ -6,6 +6,7 @@ const Stock = require('../models/stockModel');
 const MainCat = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
 const {isAuthAdmin} = require('../config/sessionAdmin');
+const Order = require('../models/ordersModel');
 
 // Main view of admin
 router.get('/admin', isAuthAdmin, async(req, res) => {
@@ -37,7 +38,7 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
         }
     ]);
 
-    res.render('admin/adminHome',{
+    res.render('admin/adminhome',{
         doc_title: 'Administrador',
         usuarios,
         ranches,
@@ -46,10 +47,10 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
 });
 
 // Route for info users
-// router.get('/admin/infoUser/:id', async(req, res)=>{
+// router.get('/admin/infouser/:id', async(req, res)=>{
 //     const user = await User.findById(req.params._id);
 //     console.log(user);
-//     res.render('admin/infoUser' , {
+//     res.render('admin/infouser' , {
 //         doc_title: 'Administrador', 
 //         edit
 //     });
@@ -57,7 +58,7 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
 // });
 
 // Route for edit users
-router.get('/admin/editUser/:id', isAuthAdmin, async(req, res)=>{
+router.get('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -86,7 +87,7 @@ router.get('/admin/editUser/:id', isAuthAdmin, async(req, res)=>{
 
     const edit = await User.findById(req.params.id);
     console.log(edit);
-    res.render('admin/editUser' , {
+    res.render('admin/edituser' , {
         doc_title: 'Administrador', 
         edit,
         usuarios,
@@ -97,18 +98,18 @@ router.get('/admin/editUser/:id', isAuthAdmin, async(req, res)=>{
 });
 
 //Ruta vista Home Grafias estadisticas
-router.get('/homeGraphics', async(req, res)=>{
-    res.render('admin/homeGraphics' , {
+router.get('/HomeGraphics', async(req, res)=>{
+    res.render('admin/HomeGraphics' , {
         doc_title: 'Administrador'
     });
 
 });
 
 //Ruta vista info del usuario
-router.get('/infoUser/:id', async(req, res)=>{
+router.get('/infouser/:id', async(req, res)=>{
         const user = await User.findById(req.params.id);
         console.log(user);
-        res.render('admin/infoUser' , {
+        res.render('admin/infouser' , {
             doc_title: 'Administrador', 
             user
         });
@@ -116,7 +117,7 @@ router.get('/infoUser/:id', async(req, res)=>{
 
 
 // Route type PUT for edit users
-router.put('/admin/editUser/:id', isAuthAdmin, async(req, res)=>{
+router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     var {name, lastname, username, email, password, role, ranch} = req.body;
     password = await encryption.encryptPassword(password);
     await User.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
@@ -132,7 +133,7 @@ router.delete('/admin/deleteuser/:id', isAuthAdmin, async(req, res)=>{
 });
 
 // Route for view of each ranch by id
-router.get('/admin/ranches/:id', isAuthAdmin, async(req, res) => {
+router.get('/admin/ranchos/:id', isAuthAdmin, async(req, res) => {
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -151,7 +152,7 @@ router.get('/admin/ranches/:id', isAuthAdmin, async(req, res) => {
     ]);
 
     //console.log(stockid);
-    res.render('ranches/ranch', {
+    res.render('ranchos/rancho', {
         doc_title: ranchesid.ranch_name,
         ranchesid,
         ranches,
@@ -160,7 +161,7 @@ router.get('/admin/ranches/:id', isAuthAdmin, async(req, res) => {
 });
 
 // View add user
-router.get('/admin/addUser', isAuthAdmin, async (req, res) => {
+router.get('/admin/adduser', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.aggregate([
         {
             '$match': {
@@ -168,47 +169,47 @@ router.get('/admin/addUser', isAuthAdmin, async (req, res) => {
             }
         }
     ]);
-    res.render('admin/addUser', {
+    res.render('admin/adduser', {
         RanchsBD, 
         doc_title: 'Añadir Usuario'
     });
 });
 
 // Post add user
-router.post('/admin/addUser', isAuthAdmin, async (req, res) => {
+router.post('/admin/adduser', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const {name, lastname, username, email, password, role, ranch} = req.body;
     
     //const errors = [];
     if(name.length <=0){
         req.flash('danger_msg', 'Digite su nombre');
-        res.redirect('/admin/addUser');
+        res.redirect('/admin/adduser');
     }
     if(username.length <= 0){
         req.flash('danger_msg', 'Escriba un nombre de usuario mayor a 4 caracteres');
-        res.redirect('/admin/addUser');
+        res.redirect('/admin/adduser');
     }
     if(password.length < 4){
         req.flash('danger_msg', 'Digite mas de 4 caracteres para la contraseña');
-        res.redirect('/admin/addUser');
+        res.redirect('/admin/adduser');
     } 
     if(role.length <= 0){
         req.flash('danger_msg', 'Tiene que asignar un rol de usuario');
-        res.redirect('/admin/addUser');
+        res.redirect('/admin/adduser');
     }
     if(ranch.length <= 0) {
         req.flash('danger_msg', 'Tiene que asignarle un rancho al usuario');
-        res.redirect('/admin/addUser');
+        res.redirect('/admin/adduser');
     } else {
         const emailUser = await User.findOne({email:email}); //Search an actual email to prevent duplicate
         const uniqueUser = await User.findOne({username: username});
         if(emailUser) {
             req.flash('danger_msg', 'El correo ya esta registrado');
-            res.redirect('/admin/addUser');
+            res.redirect('/admin/adduser');
         }
         if(uniqueUser){
             req.flash('danger_msg', 'El usuario ya esta registrado');
-            res.redirect('/admin/addUser');
+            res.redirect('/admin/adduser');
         }
         
         const newUser = new User({name, lastname, username, email, password, role, ranch});
@@ -221,7 +222,7 @@ router.post('/admin/addUser', isAuthAdmin, async (req, res) => {
 });
 
 // View add new ranch
-router.get('/admin/addRanch', isAuthAdmin, async (req, res) => {
+router.get('/admin/addranch', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.aggregate([
         {
             '$match': {
@@ -230,26 +231,26 @@ router.get('/admin/addRanch', isAuthAdmin, async (req, res) => {
         }
     ]);
 
-    res.render('admin/addRanch', {
+    res.render('admin/addranch', {
         doc_title: 'Añadir Rancho',
         RanchsBD
     });
 });
 
 // Route for add a new ranch
-router.post('/admin/addRanch', isAuthAdmin, async (req, res) => {
+router.post('/admin/addranch', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const { ranch_name, location } = req.body
     if(ranch_name.length <= 3){
         req.flash('danger_msg', 'Ingrese un nombre mas largo');
-        res.redirect('/addRanch');
+        res.redirect('/addranch');
     }
 
     const rancho = await Ranch.findOne({ranch_name:ranch_name});
 
     if(rancho){
         req.flash('danger_msg', 'El rancho ya existe');
-        res.redirect('/addRanch');
+        res.redirect('/addranch');
     } else {
         const newRanch = new Ranch({ranch_name, location});
         await newRanch.save();
@@ -261,7 +262,7 @@ router.post('/admin/addRanch', isAuthAdmin, async (req, res) => {
 
 
 // View for all users on the system
-router.get('/admin/allUsers', isAuthAdmin, async (req, res) => {
+router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
     const ranches = await Ranch.aggregate([
         {
             '$match': {
@@ -281,7 +282,7 @@ router.get('/admin/allUsers', isAuthAdmin, async (req, res) => {
         }
     ]);
 
-    res.render('admin/allUsers', {
+    res.render('admin/allusers', {
         doc_title: 'Usuarios',
         ranches,
         usuarios
@@ -289,17 +290,17 @@ router.get('/admin/allUsers', isAuthAdmin, async (req, res) => {
 });
 
 // view add stock
-router.get('/admin/addStock', isAuthAdmin, async (req, res) => {
+router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.find();
 
-    res.render('admin/addStock', {
+    res.render('admin/addstock', {
         doc_title: 'Añadir Stock',
         RanchsBD
     });
 });
 
 // post add stock
-router.post('/admin/addStock', isAuthAdmin, async (req, res) => {
+router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
     console.log(req.body);
     const {ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida} = req.body
 
@@ -310,10 +311,10 @@ router.post('/admin/addStock', isAuthAdmin, async (req, res) => {
 });
 
 // view add main catalogue
-router.get('/admin/mainCatalogue', isAuthAdmin, async (req, res) => {
+router.get('/admin/maincatalogue', isAuthAdmin, async (req, res) => {
     const RanchsBD = await Ranch.find();
 
-    res.render('admin/mainCatalogue', {
+    res.render('admin/maincatalogue', {
         doc_title: 'Main catalogue',
         RanchsBD
     });
@@ -327,12 +328,12 @@ router.post('/admin/addmaincatalogue', isAuthAdmin, async (req, res) => {
 
     if(catalogue){
         req.flash('danger_msg', 'El producto ya existe');
-        res.redirect('/admin/mainCatalogue');
+        res.redirect('/admin/maincatalogue');
     } else {
         const newCatalogue = new MainCat({nameProduct, descriptionProduct});
         await newCatalogue.save();
         req.flash('success_msg', 'Producto agregado al catalogo');
-        res.redirect('/admin/mainCatalogue');
+        res.redirect('/admin/maincatalogue');
     }
 });
 
