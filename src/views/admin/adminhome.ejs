@@ -47,9 +47,9 @@
                                     <% stockPrin.forEach((stock, i) => { %> 
                                         <tr id="id-<%= stock._id%>">
                                             <td><%= stock.ranch_owner %> </td>
-                                            <td class="product-name" data-id="<%= i %>"><%= stock.name_materiaPrima %> </td>
-                                            <td class="product-description"><%= stock.description_materiaPrima %> </td>
-                                            <td><%= stock.unidad_medida %> </td>
+                                            <td class="product-name" data-id="<%= i %>"><%= stock.name %> </td>
+                                            <td class="product-description"><%= stock.description %> </td>
+                                            <td><%= stock.unit %> </td>
                                             <td><%= stock.quantity %> </td>
                                             <td>
                                                 <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>">

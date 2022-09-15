@@ -34,10 +34,10 @@
                                 <% if(stockPrin != null) { %>
                                     <% stockPrin.forEach((data, i)=> { %> 
                                     <tr data-id="<%= data._id %>">
-                                        <td class="product-name" data-id="<%= i %>"><%= data.name_materiaPrima %></td>
-                                        <td class="product-description"><%= data.description_materiaPrima %></td>
+                                        <td class="product-name" data-id="<%= i %>"><%= data.name %></td>
+                                        <td class="product-description"><%= data.description %></td>
                                         <td><%= data.quantity %></td>
-                                        <td><%= data.unidad_medida %></td>
+                                        <td><%= data.unit %></td>
                                         <td>
                                             <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>">
                                                 <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido

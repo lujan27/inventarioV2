@@ -1,6 +1,6 @@
 function main(req, res) {
-    const moo = require('../models/ordersModel');
-    const soo = require('../models/stockModel');
+    const moo = require('../../models/ordersModel');
+    const soo = require('../../models/stockModel');
     
     soo.aggregate([
         { $match: {$text: {$search: "frijol tomate", $diacriticSensitive: false}} }

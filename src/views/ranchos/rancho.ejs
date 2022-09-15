@@ -47,9 +47,9 @@
                                         <% stockid.forEach(stock => { %> 
                                             <tr id="id-<%= stock._id%>">
                                                 <td><%= stock.ranch_owner %> </td>
-                                                <td><%= stock.name_materiaPrima %> </td>
-                                                <td><%= stock.description_materiaPrima %> </td>
-                                                <td><%= stock.unidad_medida %> </td>
+                                                <td><%= stock.name %> </td>
+                                                <td><%= stock.description %> </td>
+                                                <td><%= stock.unit %> </td>
                                                 <td><%= stock.quantity %> </td>
                                                 <td>
                                                     <button id="orderItem" class="btn btn-outline-dark" type="button">

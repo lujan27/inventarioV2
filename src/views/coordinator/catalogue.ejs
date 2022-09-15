@@ -1,87 +1,81 @@
 <%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
 
-
 <body>
+    <section class="home-section py-4 my-4">
+        <div class="container mt-2">
+            <%- include('../includes/alerts.ejs') %>
 
-<section class="home-section pt-4 mt-4">
-    <div class="container mt-2">
-        <%- include('../includes/alerts.ejs') %>
-
-        <h2>Catalogo de productos</h2>
-        <% switch(user.role){
-            case 'administrador': %> 
-
-        <% break
-
-        case 'coordinador': %>
+            <div class="row text-center mx-auto">
+                <h2>Catalogo de productos</h2>
+            </div>
+            
             <!-- Añadir las diferentes rutas para el coordinador como usuarios, inventario etc. -->
             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                 <li class="nav-item"><a class="nav-link" href="/coordinator">Coordinador</a></li>    
             </ul>
 
-            <div class="container-fluid row">
-            
-                <div class="col-2">
+            <!-- div class="container-fluid row">
+                <div class="col-2 mx-auto">
                     <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
                         <i class='bx bx-spa'></i>
                         Agregar producto al catalogo
                     </a>
                 </div>
-    
+            </div -->
+
+            <div class="row">
+                <form action="/addorder" method="POST">
+                    <h3>Realizar Pedidos</h3>
+                    <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4 h-orders-fix">
+                        <input type="text" value="<%=doc_title%>" name="module" hidden> <!-- No eliminar permite obtener el nombre de la pagina actual -->
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                    </div>
+                    <br>
+                </form>
             </div>
-        <% break
-
-        case 'usuario': %>
-            <!-- Hacer lo mismo que con el coordinador -->
-        <%break
-        } %>
-        
-        <div class="text-center">
-            <table id="inventoryTable" data-column-orderable="1, 1, 0" class="w-100 data-table table table-lg table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% catalogue.forEach((prod, i) => { %> 
-                    <tr>
-                        <td class="product-name" data-id="<%= i %>"><%= prod.nameProduct %></td>
-                        <td class="product-description"><%= prod.descriptionProduct%></td>
-                        <td><button class="btn btn-success btnOrder" data-id="<%= i %>">Agregar</button></td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+            
+            <div class="row text-center pb-sm-5">
+                <table id="inventoryTable" data-column-orderable="1, 1, 0, 0" class="data-table table table-lg table-striped px-lg-4 px-md-2">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Unidad</th>
+                            <th class="text-center">Cantidad</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% if (data) { %>
+                        <% for (let i in data) { %>
+                        <tr>
+                            <td class="text-center"><%= data[i].name %></td>
+                            <td class="text-center"><%= data[i].unit %></td>
+                            <td class="text-center"><%= data[i].quantity %></td>
+                            <td class="text-center">
+                                <button class="btn btn-success btnOrder" data-id="<%= data[i]._id %>">
+                                    <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Agregar Pedido
+                                </button>
+                            </td>
+                        </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="4">
+                                No hay inventario disponible
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <div>
-
-        </div>
-
-        <% if(user.role != 'administrador'){ %>
-        <div class="row">
-            <form action="/addorder" method="POST">
-                <h3>Realizar Pedidos</h3>
-                <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
-                    <input type="text" value="<%=doc_title%>" name="module" hidden> <!-- No eliminar permite obtener el nombre de la pagina actual -->
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
-                </div>
-                <br>
-            </form>
-        </div>
-        <% }%>
-    </div>
     </section>
 </body>
 <%- include('../includes/scripts.ejs') %>
 
-<!-- Se genero js en src/assets/js/admin/adminorder.js -->
 <script src="/js/admin/order.js"></script>
 
 <%- include('../includes/footer.ejs') %>

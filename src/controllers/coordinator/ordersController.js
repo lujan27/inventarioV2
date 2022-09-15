@@ -1,10 +1,10 @@
 const orderController = require('../../models/ordersModel');
-const inventoryModel = require('../../models/coordinator/inventoryModel');
+const stockModel = require('../../models/stockModel');
 
 function main (req, res) {
     let data = null;
 
-    inventoryModel.find({})
+    stockModel.find({})
     .then((result) => {
         data = result;
     })

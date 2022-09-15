@@ -301,9 +301,9 @@ router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
 // post add stock
 router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
     console.log(req.body);
-    const {ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida} = req.body
+    const {ranch_owner, name, description, quantity, unit} = req.body
 
-    const newStock = new stock({ranch_owner, name_materiaPrima, description_materiaPrima, quantity, unidad_medida});
+    const newStock = new stock({ranch_owner, name, description, quantity, unit});
     await newStock.save();
     req.flash('success_msg', 'Stock registrado!');
     res.redirect('/admin');
