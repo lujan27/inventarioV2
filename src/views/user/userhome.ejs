@@ -20,11 +20,11 @@
                         <div class="justify-content-center row">
             
                             <h2>Inventario en: <%= user.ranch %> </h2>
-                            <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-striped">
+                            <table id="inventoryTable" data-column-orderable="1, 0, 0, 1, 0" class="w-100 data-table table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Materia prima</th>
-                                        <th>Descripcion</th>
+                                        <th>Descripción</th>
                                         <th>Cantidad</th>
                                         <th>Unidad de medida</th>
                                         <th></th>
@@ -60,9 +60,9 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="row">
-                <form action="/addorder" method="POST">
+                <form class="mb-5 pb-5">
                     <h3>Realizar Pedidos</h3>
                     <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
                         <input type="text" value="<%=doc_title%>" name="module" hidden> <!-- No eliminar, permite obtener el nombre de la pagina actual -->

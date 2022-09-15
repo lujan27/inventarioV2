@@ -9,6 +9,7 @@ const OrderSchema = new Schema(
         order_date: { type: Date, default: Date.now() },
         module: {type: String},
         userOrder: {type: String},
+        userRanch: {type: String},
         status: { type: String, trim: true }
     },
     {

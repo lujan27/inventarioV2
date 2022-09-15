@@ -7,26 +7,53 @@
 
     <ul class="nav-list">
                 <li class="side">
-                    <a href="/HomeGraphics">
+                    <a href="/infouser/<%= user._id%>">
                         <i class='bx bxs-home'></i>
                         <span class="links_name">Inicio</span>
                     </a>
                         <span class="tooltip">Inicio</span>
                 </li>
                 <li class="side">
-                    <a href="/user">
-                        <i class='bx bxs-component'></i>
-                        <span class="links_name">My Inventario</span>
-                    </a>
-                    <span class="tooltip">My Inventario</span>
+                    <% if(user.role == 'administrador'){ %>
+                        <a href="/admin">
+                            <i class='bx bxs-component'></i>
+                            <span class="links_name">Mi Inventario</span>
+                        </a>
+                        <span class="tooltip">Mi Inventario</span>
+                        <% } else if(user.role == 'coordinador'){ %> 
+                            <a href="/coordinator">
+                                <i class='bx bxs-component'></i>
+                                <span class="links_name">Mi Inventario</span>
+                            </a>
+                            <span class="tooltip">Mi Inventario</span>
+                            <% } else if(user.role == 'usuario'){ %> 
+                                <a href="/user">
+                                    <i class='bx bxs-component'></i>
+                                    <span class="links_name">Mi Inventario</span>
+                                </a>
+                                <span class="tooltip">Mi Inventario</span>
+                                <% } %> 
+                    
                 </li>
-                <li class="side">
-                    <a href="/admin/allusers">
-                        <i class='bx bxs-data'></i>
-                        <span class="links_name">Administración</span>
-                    </a>
-                    <span class="tooltip">Administración</span>
-                </li>
+                
+                    <% if(user.role == 'administrador'){ %>
+                        <li class="side">
+                        <a href="/admin/allusers">
+                            <i class='bx bxs-data'></i>
+                            <span class="links_name">Administración</span>
+                        </a>                
+                        <span class="tooltip">Administración</span>
+                        </li>
+                        <% } else if(user.role == 'coordinador'){ %> 
+                            <li class="side">
+                            <a href="/coordinator/employees">
+                                <i class='bx bxs-data'></i>
+                                <span class="links_name">Administración</span>
+                            </a>
+                            <span class="tooltip">Administración</span>
+                            </li>
+                            <% } %>
+                    
                 <li class="side">
                     <a href="/coordinator">
                         <i class='bx bxs-stopwatch' ></i>
@@ -42,7 +69,7 @@
                     <span class="tooltip">Registro</span>
                 </li>
                 <li class="side">
-                    <a href="/admin/historic">
+                    <a href="/orders-done">
                         <i class='bx bx-history' ></i>
                         <span class="links_name">Historial</span>
                     </a>
