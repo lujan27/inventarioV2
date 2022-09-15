@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/users/userModel');
-const Ranch = require('../models/ranchModel');
-const Stock = require('../models/stockModel');
+const user = require('../models/users/userModel');
+const ranch = require('../models/ranchModel');
+const stock = require('../models/stockModel');
 const { isAuthUser } = require('../config/sessionUser');
 
 router.get('/user', isAuthUser, async (req, res) => {
-    const ranches = await Ranch.aggregate([
+    const ranches = await ranch.aggregate([
         {
             '$match': {
                 ranch_name: {$ne: 'Rancho Principal'}
             }
         }
     ]);
-    const usuarios = await User.aggregate([
+    const usuarios = await user.aggregate([
         {
             '$lookup': {
                 'from': 'ranches',
@@ -24,7 +24,7 @@ router.get('/user', isAuthUser, async (req, res) => {
         }
     ]);
 
-    const stockPrin = await Stock.aggregate([
+    const stockPrin = await stock.aggregate([
         {
             '$match': {
                 'ranch_owner': req.user.ranch

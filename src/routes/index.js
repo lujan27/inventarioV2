@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const flash = require('connect-flash/lib/flash');
-const Order = require('../models/ordersModel');
-const Ranch = require('../models/ranchModel');
-const MainCat = require('../models/mainCatalogueModel');
-const {isAuthLogged} = require('../config/sessionOn');
+const order = require('../models/ordersModel');
+const ranch = require('../models/ranchModel');
+const mainCat = require('../models/mainCatalogueModel');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -44,8 +43,8 @@ router.post('/', passport.authenticate('local', {
 
 // view Order Main Catalogue
 router.get('/catalogue', async (req, res) => {
-    const RanchsBD = await Ranch.find();
-    const catalogue = await MainCat.find();
+    const RanchsBD = await ranch.find();
+    const catalogue = await mainCat.find();
 
     res.render('admin/catalogue', {
         doc_title: 'Catalogo principal',
@@ -75,7 +74,7 @@ router.post('/add-order', async (req, res) => {
     const userOrder = req.user.username;
     const userRanch = req.user.ranch;
 
-    const newOrder = new Order({
+    const newOrder = new order({
         items, 
         status,
         module,
@@ -108,7 +107,7 @@ router.get('/orders-done', async(req, res)=>{
     
     switch(req.user.role){
         case 'administrador':
-            ordersH = await Order.find();
+            ordersH = await order.find();
             break;
         case 'coordinador':
             status = 'Pendiente revisión'

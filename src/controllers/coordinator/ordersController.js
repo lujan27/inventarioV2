@@ -1,9 +1,10 @@
 const orderController = require('../../models/ordersModel');
+const inventoryModel = require('../../models/coordinator/inventoryModel');
 
 function main (req, res) {
     let data = null;
 
-    orderController.find({})
+    inventoryModel.find({})
     .then((result) => {
         data = result;
     })
@@ -14,7 +15,7 @@ function main (req, res) {
     .finally(() => {
         return res.render('coordinator/catalogue', {
             doc_title: 'Coordinador - Ordenes',
-            catalogue: data,
+            data: data,
         });
     });
 }
