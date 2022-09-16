@@ -1,5 +1,7 @@
-@media (min-width: 576px) {
-    .h-orders-fix { height: 200px; overflow-y: scroll; }
-}
+/* =>576px - small (sm) */
+.h-orders-fix { height: auto; max-height: 150px; overflow: scroll; }
 
-.h-orders-fix { height: 100px; overflow-y: scroll; }
+/* =>768px - medium (md) */
+@media (min-width: 768px) {
+    .h-orders-fix { max-height: 200px; overflow-x: hidden; }
+}

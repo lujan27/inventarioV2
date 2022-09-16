@@ -54,6 +54,7 @@ app.use(require('./routes/index'));
 app.use(require('./routes/admin'));
 app.use(require('./routes/coord'));
 app.use(require('./routes/user'));
+app.use(require('./routes/util'));
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));

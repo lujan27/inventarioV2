@@ -4,6 +4,10 @@ ion-icon, i {
 	pointer-events: none;
 }
 
+input {
+	text-overflow: ellipsis;
+}
+
 /* >>  W i d t h  << */
 .w-100 { width: 100% !important; }
 .w-90 {width: 90% !important;}

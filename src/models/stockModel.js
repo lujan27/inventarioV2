@@ -12,6 +12,7 @@ const StockSchema = new Schema(
         quantity: {type: Number, required: true}
     },
     {
+        collection: 'stock',
         _id: false,         // <--------- Obligatorio
         versionKey: false   // <--------- Opcional
     }
