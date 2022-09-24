@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const flash = require('connect-flash/lib/flash');
-const orderModel = require('../models/ordersModel');
-const ranchModel = require('../models/ranchModel');
-const mainCatModel = require('../models/mainCatalogueModel');
+const Order = require('../models/ordersModel');
+const Ranch = require('../models/ranchModel');
+const MainCat = require('../models/mainCatalogueModel');
+const {isAuthLogged} = require('../config/sessionOn');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -43,8 +44,8 @@ router.post('/', passport.authenticate('local', {
 
 // view Order Main Catalogue
 router.get('/catalogue', async (req, res) => {
-    const RanchsBD = await ranchModel.find();
-    const catalogue = await mainCatModel.find();
+    const RanchsBD = await Ranch.find();
+    const catalogue = await MainCat.find();
 
     res.render('admin/catalogue', {
         doc_title: 'Catalogo principal',
@@ -74,7 +75,7 @@ router.post('/add-order', async (req, res) => {
     const userOrder = req.user.username;
     const userRanch = req.user.ranch;
 
-    const newOrder = new orderModel({
+    const newOrder = new Order({
         items, 
         status,
         module,
@@ -107,19 +108,31 @@ router.get('/orders-done', async(req, res)=>{
     
     switch(req.user.role){
         case 'administrador':
-            ordersH = await orderModel.find();
+            const ordersAdmin = await Order.find();
+
+            ordersH = ordersAdmin
             break;
         case 'coordinador':
             status = 'Pendiente revisión'
             break;
         case 'usuario':
-            status = 'Solicitado'
+            const ordersUser = await Order.aggregate([
+                {
+                  '$match': {
+                    'status': 'Solicitado',
+                    'userRanch': req.user.ranch
+                  }
+                }
+            ]);
+            
+            ordersH = ordersUser;
             break;
         default: 
             status = 'En proceso'
             break;
     }
 
+    
     res.render('historic' , {
         doc_title: 'Pedidos Realizados',
         ordersH
