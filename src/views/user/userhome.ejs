@@ -20,13 +20,14 @@
                         <div class="justify-content-center row">
             
                             <h2>Inventario en: <%= user.ranch %> </h2>
-                            <table id="inventoryTable" data-column-orderable="1, 0, 0, 1, 0" class="w-100 data-table table table-striped">
+                            <table id="inventoryTable" data-column-orderable="1, 0, 0, 1, 0, 0" class="w-100 data-table table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Materia prima</th>
                                         <th>Descripción</th>
                                         <th>Cantidad</th>
                                         <th>Unidad de medida</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -38,6 +39,17 @@
                                         <td class="product-description"><%= data.description %></td>
                                         <td><%= data.quantity %></td>
                                         <td><%= data.unit %></td>
+                                        <td>
+                                            <% if(data.quantity == 0) {%>
+                                                <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>" disabled>
+                                                    <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Usos
+                                                </button>
+                                            <% } else { %> 
+                                            <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" href="uses/<%=data._id%>">
+                                                <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Usos
+                                            </a>
+                                            <% } %> 
+                                        </td>
                                         <td>
                                             <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>">
                                                 <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido

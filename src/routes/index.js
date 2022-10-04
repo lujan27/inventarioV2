@@ -5,6 +5,8 @@ const flash = require('connect-flash/lib/flash');
 const Order = require('../models/ordersModel');
 const Ranch = require('../models/ranchModel');
 const MainCat = require('../models/mainCatalogueModel');
+const stock = require('../models/stockModel');
+const usesModel = require('../models/usesModel');
 const {isAuthLogged} = require('../config/sessionOn');
 
 //Cerrar sesión
@@ -97,6 +99,9 @@ router.post('/add-order', async (req, res) => {
         case 'Usuario':
             res.redirect('/user');
             break;
+        case 'Coordinador':
+            res.redirect('/coordinator');
+            break;
         default: 
             res.redirect('/catalogue');
             break;
@@ -113,7 +118,15 @@ router.get('/orders-done', async(req, res)=>{
             ordersH = ordersAdmin
             break;
         case 'coordinador':
-            status = 'Pendiente revisión'
+            const ordersCoord = await Order.aggregate([
+                {
+                    '$match': {
+                        'userRanch': req.user.ranch
+                    }
+                }
+            ]);
+
+            ordersH = ordersCoord;
             break;
         case 'usuario':
             const ordersUser = await Order.aggregate([
@@ -138,6 +151,71 @@ router.get('/orders-done', async(req, res)=>{
         ordersH
     });
 
+});
+
+router.get('/orders-done/:id', async (req, res) => {
+    const orderid = await Order.findById(req.params.id);
+
+    res.render('orderID', {
+        doc_title: 'Informacion del pedido',
+        orderid
+    });
+});
+
+//Ruta para material gastado
+router.get('/uses/:id', async (req, res) => {
+    
+    const uso = await stock.findById(req.params.id);
+    // console.log(uso);
+
+    res.render('uses', {
+        doc_title: 'Uso de material',
+        uso
+    });
+});
+
+router.put('/uses/:id', async (req, res) => {
+    //console.log(req.body);
+    const {ranch_owner, name, description, unit, quantity} = req.body;
+    const c_stock = await stock.findById(req.params.id);
+    const c_quantity = Number(c_stock.quantity);
+    const n_quantity = Number(quantity);
+    
+    if(n_quantity > c_quantity){
+        req.flash('danger_msg', 'La nueva cantidad no puede ser mayor al stock actual')
+    }
+    const total_quantity = c_quantity - n_quantity;
+    await stock.findByIdAndUpdate(req.params.id, {ranch_owner, name, description, unit, quantity: total_quantity});
+    const newUses = new usesModel({ranch_owner, name, description, unit, old_quantity: c_stock.quantity, registered_qnty: quantity, new_quantity: total_quantity, user: req.user.username});
+    await newUses.save();
+    req.flash('success_msg', 'Stock actualizado');
+    switch(req.user.role){
+        case 'usuario':
+            res.redirect('/user');
+        break;
+        case 'coordinador':
+            res.redirect('/coordinator');
+        break;
+    }
+    
+    
+});
+
+router.get('/uses-historic', async (req, res) => {
+
+    const uses = await usesModel.aggregate([
+        {
+          '$match': {
+            'ranch_owner': req.user.ranch
+          }
+        }
+      ]);
+    // console.log(uses);
+
+    res.render('uses-historic', {
+        doc_title: 'Historial Material',
+        uses
+    });
 });
 
 module.exports = router;

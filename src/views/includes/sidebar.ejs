@@ -61,19 +61,21 @@
                     </a>
                     <span class="tooltip">Control de Procesos</span>
                 </li>
+                <% if(user.role != 'administrador') {%> 
                 <li class="side">
-                    <a href="#">
+                    <a href="/uses-historic">
                         <i class='bx bx-clipboard'></i>
                         <span class="links_name">Registro</span>
                     </a>
                     <span class="tooltip">Registro</span>
                 </li>
+                <% } %> 
                 <li class="side">
                     <a href="/orders-done">
                         <i class='bx bx-history' ></i>
-                        <span class="links_name">Historial</span>
+                        <span class="links_name">Historial Pedidos</span>
                     </a>
-                    <span class="tooltip">Historial</span>
+                    <span class="tooltip">Historial Pedidos</span>
                 </li>
 
         <li class="profile">

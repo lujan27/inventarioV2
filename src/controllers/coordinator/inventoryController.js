@@ -1,4 +1,5 @@
-const inventoryModel = require('../../models/coordinator/inventoryModel');
+// const inventoryModel = require('../../models/coordinator/inventoryModel');
+const inventoryModel = require('../../models/stockModel');
 
 function main (req, res) {
     let data = null;
@@ -6,7 +7,13 @@ function main (req, res) {
     // const foo = require('../orderController');
     // foo.main();
 
-    inventoryModel.find({})
+    inventoryModel.aggregate([
+        {
+          '$match': {
+            'ranch_owner': req.user.ranch
+          }
+        }
+      ])
     .then((result) => {
         data = result;
     })
