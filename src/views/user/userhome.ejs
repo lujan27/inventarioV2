@@ -18,8 +18,9 @@
                 <div class="subcontenedor">
                     <div class="bloque activo">
                         <div class="justify-content-center row">
-            
+                            
                             <h2>Inventario en: <%= user.ranch %> </h2>
+                            
                             <table id="inventoryTable" data-column-orderable="1, 0, 0, 1, 0, 0" class="w-100 data-table table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
@@ -78,6 +79,7 @@
                     <h3>Realizar Pedidos</h3>
                     <div id="formOrder" class="container-fluid px-lg-5 px-3 mb-4">
                         <input type="text" value="<%=doc_title%>" name="module" hidden> <!-- No eliminar, permite obtener el nombre de la pagina actual -->
+                        <input id="role" value="<%=user.role%>" hidden>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>

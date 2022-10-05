@@ -10,7 +10,7 @@ const OrderSchema = new Schema(
         module: {type: String},
         userOrder: {type: String},
         userRanch: {type: String},
-        status: { type: String, trim: true }
+        
     },
     {
         _id: false,         // <--------- Obligatorio

@@ -16,6 +16,8 @@ const createOrder = (e) => {
     const itemID = e.target.dataset.id;
     const formOrder = $('#formOrder'); //Obtienes el div del formulario
     const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes los valores de la tabla
+    const userRole = document.getElementById('role').value.trim();
+    //console.log(userRole);
 
     // Si no existe, añádelo
     if (!$(`#formOrder .row[data-id="${itemID}"]`).length)
@@ -59,7 +61,7 @@ if (buttonsOrder.length)
 
 $('#Gdisabled').on('click', (e) => {
     var items = [];
-
+    var status = document.getElementById('role').value.trim();
     $('.order-item').map((i, elem) => {
         var quantity = parseInt(elem.querySelector('.prod-qty').value),
             product = elem.querySelector('.prod-name').value.trim(),
@@ -69,13 +71,23 @@ $('#Gdisabled').on('click', (e) => {
         if (quantity > 0) {
             order = {
                 pdOrd: product,
-                qntyOrd: quantity
+                qntyOrd: quantity,
+                status
             }
-            if (notes.length > 1)
+            if (notes.length > 1){
                 order.noteOrd = notes;
+            }
+            if(status == 'usuario'){
+                order.status = 'Solicitado';
+            }
+            else if(status == 'coordinador'){
+                order.status = 'Pendiente revisión';
+            }
+            
         }
 
         items.push(order);
+        
     });
 
     $.ajax({

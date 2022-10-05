@@ -132,7 +132,7 @@ router.get('/orders-done', async(req, res)=>{
             const ordersUser = await Order.aggregate([
                 {
                   '$match': {
-                    'status': 'Solicitado',
+                    'items.status': 'Solicitado',
                     'userRanch': req.user.ranch
                   }
                 }
