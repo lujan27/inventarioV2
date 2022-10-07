@@ -31,7 +31,7 @@
                     <tbody>
                         
                             <% for(let i = 0; i<orderid.items.length; i++){ %> 
-                            <tr id="id-<%=orderid._id%>">
+                            <tr id="table" data-id="<%=i%>">
                                 
                                 <td><%= orderid.items[i].pdOrd %></td>
                                 <td><%= orderid.items[i].qntyOrd %></td>
@@ -42,9 +42,9 @@
                                 <td><%= orderid.order_date %> </td>
                                 
                                 <td>
-                                    <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" href="#">
+                                    <button id="Gdisabled" class="btn btn-outline-dark btnOrder" type="button" data-id="<%=i%>" onclick="GetId()">
                                         <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
-                                    </a>
+                                    </button>
                                 </td>
                                 
                             </tr>
@@ -66,5 +66,12 @@
 </body>
 
 <%- include('includes/scripts.ejs') %>
+
+<script>
+    function GetId(){
+        var boton = document.getElementById('Gdisabled');
+        console.log(boton);
+    }
+</script>
 
 <%- include('includes/footer.ejs') %>
