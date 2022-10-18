@@ -5,7 +5,10 @@ const AutoIncrement = require('mongoose-sequence')(mongoose); // <--------- Obli
 const OrderSchema = new Schema(
     {
         _id: { type: Number},      // <--------- Obligatorio
-        items: { type: Array, required: true },
+        pdOrd: {type: String},
+        qntyOrd: {type: Number},
+        noteOrd: {type: String},
+        status: {type: String},
         order_date: { type: Date, default: Date.now() },
         module: {type: String},
         userOrder: {type: String},

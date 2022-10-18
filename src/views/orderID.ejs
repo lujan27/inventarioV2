@@ -42,7 +42,7 @@
                                 <td><%= orderid.order_date %> </td>
                                 
                                 <td>
-                                    <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" href="#">
+                                    <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" value="<%=orderid._id%>">
                                         <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                                     </a>
                                 </td>
@@ -68,3 +68,30 @@
 <%- include('includes/scripts.ejs') %>
 
 <%- include('includes/footer.ejs') %>
+
+<script>
+$('#orderItem').on('click', (e) => {
+    idStatus = $('#orderItem').attr("value");
+    $.ajax({
+        type: 'PUT',
+        url: window.location.origin + '/update/'+idStatus,
+        contentType: 'application/json', // Important thing don't delete 💀
+        dataType: 'json', // Also this is important 👻
+        data: JSON.stringify({status:"TEMPORAL"}),
+        async: true,
+        /** _--* Parámetros útiles 101 *--_
+         * result: resultado 👁👄👁
+         * xhr: headers
+         * error: causa del error
+        */
+        success: (result, status, xhr) => {
+            console.log("EXITO");
+            window.location.reload();
+        },
+        error: (xhr, status, error) => {
+            console.error(xhr);
+            console.error(error);
+        }
+    });
+})
+</script>

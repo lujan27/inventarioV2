@@ -66,9 +66,9 @@
                 <tbody>
                     <% catalogue.forEach((prod, i) => { %> 
                     <tr>
-                        <td class="product-name" data-id="<%= i %>"><%= prod.nameProduct %></td>
+                        <td class="product-name" data-id="<%=i%>"><%= prod.nameProduct %></td>
                         <td class="product-description"><%= prod.descriptionProduct%></td>
-                        <td><button class="btn btn-success btnOrder" data-id="<%= i %>">Agregar</button></td>
+                        <td><button class="btn btn-success btnOrder" data-id="<%=i%>">Agregar</button></td>
                     </tr>
                     <% }); %>
                 </tbody>

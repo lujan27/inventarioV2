@@ -8,6 +8,7 @@ const MainCat = require('../models/mainCatalogueModel');
 const stock = require('../models/stockModel');
 const usesModel = require('../models/usesModel');
 const {isAuthLogged} = require('../config/sessionOn');
+const ordersModel = require('../models/ordersModel');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -57,110 +58,78 @@ router.get('/catalogue', async (req, res) => {
 });
 
 router.post('/add-order', async (req, res) => {
-    const {items, module} = req.body
+    
+    const data = req.body;
+    let cont = [];
+    for (let element in data.pdOrd){
+        
+        cont.push(element);
+
+    };
+
+    console.log(cont.length);
+
+    var estatus="";
 
     switch(req.user.role){
-        case 'administrador':
-            status = 'Aprobado'
+        case "coordinador":
+            estatus = "Pendiente a revisión"
             break;
-        case 'coordinador':
-            status = 'Pendiente revisión'
+
+        case "usuario":
+            estatus = "Solicitado"    
             break;
-        case 'usuario':
-            status = 'Solicitado'
-            break;
-        default: 
-            status = 'En proceso'
-            break;
+
+        
+        
     }
     
-    const userOrder = req.user.username;
-    const userRanch = req.user.ranch;
+    const {module, pdOrd, qntyOrd, noteOrd} = req.body;
 
-    const newOrder = new Order({
-        items, 
-        status,
-        module,
-        userOrder,
-        userRanch
-    });
+    if(typeof pdOrd == "string"){
+       const one = new ordersModel({module, pdOrd, qntyOrd, noteOrd, userOrder: req.user.username, userRanch: req.user.ranch, status: estatus});
+       await one.save();
+       req.flash("success_msg", "Orden creada!");
+       
+    }else{
 
-    await newOrder.save();
-
-    req.flash('success_msg', 'Peticion realizada');
-
-    switch (module){
-        case 'Administrador':
-            res.redirect('/admin');
-            break;
-        case 'Catalogo Principal':
-            res.redirect('/catalogue');
-            break;
-        case 'Usuario':
-            res.redirect('/user');
-            break;
-        case 'Coordinador':
-            res.redirect('/coordinator');
-            break;
-        default: 
-            res.redirect('/catalogue');
-            break;
-    } //Agregar mas case para redirigir a los usuarios dependiendo del nombre que tenga su pagina de pedidos
-});
-
-//Ruta vista Historial
-router.get('/orders-done', async(req, res)=>{
-    
-    switch(req.user.role){
-        case 'administrador':
-            const ordersAdmin = await Order.find();
-
-            ordersH = ordersAdmin
-            break;
-        case 'coordinador':
-            const ordersCoord = await Order.aggregate([
-                {
-                    '$match': {
-                        'userRanch': req.user.ranch
-                    }
-                }
-            ]);
-
-            ordersH = ordersCoord;
-            break;
-        case 'usuario':
-            const ordersUser = await Order.aggregate([
-                {
-                  '$match': {
-                    'items.status': 'Solicitado',
-                    'userRanch': req.user.ranch
-                  }
-                }
-            ]);
+        for(let i=0; i<cont.length; i++){
+            let two = new ordersModel({module, pdOrd:pdOrd[i], qntyOrd:qntyOrd[i], noteOrd:noteOrd[i], userOrder: req.user.username, userRanch: req.user.ranch, status: estatus});
+            await two.save();
             
-            ordersH = ordersUser;
-            break;
-        default: 
-            status = 'En proceso'
-            break;
+        }
+        req.flash("success_msg", "Ordenes creadas: "+cont.length);
+       
     }
 
-    
-    res.render('historic' , {
-        doc_title: 'Pedidos Realizados',
-        ordersH
-    });
+    switch(module){
+         
+        case "Catalogo principal":
+            res.redirect('/catalogue')
+            break;
 
+        case "Coordinador":
+            res.redirect('/coordinator')
+            break;
+
+        case "Usuario":
+            res.redirect('/user')
+            break;
+
+        
+        
+    }
 });
 
 router.get('/orders-done/:id', async (req, res) => {
     const orderid = await Order.findById(req.params.id);
-
+    //console.log(orderid.items.length);
     res.render('orderID', {
         doc_title: 'Informacion del pedido',
         orderid
     });
 });
+
 
 //Ruta para material gastado
 router.get('/uses/:id', async (req, res) => {
@@ -201,6 +170,51 @@ router.put('/uses/:id', async (req, res) => {
     
 });
 
+//Ruta vista Historial
+router.get('/orders-done', async(req, res)=>{
+    
+    switch(req.user.role){
+        case 'administrador':
+            const ordersAdmin = await Order.find();
+
+            ordersH = ordersAdmin
+            break;
+        case 'coordinador':
+            const ordersCoord = await Order.aggregate([
+                {
+                    '$match': {
+                        'userRanch': req.user.ranch
+                    }
+                }
+            ]);
+
+            ordersH= ordersCoord;
+            break;
+        case 'usuario':
+            const ordersUser = await Order.aggregate([
+                {
+                  '$match': {
+                    'items.status': 'Solicitado',
+                    'userRanch': req.user.ranch
+                  }
+                }
+            ]);
+            
+            ordersH = ordersUser;
+            break;
+        default: 
+            status = 'En proceso'
+            break;
+    }
+
+    
+    res.render('historic' , {
+        doc_title: 'Pedidos Realizados',
+        ordersH
+    });
+
+});
+
 router.get('/uses-historic', async (req, res) => {
 
     const uses = await usesModel.aggregate([
@@ -216,6 +230,26 @@ router.get('/uses-historic', async (req, res) => {
         doc_title: 'Historial Material',
         uses
     });
+});
+
+router.put('/update/:id', async(req, res)=>{
+    console.log("HERE I AM");
+    var {status} = req.body;
+    //console.log(req.body);
+    var okok = await Order.findById(req.params.id);
+    /*for (i=0; i<okok.items.length;i++){
+
+    }*/
+    console.log(okok.items[0].status)
+    
+    await Order.findByIdAndUpdate(req.params.id, {$set:{"items.status.$[0]": {status}}},{new:true})
+    .then(()=>{
+        console.log("aqui")
+        
+    }).catch(e=>console.log(e))
+
+    //req.flash('success_msg', 'Status Actualizado');
+        //res.redirect('/orders-done');
 });
 
 module.exports = router;
