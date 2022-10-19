@@ -130,6 +130,25 @@ router.get('/orders-done/:id', async (req, res) => {
     });
 });
 
+// Route for edit users
+router.get('/user/editstatus/:id', async(req, res)=>{
+    const editstatus = await ordersModel.findById(req.params.id);
+    console.log(editstatus);
+    res.render('editstatus' , {
+        doc_title: 'Editar estatus',
+        editstatus
+    });
+
+});
+
+// Route type PUT for edit users
+router.put('/user/editstatus/:id', async(req, res)=>{
+    var {status} = req.body;
+    await ordersModel.findByIdAndUpdate(req.params.id, {status});
+    req.flash('success_msg', 'Estatus actualizado');
+    res.redirect('/user');
+});
+
 
 //Ruta para material gastado
 router.get('/uses/:id', async (req, res) => {
@@ -180,25 +199,12 @@ router.get('/orders-done', async(req, res)=>{
             ordersH = ordersAdmin
             break;
         case 'coordinador':
-            const ordersCoord = await Order.aggregate([
-                {
-                    '$match': {
-                        'userRanch': req.user.ranch
-                    }
-                }
-            ]);
+            const ordersCoord = await Order.find();
 
             ordersH= ordersCoord;
             break;
         case 'usuario':
-            const ordersUser = await Order.aggregate([
-                {
-                  '$match': {
-                    'items.status': 'Solicitado',
-                    'userRanch': req.user.ranch
-                  }
-                }
-            ]);
+            const ordersUser = await Order.find();
             
             ordersH = ordersUser;
             break;
