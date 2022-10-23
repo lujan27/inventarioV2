@@ -13,6 +13,7 @@ const OrderSchema = new Schema(
         module: {type: String},
         userOrder: {type: String},
         userRanch: {type: String},
+        declineReasons: {type: String}
         
     },
     {

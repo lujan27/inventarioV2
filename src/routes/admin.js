@@ -210,7 +210,7 @@ router.post('/admin/adduser', isAuthAdmin, async (req, res) => {
             res.redirect('/admin/adduser');
         }
         
-        const newUser = new user({name, lastname, username, email, password, role, ranch});
+        const newUser = new userModel({name, lastname, username, email, password, role, ranch});
         newUser.password = await newUser.encryptPassword(password);
         await newUser.save();
         req.flash('success_msg', 'Usuario creado!');

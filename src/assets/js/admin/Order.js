@@ -16,6 +16,7 @@ const createOrder = (e) => {
     const itemID = e.target.dataset.id;
     const formOrder = $('#formOrder'); //Obtienes el div del formulario
     const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes los valores de la tabla
+    const button = document.getElementById('Gdisabled');
     //console.log(userRole);
 
     // Si no existe, añádelo
@@ -53,6 +54,10 @@ const createOrder = (e) => {
                 </div>
             </div>
         `);
+
+        if(productName){
+            button.removeAttribute('disabled', 'disabled');
+        }
 }
 
 if (buttonsOrder.length)

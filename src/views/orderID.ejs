@@ -13,39 +13,71 @@
         <div class="bloque activo">
           <div class="justify-content-center row">
             
-            <h2>Informacion del pedido:</h2>
-                <table id="inventoryTable" data-column-orderable="1, 1, 1, 0" class="w-100 data-table table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            
-                            <th scope="col">Material</th>                        
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Notas</th>
-                            <th scope="col">Estatus</th>
-                            <th scope="col">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <% if(orderid){%> 
-                            <tr id="id-<%=orderid._id%>">
-
-                                <td><%= orderid.pdOrd %> </td>
-                                <td><%= orderid.qntyOrd %> </td>
-                                <td><%= orderid.noteOrd %> </td>
-                                <td><%= orderid.status %> </td>
-                                <td><a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/user/editstatus/<%= orderid._id%>"><i class='bx bxs-edit' ></i>Estatus</a></td>
-                                
-                            </tr>
-                            <% }; %> 
-                            
+            <h2>Informacion del pedido #<%=orderid._id%>: </h2>
+            <div class="card-body">
+                <form action="/editstatus/<%=orderid._id%>?_method=PUT" method="POST">
                     
-                            
+                    <div class="form-group">
+                        <label>Material: </label>
+                        <input type="text" class="form-control" name="" value="<%= orderid.pdOrd%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad: </label>
+                        <input type="number" class="form-control" name="" value="<%= orderid.qntyOrd%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Nota: </label>
+                        <br>
+                        <textarea name="" id="" cols="30" rows="5" disabled><%=orderid.noteOrd%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Usuario: </label>
+                        <input type="text" class="form-control" name="" value="<%= orderid.userOrder%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Rancho: </label>
+                        <input type="text" class="form-control" name="" value="<%= orderid.userRanch%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Estatus: </label>
+                        <input type="text" class="form-control" name="" value="<%= orderid.status%>" disabled>
+                    </div>
+                    <% if(
+                            user.role != 'usuario' && //El rol actual es diferente de 'usuario'
+                            user.username != orderid.userOrder && //El nombre de usuario actual es diferente de quien hizo la orden
+                            !orderid.declineReasons && //No existe el campo 'declineReasons' dentro de la BD
+                            orderid.status != 'Aceptada' //El status es diferente de 'Aceptada'
+                        ){ %>
+                    <div class="form-group">
+                        <label for="status">Aceptar o rechazar el pedido</label>
+                        <select name="newStatus" id="status" onchange="changeStatus()">
+                            <option value="No"></option>
+                            <option value="Aceptar">Aceptar</option>
+                            <option value="Rechazar">Rechazar</option>
+                        </select>
+                        <br>
+                        <label for="decline" id="lbldecline" hidden>Indique las razones por las que rechaza este pedido: </label>
+                        <br id="salto" hidden>
+                        <textarea name="declineReasons" id="decline" cols="30" rows="5" hidden></textarea>
+                    </div>
+                    
 
-                    </tbody>
-                    <caption class="pl-2">Tabla Informacion sobre el pedido #<%=orderid._id%> </caption>
-                </table>
+                    <div class="form-group">
+                        <button class="btn btn-dark btn-block" id="Gdisabled" disabled>Guardar</button>
+                    </div>                    
+                    <% } %> 
+                </form>
+
+                <%if(orderid.declineReasons){%> 
+                <div class="form-group">
+                    <details open>
+                        <summary>Razones de rechazo: </summary>
+                        <p><%=orderid.declineReasons%></p>
+                    </details>
+                </div>
+                <% } %> 
+            </div>
+        </div>
           </div>
         </div>
     </div>
@@ -56,5 +88,7 @@
 </body>
 
 <%- include('includes/scripts.ejs') %>
+
+<script src="/js/selectOrders.js"></script>
 
 <%- include('includes/footer.ejs') %>

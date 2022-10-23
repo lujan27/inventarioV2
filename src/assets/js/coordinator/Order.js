@@ -16,7 +16,8 @@ const createOrder = (e) => {
     const itemID = e.target.dataset.id;
     const formOrder = $('#formOrder'); //Obtienes el div del formulario
     const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes los valores de la tabla
-    const userRole = document.getElementById('role').value.trim();
+    const button = document.getElementById('Gdisabled');
+    // const userRole = document.getElementById('role').value.trim();
     //console.log(userRole);
 
     // Si no existe, añádelo
@@ -54,60 +55,68 @@ const createOrder = (e) => {
                 </div>
             </div>
         `);
+
+        if(productName){
+             button.removeAttribute('disabled', 'disabled');
+         }
 }
 
 if (buttonsOrder.length)
     buttonsOrder.on('click', createOrder);
 
-$('#Gdisabled').on('click', (e) => {
-    var items = [];
-    var status = document.getElementById('role').value.trim();
-    $('.order-item').map((i, elem) => {
-        var quantity = parseInt(elem.querySelector('.prod-qty').value),
-            product = elem.querySelector('.prod-name').value.trim(),
-            notes = elem.querySelector('.prod-notes').value.trim(),
-            order = {}
+
+
+
+
+// $('#Gdisabled').on('click', (e) => {
+//     var items = [];
+//     var status = document.getElementById('role').value.trim();
+//     $('.order-item').map((i, elem) => {
+//         var quantity = parseInt(elem.querySelector('.prod-qty').value),
+//             product = elem.querySelector('.prod-name').value.trim(),
+//             notes = elem.querySelector('.prod-notes').value.trim(),
+//             order = {}
         
-        if (quantity > 0) {
-            order = {
-                pdOrd: product,
-                qntyOrd: quantity,
-                status
-            }
-            if (notes.length > 1){
-                order.noteOrd = notes;
-            }
-            if(status == 'usuario'){
-                order.status = 'Solicitado';
-            }
-            else if(status == 'coordinador'){
-                order.status = 'Pendiente revisión';
-            }
+//         if (quantity > 0) {
+//             order = {
+//                 pdOrd: product,
+//                 qntyOrd: quantity,
+//                 status
+//             }
+//             if (notes.length > 1){
+//                 order.noteOrd = notes;
+//             }
+//             if(status == 'usuario'){
+//                 order.status = 'Solicitado';
+//             }
+//             else if(status == 'coordinador'){
+//                 order.status = 'Pendiente revisión';
+//             }
             
-        }
+//         }
 
-        items.push(order);
+//         items.push(order);
         
-    });
+//     });
 
-    $.ajax({
-        type: 'POST',
-        url: window.location.origin + '/add-order',
-        contentType: 'application/json', // Important thing don't delete 💀
-        dataType: 'json', // Also this is important 👻
-        data: JSON.stringify({ items: items, module: 'Coordinador' }),
-        async: true,
-        /** _--* Parámetros útiles 101 *--_
-         * result: resultado 👁👄👁
-         * xhr: headers
-         * error: causa del error
-        */
-        success: (result, status, xhr) => {
-            window.location.reload();
-        },
-        error: (xhr, status, error) => {
-            console.error(xhr);
-            console.error(error);
-        }
-    });
-})
+//     $.ajax({
+//         type: 'POST',
+//         url: window.location.origin + '/add-order',
+//         contentType: 'application/json', // Important thing don't delete 💀
+//         dataType: 'json', // Also this is important 👻
+//         data: JSON.stringify({ items: items, module: 'Coordinador' }),
+//         async: true,
+//         /** _--* Parámetros útiles 101 *--_
+//          * result: resultado 👁👄👁
+//          * xhr: headers
+//          * error: causa del error
+//         */
+//         success: (result, status, xhr) => {
+//             window.location.reload();
+//         },
+//         error: (xhr, status, error) => {
+//             console.error(xhr);
+//             console.error(error);
+//         }
+//     });
+// })
