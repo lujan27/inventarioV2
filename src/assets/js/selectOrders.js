@@ -20,6 +20,7 @@ function changeStatus(){
             label.removeAttribute('hidden', 'hidden');
             txtArea.removeAttribute('hidden', 'hidden');
             salto.removeAttribute('hidden', 'hidden');
+            txtArea.removeAttribute('disabled', 'disabled');
 
         }
     } else if (selected.value == 'No'){
