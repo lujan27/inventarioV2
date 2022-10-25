@@ -9,6 +9,7 @@ const stock = require('../models/stockModel');
 const usesModel = require('../models/usesModel');
 const {isAuthLogged} = require('../config/sessionOn');
 const ordersModel = require('../models/ordersModel');
+const stockModel = require('../models/stockModel');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -84,17 +85,17 @@ router.post('/add-order', async (req, res) => {
         
     }
     
-    const {module, pdOrd, qntyOrd, noteOrd} = req.body;
+    const {module, pdOrd, qntyOrd, noteOrd, unitOrd} = req.body;
 
     if(typeof pdOrd == "string"){
-       const one = new ordersModel({module, pdOrd, qntyOrd, noteOrd, userOrder: req.user.username, userRanch: req.user.ranch, status: estatus});
+       const one = new ordersModel({module, pdOrd, qntyOrd, noteOrd, userOrder: req.user.username, userRanch: req.user.ranch, status: estatus, unit: unitOrd});
        await one.save();
        req.flash("success_msg", "Orden creada!");
        
     }else{
 
         for(let i=0; i<cont.length; i++){
-            let two = new ordersModel({module, pdOrd:pdOrd[i], qntyOrd:qntyOrd[i], noteOrd:noteOrd[i], userOrder: req.user.username, userRanch: req.user.ranch, status: estatus});
+            let two = new ordersModel({module, pdOrd:pdOrd[i], qntyOrd:qntyOrd[i], noteOrd:noteOrd[i], userOrder: req.user.username, userRanch: req.user.ranch, status: estatus, unit: unitOrd[i]});
             await two.save();
             
         }
@@ -142,30 +143,11 @@ router.get('/orders-done/:id', async (req, res) => {
 // });
 
 // Route type PUT for edit STATUS
-router.put('/editstatus/:id', async(req, res)=>{
-    // var {status} = req.body;
-    // await ordersModel.findByIdAndUpdate(req.params.id, {status});
-    // req.flash('success_msg', 'Estatus actualizado');
-    // res.redirect('/user');
+router.put('/editstatus/:id', async(req, res)=>{   
     console.log(req.body);
-    var {newStatus, declineReasons} = req.body;
+    var {newStatus, declineReasons, reqName, reqQuantity, reqUser, reqRanch, reqUnit} = req.body;
     var updStatus = '';
 
-    // switch(req.user.role && newStatus){
-    //     case 'administrador' && 'Aceptar':
-    //         newStatus = 'Aceptada'
-    //         break;
-    //     case 'administrador' && 'Rechazar':
-    //         newStatus = 'Rechazada'
-    //         break;
-    //     case 'coordinador' && 'Aceptar':
-    //         console.log('Pendiente');
-    //         // newStatus = 'Pendiente a revisión'
-    //         break;
-    //     case 'coordinador' && 'Rechazar':
-    //         newStatus = 'Rechazada'
-    //         break;
-    // }
     if(declineReasons == ''){
         req.flash('danger_msg', 'Tiene que ingresar las razones del rechazo de la orden');
         res.redirect('/orders-done');
@@ -178,14 +160,127 @@ router.put('/editstatus/:id', async(req, res)=>{
         } else {
             updStatus = 'Rechazada';
         }
-        await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, declineReasons});
-        if(updStatus == 'Aceptada' || updStatus == 'Pendiente a revisión'){
-            req.flash('success_msg', 'Estatus actualizado: ' + updStatus);
-        } else if(updStatus == 'Rechazada'){
-            req.flash('danger_msg', 'Estatus actualizado: ' + updStatus);
+
+        if(updStatus == 'Aceptada'){
+            const stockP = await stockModel.findOne({ //Obtiene el stock del 'Rancho Principal'
+                ranch_owner: 'Rancho Principal', 
+                name: reqName
+            });
+
+            if(stockP == null){
+                req.flash('danger_msg', 'Este material no existe en el rancho');
+                res.redirect('/orders-done');
+            } else {
+                var o_quantity = Number(stockP.quantity); //Cantidad actual en el 'Rancho principal'
+                var n_quantity = Number(reqQuantity); //Cantidad solicitada en la orden
+                var result = o_quantity - n_quantity; //Calcula la resta del inventario y la orden requerida
+                console.log(o_quantity);
+                console.log('El resultado es: '+result);
+    
+                if(result > o_quantity || Math.sign(result) == -1){
+                    req.flash('danger_msg', 'No hay el material suficiente');
+                    res.redirect('/orders-done');
+                } else{
+                    const stockTarget = await stockModel.findOne({
+                        ranch_owner: reqRanch,
+                        name: reqName
+                    });
+        
+                    if(stockTarget == null){
+                        var c_quantity = 0;
+                    } else {
+                        var c_quantity = Number(stockTarget.quantity); //Cantidad dentro del rancho destino
+                    }
+        
+                    var update_qnty = c_quantity + n_quantity; //Operacion para la suma de material
+                    
+                    if(stockTarget == null){ //En caso de que el material que solicitan no exista se creará cuando el admin lo acepte
+                        console.log('No existe ese material');
+                        const newStock = new stockModel({
+                            ranch_owner: reqRanch,
+                            name: reqName,
+                            quantity: reqQuantity,
+                            unit: reqUnit
+                        })
+                        await newStock.save();
+                        await stockP.updateOne({quantity: result});// Actualiza el stock del 'Rancho Principal'
+        
+                        const sent_Uses = new usesModel({ //Registrar el uso del material
+                            ranch_owner: 'Rancho Principal',
+                            name: reqName,
+                            description: 'No hay descripcion',
+                            unit: reqUnit,
+                            old_quantity: o_quantity,
+                            registered_qnty: n_quantity,
+                            new_quantity: result,
+                            user: req.user.username,
+                            type_action: 'Transferencia de material para: '+reqRanch
+                        });
+                        await sent_Uses.save();
+        
+                        const receipt_Uses = new usesModel({
+                            ranch_owner: reqRanch,
+                            name: reqName,
+                            description: 'No hay descripcion',
+                            unit: reqUnit,
+                            old_quantity: c_quantity,
+                            registered_qnty: n_quantity,
+                            new_quantity: update_qnty,
+                            user: req.user.username,
+                            type_action: 'Recibo de material desde Rancho Principal'
+                        });
+                        await receipt_Uses.save();
+        
+                    } else {
+                        
+                        console.log('La nueva cantidad esssss: '+update_qnty)
+                        await stockTarget.updateOne({quantity: update_qnty})
+                        await stockP.updateOne({quantity: result});
+        
+                        const sent_Uses = new usesModel({ //Registrar el envio del material
+                            ranch_owner: 'Rancho Principal',
+                            name: reqName,
+                            description: 'No hay descripcion',
+                            unit: reqUnit,
+                            old_quantity: o_quantity,
+                            registered_qnty: n_quantity,
+                            new_quantity: result,
+                            user: req.user.username,
+                            type_action: 'Transferencia de material para: '+reqRanch
+                        });
+                        await sent_Uses.save();
+        
+                        const receipt_Uses = new usesModel({
+                            ranch_owner: reqRanch,
+                            name: reqName,
+                            description: 'No hay descripcion',
+                            unit: reqUnit,
+                            old_quantity: c_quantity,
+                            registered_qnty: n_quantity,
+                            new_quantity: update_qnty,
+                            user: req.user.username,
+                            type_action: 'Recibo de material desde Rancho Principal'
+                        });
+                        await receipt_Uses.save();
+                    }
+                    
+                    await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, declineReasons});
+    
+                    if(updStatus == 'Aceptada' ){
+                        req.flash('success_msg', 'Estatus actualizado: ' + updStatus + '\n');
+                        req.flash('success_msg', 'Transferencia de material realizada');
+                    } else if(updStatus == 'Pendiente a revisión'){
+                        req.flash('success_msg', 'Estatus actualizado: ' + updStatus);
+                    } else if(updStatus == 'Rechazada'){
+                        req.flash('danger_msg', 'Estatus actualizado: ' + updStatus);
+                    }
+                    
+                    res.redirect('/orders-done');
+                }
+            }
+            
         }
         
-        res.redirect('/orders-done');
     }
 });
 
@@ -214,7 +309,17 @@ router.put('/uses/:id', async (req, res) => {
     }
     const total_quantity = c_quantity - n_quantity;
     await stock.findByIdAndUpdate(req.params.id, {ranch_owner, name, description, unit, quantity: total_quantity});
-    const newUses = new usesModel({ranch_owner, name, description, unit, old_quantity: c_stock.quantity, registered_qnty: quantity, new_quantity: total_quantity, user: req.user.username});
+    const newUses = new usesModel({
+        ranch_owner, 
+        name, 
+        description, 
+        unit, 
+        old_quantity: c_stock.quantity, 
+        registered_qnty: quantity, 
+        new_quantity: total_quantity, 
+        user: req.user.username, 
+        type_action: 'Uso de material'
+    });
     await newUses.save();
     req.flash('success_msg', 'Stock actualizado');
     switch(req.user.role){

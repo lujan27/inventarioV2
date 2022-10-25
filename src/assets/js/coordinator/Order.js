@@ -44,6 +44,22 @@ const createOrder = (e) => {
                     </div>
                 </div>
 
+                <div class="col-4 m-auto py-2">
+                <div class="form-floating">
+                    <select class="form-control prod-unit" name="unitOrd">
+                        <option value="kg">Kilogramo</option>
+                        <option value="g">Gramo</option>
+                        <option value="l">Litro</option>
+                        <option value="ml">Mililitro</option>
+                        <option value="km">Kilometro</option>
+                        <option value="m">Metro</option>
+                    </select>
+                    <label>
+                        Unidad de medida
+                    </label>
+                </div>
+            </div>
+
                 <div class="col-4 col-lg-5 m-auto py-2">
                     <div class="form-floating">
                         <textarea class="form-control prod-notes"

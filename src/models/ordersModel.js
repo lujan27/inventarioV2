@@ -8,6 +8,7 @@ const OrderSchema = new Schema(
         pdOrd: {type: String},
         qntyOrd: {type: Number},
         noteOrd: {type: String},
+        unit: {type: String},
         status: {type: String},
         order_date: { type: Date, default: Date.now() },
         module: {type: String},

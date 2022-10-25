@@ -13,6 +13,7 @@ const usesSchema = new Schema(
         registered_qnty: {type: Number, required: true},
         new_quantity: {type: Number, required: true},
         user: {type: String, required: true},
+        type_action: {type: String},
         modify_date: {type: Date, default: Date.now()}
     },
     {

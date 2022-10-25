@@ -14,7 +14,7 @@
           <div class="justify-content-center row">
 
             <h2>Historial material usado</h2>
-                <table id="inventoryTable" data-column-orderable="1, 1, 1, 0, 0, 0, 0, 0" class="w-100 data-table table table-striped">
+                <table id="inventoryTable" data-column-orderable="1, 1, 1, 0, 0, 0, 0, 1, 0" class="w-100 data-table table table-striped">
                     <thead class="thead-dark">
                         <tr>
                             
@@ -23,8 +23,9 @@
                             <th scope="col">Usuario</th>
                             <th scope="col">Unidad de medida</th>
                             <th scope="col">Cantidad inicial</th>
-                            <th scope="col">Cantidad gastada</th>
+                            <th scope="col">Cantidad registrada</th>
                             <th scope="col">Cantidad resultante</th>
+                            <th scope="col">Tipo de uso</th>
                             <th scope="col">Fecha</th>
                             
                         </tr>
@@ -40,6 +41,7 @@
                                 <td><%=data.old_quantity%> </td>
                                 <td><%=data.registered_qnty%> </td>
                                 <td><%=data.new_quantity%> </td>
+                                <td><%=data.type_action%> </td>
                                 <td><%=data.modify_date%> </td>
                             </tr>
                             
