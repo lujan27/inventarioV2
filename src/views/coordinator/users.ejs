@@ -1,175 +1,38 @@
+<%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
 
 <body>
-    <%- include('../includes/alerts.ejs') %>
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
+        <div class="container mt-2">
+            <%- include('../includes/alerts.ejs') %>
+
     
-    <button id="btn-modal-confirm" type="button" class="d-none" data-bs-toggle="modal"
-        data-bs-target="#modal-confirm" hidden></button>
-    <!-- Modal Register -->
-    <div id="modal-confirm" class="modal fade" data-bs-keyboard="false" aria-labelledby="modal-confirmLabel"
-        aria-hidden="true" data-bs-backdrop="static" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-confirmLabel">Confirmar acción</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
+
+            <div class="row text-center mx-auto">
+                <h2>Lista de empleados</h2>
+            </div>
+
+            <!-- div class="container-fluid row">
+                <div class="col-2 mx-auto">
+                    <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
+                        <i class='bx bx-spa'></i>
+                        Agregar producto al catalogo
+                    </a>
+                </div>
+            </div -->
+
+            <div class="content-fluid">
+                <div class="col-2 text-center">
+                    <button id="btn-modal-user" type="button" class="btn btn-primary register-mode" data-bs-toggle="modal"
+                        data-bs-target="#modal-user">
+                        Registrar usuario
                     </button>
                 </div>
-                <div class="modal-body">
-                    Estas seguro de <span class="mode-reg">registrar</span><span class="d-none mode-del">eliminar</span>
-                    al usuario <span id="display-user"></span>
-                </div>
-                <div class="modal-footer">
-                    <button id="btn-cancel" type="button" class="btn btn-secondary close-modal"
-                        data-bs-dismiss="modal">Cancelar</button>
-                    <button id="btn-confirm" type="button" class="btn btn-success">Confirmar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Register -->
-    <div id="modal-user" class="modal fade" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true" data-bs-backdrop="static" tabindex="-1">
-        <div class="modal-dialog modal-xl modal-dialog-centered w-90 w-md-75">
-            <div class="modal-content bg-dark rounded-3 shadow-lg">
-                <div class="row my-auto align-content-center px-3">
-                    <div class="container">
-                        <div class="row mt-3">
-                            <div class="col-2"></div>
-                            <div class="col d-flex justify-content-center">
-                                <h4 class="text-light p-0 mt-2 mode-r">Registro de personal</h4>
-                                <h4 class="text-light p-0 mt-2 mode-e d-none">Editar registro</h4>
-                            </div>
-                            <div class="col-2 d-flex justify-content-center align-content-center">
-                                <button type="button" class="btn btn-outline-light my-auto d-flex close-modal"
-                                    data-bs-dismiss="modal" aria-label="Close">
-                                    <i class="fa-solid fa-xmark fs-5 my-auto"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-nowrap text-light justify-content-center text-decoration-underline">
-                        <p class="lang" data-lang="es">Los campos obligatorios aparecen marcados con un </p>
-                        <span class="text-danger ps-2"><i class="fa-solid fa-asterisk"></i></span>
-                    </div>
-                    <div class="card-body px-3">
-                        <form method="POST" class="form-user" autocomplete="off" aria-autocomplete="none" data-mode="reg">
-                            <input type="hidden" id="user-id">
-                            <div class="row">
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="name" type="text" placeholder="." 
-                                            maxlength="25" />
-                                        <label for="name">
-                                            Nombre(s) <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="lastname" type="text" placeholder="." 
-                                            maxlength="25" />
-                                        <label for="lastname">
-                                            Apellidos(s) <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="username" type="text" placeholder="." 
-                                            maxlength="16" required />
-                                        <label for="username">
-                                            Usuario <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="email" type="email" placeholder="." 
-                                            maxlength="30" required />
-                                        <label for="email">
-                                            E-mail <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 mx-auto col-md-6 col-12">
-                                    <div class="form-floating">
-                                        <input class="form-control mandatory" id="password" type="password" placeholder="." 
-                                            minlength="8" maxlength="25" required />
-                                        <label for="password">
-                                            Contraseña <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select class="form-control form-select ps-4 mandatory" id="ranch" required>
-                                            <option value="0" selected>- Selecciona Rancho -</option>
-                                            <option value="pollitos en fuga">pollitos en fuga</option>
-                                            <option value="UTNA">UTNA</option>
-                                        </select>
-                                        <label for="ranch">
-                                            Rancho perteneciente <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-6 col-12">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select class="form-control form-select ps-4 mandatory" id="role" required>
-                                            <option value="0" selected>- Selecciona rol -</option>
-                                            <option value="administrador">administrador</option>
-                                            <option value="coordinador">coordinador</option>
-                                            <option value="usuario">usuario</option>
-                                        </select>
-                                        <label for="role">
-                                            Rol <i class="fa-solid fa-asterisk text-danger"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-2 mb-5">
-                                <div class="row my-3">
-                                    <button id="register" class="btn btn-outline-success submit-data mx-auto w-50 w-md-25
-                                        fs-5 btn-block mode-r" type="button">
-                                        Registrar
-                                    </button>
-                                    <button id="save" class="btn btn-outline-success submit-data mx-auto w-50 w-md-25
-                                        fs-5 btn-block mode-e d-none" type="button">
-                                        Guardar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row">
-            <h1>Lista de empleados</h1>
-        </div>
-    </div>
-
-    <div class="content-fluid">
-        <div class="row">
-            <button id="btn-modal-user" type="button" class="btn btn-primary register-mode" data-bs-toggle="modal"
-                data-bs-target="#modal-user">
-                Registrar usuario
-            </button>
-        </div>
-        <div class="row w-75 mx-auto">
-            <table id="usersTable" data-column-orderable="1, 1, 0, 0, 1, 1, 0" class="w-100 data-table">
-                <thead>
+                <br>
+            <div class="row text-center pb-sm-5">
+                <table id="inventoryTable" data-column-orderable="1, 0, 1, 0, 0, 0" class="w-100 data-table table table-lg table-striped">
+                    <thead class="thead-dark">
                     <tr>
                         <th>Nombre</th>
                         <th>Apellidos</th>
@@ -177,7 +40,7 @@
                         <th>E-mail</th>
                         <th>Rol</th>
                         <th>Rancho</th>
-                        <th></th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -197,6 +60,12 @@
                                     <i class="fa-solid fa-list"></i>
                                 </button>
                                 <ul class="dropdown-menu">
+                                    <center>
+                                        <li>
+                                            <a type="button" style="text-align:center" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
+                                            <input type="hidden" name="_method" value="delete">
+                                        </li>
+                                        </center>
                                     <li>
                                         <button type="button" class="btn rounded-0 dropdown-item py-2 text-center edit-mode"
                                             data-bs-toggle="modal" data-bs-target="#modal-user" data-id="<%= data[i]._id %>">
@@ -217,13 +86,14 @@
                 <% } } %>
                 </tbody>
             </table>
+        
+            </div>
         </div>
-    </div>
-</body>
-
+        <br>
+        <%- include('../includes/foot.ejs') %>
+    </section>
 <%- include('../includes/scripts.ejs') %>
 
-<script src="/js/datatables.js"></script>
-<script src="/js/user-form-validation.js"></script>
+<script src="/js/orders.js"></script>
 
 <%- include('../includes/footer.ejs') %>

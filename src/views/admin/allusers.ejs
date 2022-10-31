@@ -2,26 +2,10 @@
 <%- include('../includes/header.ejs') %>
 
 <body>
-    <section class="home-section pt-4 mt-4">
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
         <div class="container mt-4">
             <%- include('../includes/alerts.ejs') %>
-            
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
-                    <ul class="dropdown-menu">
-
-                    <% ranches.forEach(ranch => { %>
-
-                    <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%= ranch.ranch_name %></a></li>
-
-                    <% }); %>
-
-                    </ul>
-                </li>
-            </ul>
 
                     <div class="container-fluid pt-4 mt-4">
                         <div class="subcontenedor">                       
@@ -78,7 +62,7 @@
                                             <% } %>
                                             <td>
                                                 <div class="btn-group dropstart">
-                                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle opts"
+                                                    <button type="button" class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle opts"
                                                         data-bs-toggle="dropdown" aria-expanded="false" >
                                                         <i class="fa-solid fa-list"></i>
                                                     </button>
@@ -86,7 +70,7 @@
                                                     <ul class="dropdown-menu">
                                                         <center>
                                                         <li>
-                                                            <a type="button" style="text-align:center" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
+                                                            <a type="button" style="text-align:center" class="btn btn-outline-success my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
                                                             <input type="hidden" name="_method" value="delete">
                                                         </li>
                                                         </center>
@@ -121,7 +105,9 @@
                         </div>        
                     </div>
         </div>
+        <br>
+        <%- include('../includes/foot.ejs') %>
     </section>
-</body>
+
 <%- include('../includes/scripts.ejs') %>
 <%- include('../includes/footer.ejs') %>

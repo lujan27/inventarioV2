@@ -4,27 +4,11 @@
 
 
 <body>
-    <section class="home-section pt-4 mt-4">
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
+
         <div class="container mt-4">
         <%- include('../includes/alerts.ejs') %>
-
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
-                <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
-                    <ul class="dropdown-menu">
-
-                    <% ranches.forEach(ranch => { %>
-
-                      <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%= ranch.ranch_name %></a></li>
-
-                    <% }); %>
-
-                    </ul>
-                  </li>
-            </ul>
 
             <div class="container-fluid pt-4 mt-4">
                 <div class="subcontenedor">
@@ -52,7 +36,7 @@
                                             <td><%= stock.unit %> </td>
                                             <td><%= stock.quantity %> </td>
                                             <td>
-                                                <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>">
+                                                <button id="orderItem" class="btn btn-outline-primary my-2 my-sm-0 btnOrder" type="button" data-id="<%= i %>">
                                                     <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                                                 </button>
                                             </td>
@@ -88,9 +72,9 @@
 
         </div>
     </div>  
-
-
-</body>
+    <br>
+    <%- include('../includes/foot.ejs') %>
+    </section>
 
 <%- include('../includes/scripts.ejs') %>
 <script src="/js/admin/order.js"></script>

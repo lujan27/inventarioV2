@@ -290,10 +290,12 @@ router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
 // view add stock
 router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
     const RanchsBD = await ranchModel.find();
+    const catalogue = await mainCatModel.find();
 
     res.render('admin/addstock', {
         doc_title: 'Añadir Stock',
-        RanchsBD
+        RanchsBD,
+        catalogue
     });
 });
 

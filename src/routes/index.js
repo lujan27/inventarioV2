@@ -10,6 +10,7 @@ const usesModel = require('../models/usesModel');
 const {isAuthLogged} = require('../config/sessionOn');
 const ordersModel = require('../models/ordersModel');
 const stockModel = require('../models/stockModel');
+const userModel = require('../models/users/userModel');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -19,6 +20,7 @@ router.get('/admin/Cerrar', async (req, res)=>{
 });
 
 router.get('/', (req, res) => {
+    
     const success_msg = req.flash('success_msg')[0];
     res.render('index', {
         doc_title: 'Inicio de sesión - Inventario',

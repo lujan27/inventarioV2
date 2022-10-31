@@ -3,28 +3,10 @@
 
 
 <body>
-
-<section class="home-section pt-4 mt-4">
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
     <div class="container mt-2">
         <%- include('../includes/alerts.ejs') %>
-        
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
-                    <ul class="dropdown-menu">
-    
-                    <% ranches.forEach(ranch => { %>
-    
-                    <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%= ranch.ranch_name %></a></li>
-    
-                    <% }); %>
-    
-                    </ul>
-                </li>
-
-            </ul>
 
             <div class="row pt-4 mt-4">
                 <div class="col-md-8 mx-auto pb-4 mb-4">
@@ -74,17 +56,15 @@
                                 </div>
                                 <div class="form-group" name="formulario">
                                     <label>Recinto al que pertenece: </label>
-                                    <select class="custom-select" name="ranch" id="" value="<%= edit.ranch%>">
-                                        <option value="">Asigna el rancho al que pertenece...</option>
-                                        <option <%= edit.ranch =='Pollitos en fuga' ? "selected" : '' %> value="Pollitos en fuga">Pollitos en fuga</option>
-                                        <option <%= edit.ranch =='UTNA' ? "selected" : '' %> value="UTNA">UTNA</option>
-                                        <option <%= edit.ranch =='puentes' ? "selected" : '' %> value="puentes">Puentes</option>
-                                        <option <%= edit.ranch =='loreto' ? "selected" : '' %> value="loreto">Loreto</option>
+                                    <select class="custom-select" name="ranch" id="" value="<%= edit.ranch%>" aria-placeholder="Selecciona el rancho">
+                                        <% ranches.forEach(function(ranch){%> 
+                                        <option value="<%= ranch.ranch_name %>"><%= ranch.ranch_name %> </option>
+                                    <% }); %> 
                                     </select>
                                 </div>
                                 <% }; %>
                                 <div class="form-group">
-                                    <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
+                                    <button class="btn btn-outline-primary my-2 my-sm-0 btn-block" id="Gdisabled">Guardar</button>
                                 </div>
                                 
                             </form>
@@ -97,9 +77,9 @@
 
 
     </div>
+    <br>
+    <%- include('../includes/foot.ejs') %>
 </section>
- 
-</body>
 
 <%- include('../includes/scripts') %>
 <%- include('../includes/footer.ejs') %>
