@@ -18,7 +18,7 @@ body{
   top: 0;
   height: 100%;
   width: 78px;
-  background: #222;
+  background: #1d6a88;
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -94,7 +94,7 @@ ul {
   left: calc(100% + 15px);
   z-index: 3;
   background: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px #1d6a88;
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 15px;
@@ -125,7 +125,7 @@ ul {
   border: none;
   border-radius: 12px;
   transition: all 0.5s ease;
-  background: #111;
+  background: #1d6a88;
 }
 .sidebar.open input{
   padding: 0 20px 0 50px;
@@ -137,16 +137,16 @@ ul {
   left: 0;
   transform: translateY(-50%);
   font-size: 22px;
-  background: #111;
+  background: #1d6a88;
   color: #FFF;
 }
 .sidebar.open .bx-search:hover{
-  background: #111;
+  background: #1d6a88;
   color: #FFF;
 }
 .sidebar .bx-search:hover{
   background: #FFF;
-  color: #222;
+  color: #1d6a88;
 }
 .sidebar li.side a{
   display: flex;
@@ -156,7 +156,7 @@ ul {
   align-items: center;
   text-decoration: none;
   transition: all 0.4s ease;
-  background: #222;
+  background: #1d6a88;
 }
 .sidebar li.side a:hover{
   background: #FFF;
@@ -178,7 +178,7 @@ ul {
 .sidebar li.side a:hover .links_name,
 .sidebar li.side a:hover i{
   transition: all 0.5s ease;
-  color: #222;
+  color: #1d6a88;
 }
 
 /*Boton Salir*/
@@ -222,7 +222,7 @@ ul {
   left: 0;
   bottom: -8px;
   padding: 10px 14px;
-  background: #111;
+  background: #1d6a88;
   transition: all 0.5s ease;
   overflow: hidden;
 }
@@ -256,7 +256,7 @@ ul {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: #111;
+  background: #1d6a88;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -292,7 +292,7 @@ ul {
 
 .home-section .text{
   display: inline-block;
-  color: #222;
+  color: #1d6a88;
   font-size: 25px;
   font-weight: 500;
   margin: 18px;

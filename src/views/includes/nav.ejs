@@ -1,16 +1,46 @@
+
     <% if(user.role =="administrador"){%>
-        <nav class="navbar navbar-expand-lg" style="background-color: #e0dede;">
+        <nav class="navbar navcolor navbar-expand-lg">
             <div class="container-fluid">
                 <a class="nav-link" href="/catalogue">Catalogo Principal</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <div class="collapse  navbar-collapse" id="navbarNavDropdown" >
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/allusers" style="color: #fff;">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin" style="color: #fff;">Inventario principal</a></li>
                     <li class="nav-item dropdown">
                 </ul>
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
+                <ul class="dropdown-menu">
+
+                  <% ranches.forEach(ranch => { %>
+
+                    <li><a class="dropdown-item" href="/admin/ranchos/<%=ranch._id%>"><%= ranch.ranch_name %></a></li>
+
+                  <% }); %>
+  
+                </ul>
+                <ul class="navbar-nav" style="color: #fff;">
+                  <!-- Notification dropdown -->
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle hidden-arrow"
+                      href="/orders-done"
+                      id="navbarDropdownMenuLink"
+                      role="button"
+                      data-mdb-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-bell"></i>
+                      <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                  </li>
+                  <!-- Notification dropdown -->
+                </ul>
+                  </ul>
+                </li>
+              <div style="padding-left: 10cm;">
+                <h5><%= doc_title %></h5>
+              </div>
               </div>
             </div>
           </nav>

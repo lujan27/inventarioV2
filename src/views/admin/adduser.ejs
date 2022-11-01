@@ -56,7 +56,7 @@
                                 <label>Recinto al que pertenece: </label>
                                 <select class="form-control" name="ranch" id="">
                                     <option value="">Asigna el rancho al que pertenece...</option>
-                                    <% RanchsBD.forEach(function(rancho){%> 
+                                    <% ranches.forEach(function(rancho){%> 
                                     <option value="<%= rancho.ranch_name %>"><%= rancho.ranch_name %> </option>
                                     <% }); %> 
                                 </select>

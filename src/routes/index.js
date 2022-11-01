@@ -50,12 +50,12 @@ router.post('/', passport.authenticate('local', {
 
 // view Order Main Catalogue
 router.get('/catalogue', async (req, res) => {
-    const RanchsBD = await Ranch.find();
+    const ranches = await Ranch.find();
     const catalogue = await MainCat.find();
 
     res.render('admin/catalogue', {
         doc_title: 'Catalogo principal',
-        RanchsBD,
+        ranches,
         catalogue
     });
 });
@@ -508,7 +508,7 @@ router.put('/uses/:id', async (req, res) => {
 
 //Ruta vista Historial
 router.get('/orders-done', async(req, res)=>{
-    
+    const ranches = await Ranch.find();
     switch(req.user.role){
         case 'administrador':
             const ordersAdmin = await Order.aggregate([
@@ -562,13 +562,14 @@ router.get('/orders-done', async(req, res)=>{
     
     res.render('historic' , {
         doc_title: 'Pedidos Realizados',
-        ordersH
+        ordersH,
+        ranches
     });
 
 });
 
 router.get('/uses-historic', async (req, res) => {
-
+    const ranches = await Ranch.find();
     const uses = await usesModel.aggregate([
         {
           '$match': {
@@ -580,7 +581,8 @@ router.get('/uses-historic', async (req, res) => {
 
     res.render('uses-historic', {
         doc_title: 'Historial Material',
-        uses
+        uses,
+        ranches
     });
 });
 

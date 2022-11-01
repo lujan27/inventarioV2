@@ -2,17 +2,13 @@
 
 <body>
 
-	<section class="home-section">
+	<!--Hey! This is the original version
+of Simple CSS Waves-->
 
-	<div class="container">
-		<div class="circleOne"></div>
-		<div class="circleTwo"></div>
-		<img class="wave" src="/img/wave.png" />
-		<div class="img">
-			<img src="/img/undraw_logistics.svg" />
-		</div>
+<div class="header">
 
-		<div class="login-container">
+	<!--Content before waves-->
+	<div class="inner-header flex">
 			<form action="/" method="POST">
 				<img class="avatar" src="/img/avatar_male.svg" />
 				<h2>Bienvenido</h2>
@@ -22,7 +18,7 @@
 					</div>
 					<div>
 						<h5>Usuario</h5>
-						<input class="input" type="text" name="username" />
+						<input class="form-control" type="text" name="username" />
 					</div>
 				</div>
 
@@ -32,18 +28,37 @@
 					</div>
 					<div>
 						<h5>Contraseña</h5>
-						<input class="input" type="password" name="password" />
+						<input class="form-control" type="password" name="password" />
 					</div>
 				</div>
-				<!--<a href="#">¿Olvidaste la contraseña?</a>-->
 				<input type="submit" class="btn" value="Iniciar Sesion" />
-				<%- include('includes/alerts.ejs') %>
-			</form>
-		</div>
 	</div>
-	<br>
-	<%- include('includes/foot.ejs') %>
-	</section>
+	
+	<!--Waves Container-->
+	<div>
+	<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+	<defs>
+	<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+	</defs>
+	<g class="parallax">
+	<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+	<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+	<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+	<use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+	</g>
+	</svg>
+	</div>
+	<!--Waves end-->
+	
+	</div>
+	<!--Header ends-->
+	
+	<!--Content starts-->
+	<div class="content flex">
+	  <p>By.Goodkatz | Free to use </p>
+	</div>
+	<!--Content ends-->
 
 <%- include('includes/scripts.ejs') %>
 <%- include('includes/footer.ejs') %>

@@ -106,10 +106,12 @@ router.get('/HomeGraphics', async(req, res)=>{
 
 //Ruta vista info del usuario
 router.get('/infouser/:id', async(req, res)=>{
+        const ranches = await ranchModel.find();
         const user = await userModel.findById(req.params.id);
         res.render('admin/infouser' , {
             doc_title: 'Administrador', 
-            user
+            user,
+            ranches
         });
     });
 
@@ -169,7 +171,7 @@ router.get('/admin/ranchos/:id', isAuthAdmin, async(req, res) => {
 
 // View add user
 router.get('/admin/adduser', isAuthAdmin, async (req, res) => {
-    const RanchsBD = await ranchModel.aggregate([
+    const ranches = await ranchModel.aggregate([
         {
             '$match': {
                 ranch_name: {$ne: 'Rancho Principal'}
@@ -177,7 +179,7 @@ router.get('/admin/adduser', isAuthAdmin, async (req, res) => {
         }
     ]);
     res.render('admin/adduser', {
-        RanchsBD, 
+        ranches, 
         doc_title: 'Añadir Usuario'
     });
 });
@@ -298,12 +300,12 @@ router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
 
 // view add stock
 router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
-    const RanchsBD = await ranchModel.find();
+    const ranches = await ranchModel.find();
     const catalogue = await mainCatModel.find();
 
     res.render('admin/addstock', {
         doc_title: 'Añadir Stock',
-        RanchsBD,
+        ranches,
         catalogue
     });
 });

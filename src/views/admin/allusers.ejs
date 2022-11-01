@@ -1,7 +1,7 @@
 <%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
 
-<body>
+<body class="bodycolor">
     <section class="home-section">
         <%- include('../includes/nav.ejs') %>
         <div class="container mt-4">
@@ -34,7 +34,7 @@
                                     </div>
 
                                 <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-lg table-striped">
-                                    <thead class="thead-dark">
+                                    <thead class="thead">
                                         <tr>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Apellido</th>
@@ -62,7 +62,7 @@
                                             <% } %>
                                             <td>
                                                 <div class="btn-group dropstart">
-                                                    <button type="button" class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle opts"
+                                                    <button type="button" class="btn btn-color my-2 my-sm-0 dropdown-toggle opts"
                                                         data-bs-toggle="dropdown" aria-expanded="false" >
                                                         <i class="fa-solid fa-list"></i>
                                                     </button>

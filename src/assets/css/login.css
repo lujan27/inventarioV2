@@ -138,7 +138,7 @@ form h2{
     font-size: 3.9rem;
     text-transform: uppercase;
     margin: 15px 0;
-    color: #333;
+    color: #fff;
 
     animation-name: crecio;
     animation-duration: 1.5s;
@@ -262,7 +262,7 @@ a:hover{
     font-size: 1.7rem;
     outline: none;
     border: none;
-    background-image: linear-gradient(to right, #475A9A, rgb(33, 49, 98), #152041);
+    background-image: linear-gradient(to right, #475A9A, rgb(63, 96, 197), #1a4ada);
     color: #fff;
     text-transform: uppercase;
     font-family:'Poppins', sans-serif;
@@ -513,3 +513,21 @@ a:hover{
         justify-content: center;
     }
 }*/
+
+.form-control {
+    background: rgba(0, 0, 0, .3);
+    border-style: none;
+    transition: 0.5s ease-in;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    background: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: white;
+}
