@@ -30,8 +30,11 @@ $(document).ready(() => {
             // ]
             dom: '<"top"f>rt<"bottom"p>',
             responsive: true,
-            order: [[0, 'asc']],
+            order: [[0, 'desc']],
             columns: columnOrderable('.data-table'),
+            columnDefs:[{targets:3, render:function(data){
+                return moment(data).format('DD MMM YYYY, h:mm a');
+            }}],
             language: {
                 "emptyTable":     "No se encontraron registros",
                 "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",

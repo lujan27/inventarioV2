@@ -152,15 +152,8 @@
                     <% data.forEach((datos, i) => { %>
                     <tr data-id="<%= datos._id %>">
                         <td class="product-name" data-id="<%=i%>"><%= datos.name %></td>
-                        <% if(datos.description){ %> 
-                        <td class="product-description"><%= (datos.description.length > 25) 
-                            ? datos.description.slice(0, 25) + '...'
-                            : datos.description
-                        %></td>
-                        <% } else {%>
-                        <td>No hay descripcion</td> 
-                        <% } %> 
-                        <td><%= datos.unit %></td>
+                        <td class="product-description" data-id="<%=i%>"><%=datos.description%></td>
+                        <td class="product-unit" data-id="<%=i%>"><%= datos.unit %></td>
                         <td><%= datos.quantity %></td>
                         
                             <td>
@@ -243,5 +236,5 @@
 </body>
 
 <%- include('../includes/scripts.ejs') %>
-<script src="/js/coordinator/order.js"></script>
+<script src="/js/admin/order.js"></script>
 <%- include('../includes/footer.ejs') %>

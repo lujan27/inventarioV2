@@ -9,12 +9,16 @@ const OrderSchema = new Schema(
         qntyOrd: {type: Number},
         noteOrd: {type: String},
         unit: {type: String},
+        description: {type: String},
         status: {type: String},
         order_date: { type: Date, default: Date.now() },
         module: {type: String},
         userOrder: {type: String},
         userRanch: {type: String},
-        declineReasons: {type: String}
+        reasonsCoord: {type: String},
+        reasonsAdmin: {type: String},
+        statusCoord: {type: String},
+        statusAdmin: {type: String}
         
     },
     {

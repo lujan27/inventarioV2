@@ -117,10 +117,19 @@ router.get('/infouser/:id', async(req, res)=>{
 // Route type PUT for edit users
 router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
     var {name, lastname, username, email, password, role, ranch} = req.body;
-    password = await encryption.encryptPassword(password);
-    await userModel.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
-    req.flash('success_msg', 'Usuario Actualizado');
-    res.redirect('/admin');
+    if(role == ''){
+        req.flash('danger_msg', 'Tiene que asignar un rol');
+        res.redirect('/admin/allusers');
+    } else if(ranch == ''){
+        req.flash('danger_msg', 'Tiene que asignar un recinto');
+        res.redirect('/admin/allusers');
+    } else {
+        password = await encryption.encryptPassword(password);
+        await userModel.findByIdAndUpdate(req.params.id, {name, lastname, username, email, password, role, ranch});
+        req.flash('success_msg', 'Usuario Actualizado');
+        res.redirect('/admin/allusers');
+    }
+
 });
 
 // Route for delete users
@@ -250,7 +259,7 @@ router.post('/admin/addranch', isAuthAdmin, async (req, res) => {
         req.flash('danger_msg', 'El rancho ya existe');
         res.redirect('/addranch');
     } else {
-        const newRanch = new ranch({ranch_name, location});
+        const newRanch = new ranchModel({ranch_name, location});
         await newRanch.save();
         req.flash('success_msg', 'Rancho creado!');
         res.redirect('/admin');
@@ -290,22 +299,53 @@ router.get('/admin/allusers', isAuthAdmin, async (req, res) => {
 // view add stock
 router.get('/admin/addstock', isAuthAdmin, async (req, res) => {
     const RanchsBD = await ranchModel.find();
+    const catalogue = await mainCatModel.find();
 
     res.render('admin/addstock', {
         doc_title: 'Añadir Stock',
-        RanchsBD
+        RanchsBD,
+        catalogue
     });
 });
 
 // post add stock
 router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
-    console.log(req.body);
-    const {ranch_owner, name, description, quantity, unit} = req.body;
+    var data = req.body;
 
-    const newStock = new stockModel({ranch_owner, name, description, quantity, unit});
-    await newStock.save();
-    req.flash('success_msg', 'Stock registrado!');
-    res.redirect('/admin');
+    let contar = [];
+    for(let elemento in data.pdOrd){
+        contar.push(elemento);
+    }
+    console.log(contar.length);
+
+    console.log(req.body);
+    const {ranch_owner, pdOrd, desOrd, qntyOrd, unitOrd} = req.body;
+
+    if(ranch_owner == ''){
+        req.flash('danger_msg', 'Debe seleccionar un rancho');
+        res.redirect('/admin/addstock');
+    } else if (qntyOrd <= 0){
+        req.flash('danger_msg', 'No debe dejar en 0 la cantidad');
+        res.redirect('/admin/addstock');
+    } else {
+        if(typeof pdOrd == 'string'){
+        const newStock = new stockModel({ranch_owner, name: pdOrd, description: desOrd, quantity: qntyOrd, unit: unitOrd});
+        await newStock.save();
+        req.flash('success_msg', 'Stock registrado!');
+        res.redirect('/admin/addstock');
+    } else {
+            for(let i = 0; i<contar.length; i++){
+                const newStocks = new stockModel({ranch_owner, name: pdOrd[i], description: desOrd[i], quantity: qntyOrd[i], unit: unitOrd[i]});
+                await newStocks.save();
+            }
+            req.flash('success_msg', 'Stocks registrados en '+ ranch_owner + ': '+ contar.length);
+            res.redirect('/admin/addstock');
+        }
+    }
+
+    
+
+    
 });
 
 // view add main catalogue
@@ -320,15 +360,18 @@ router.get('/admin/maincatalogue', isAuthAdmin, async (req, res) => {
 
 // post main catalogue
 router.post('/admin/addmaincatalogue', isAuthAdmin, async (req, res) => {
-    const {nameProduct, descriptionProduct} = req.body;
+    const {nameProduct, descriptionProduct, unit} = req.body;
 
     const catalogue = await mainCatModel.findOne({nameProduct: nameProduct});
 
     if(catalogue){
         req.flash('danger_msg', 'El producto ya existe');
         res.redirect('/admin/maincatalogue');
-    } else {
-        const newCatalogue = new mainCatModel({nameProduct, descriptionProduct});
+    } else if(unit == ''){
+        req.flash('danger_msg', 'Debe seleccionar una unidad de medida');
+        res.redirect('/admin/maincatalogue');
+    }else {
+        const newCatalogue = new mainCatModel({nameProduct, descriptionProduct, unit});
         await newCatalogue.save();
         req.flash('success_msg', 'Producto agregado al catalogo');
         res.redirect('/admin/maincatalogue');

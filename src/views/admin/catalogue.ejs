@@ -55,11 +55,12 @@
         <% } %> 
         
         <div class="text-center">
-            <table id="inventoryTable" data-column-orderable="1, 1, 0" class="w-100 data-table table table-lg table-striped">
+            <table id="inventoryTable" data-column-orderable="1, 1, 1,0" class="w-100 data-table table table-lg table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
+                        <th scope="col">Unidad de medida</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -67,7 +68,8 @@
                     <% catalogue.forEach((prod, i) => { %> 
                     <tr>
                         <td class="product-name" data-id="<%=i%>"><%= prod.nameProduct %></td>
-                        <td class="product-description"><%= prod.descriptionProduct%></td>
+                        <td class="product-description" data-id="<%=i%>"><%= prod.descriptionProduct%></td>
+                        <td class="product-unit" data-id="<%=i%>"><%= prod.unit%></td>
                         <td><button class="btn btn-success btnOrder" data-id="<%=i%>">Agregar</button></td>
                     </tr>
                     <% }); %>
@@ -79,7 +81,7 @@
 
         </div>
 
-        <% if(user.role != 'administrador'){ %>
+        
         <div class="row">
             <form action="/add-order" method="POST">
                 <h3>Realizar Pedidos</h3>
@@ -92,7 +94,7 @@
                 <br>
             </form>
         </div>
-        <% }%>
+        
     </div>
     </section>
 </body>

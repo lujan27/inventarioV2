@@ -22,6 +22,10 @@
                         <input type="text" class="form-control" name="reqName" value="<%= orderid.pdOrd%>" readonly>
                     </div>
                     <div class="form-group">
+                        <label>Descripción del material </label>
+                        <input type="text" class="form-control" name="reqDes" value="<%= orderid.description%>" readonly>
+                    </div>
+                    <div class="form-group">
                         <label>Cantidad: </label>
                         <input type="number" class="form-control" name="reqQuantity" value="<%= orderid.qntyOrd%>" readonly>
                     </div>
@@ -46,10 +50,62 @@
                         <label>Estatus: </label>
                         <input type="text" class="form-control" name="" value="<%= orderid.status%>" disabled>
                     </div>
-                    <% if(
+
+                    <% if(orderid.statusCoord){ %> 
+                        <div class="form-group">
+                            <label>Coordinador que realizó la acción:</label>
+                            <input type="text" class="form-control" name="" value="<%= orderid.statusCoord%>" disabled>
+                        </div>
+                    <% } %>
+
+                    <%if(orderid.reasonsCoord){%> 
+                        <div class="form-group">
+                            <details open>
+                                <summary>Detalles Coordinador:</summary>
+                                <p><%=orderid.reasonsCoord%></p>
+                            </details>
+                        </div>
+                        <% } %>
+
+                    <% if(orderid.statusAdmin){ %> 
+                        <div class="form-group">
+                            <label>Administrador que realizó la acción:</label>
+                            <input type="text" class="form-control" name="" value="<%= orderid.statusAdmin%>" disabled>
+                        </div>
+                    <% } %>
+
+                    <%if(orderid.reasonsAdmin){%> 
+                        <div class="form-group">
+                            <details open>
+                                <summary>Detalles Administrador:</summary>
+                                <p><%=orderid.reasonsAdmin%></p>
+                            </details>
+                        </div>
+                        <% } %>
+
+                    <% if(orderid.status == 'En camino' && user.role == 'administrador') {%>
+                        <div class="form-group">
+                            <label for="status">Aceptar o rechazar el pedido</label>
+                            <select name="newStatus" id="status" onchange="changeStatus()">
+                                <option value="No"></option>
+                                <option value="Aceptar">Aceptar</option>
+                                <option value="Rechazar">Rechazar</option>
+                            </select>
+                            <br>
+                            <label for="decline" id="lbldecline" hidden>Indique las razones por las que se acepta o rechaza este pedido: </label>
+                            <br id="salto" hidden>
+                            <textarea name="reasons" id="decline" cols="30" rows="5" hidden></textarea>
+                        </div>
+                        
+    
+                        <div class="form-group">
+                            <button class="btn btn-dark btn-block" id="Gdisabled" disabled>Guardar</button>
+                        </div>                    
+                    <% } else if(
                             user.role != 'usuario' && //El rol actual es diferente de 'usuario'
                             user.username != orderid.userOrder && //El nombre de usuario actual es diferente de quien hizo la orden
-                            !orderid.declineReasons && //No existe el campo 'declineReasons' dentro de la BD
+                            user.username != orderid.statusCoord &&
+                            user.username != orderid.statusAdmin &&
                             orderid.status != 'Aceptada' //El status es diferente de 'Aceptada'
                         ){ %>
                     <div class="form-group">
@@ -60,9 +116,9 @@
                             <option value="Rechazar">Rechazar</option>
                         </select>
                         <br>
-                        <label for="decline" id="lbldecline" hidden>Indique las razones por las que rechaza este pedido: </label>
+                        <label for="decline" id="lbldecline" hidden>Indique las razones por las que se acepta o rechaza este pedido: </label>
                         <br id="salto" hidden>
-                        <textarea name="declineReasons" id="decline" cols="30" rows="5" hidden></textarea>
+                        <textarea name="reasons" id="decline" cols="30" rows="5" hidden></textarea>
                     </div>
                     
 
@@ -72,14 +128,8 @@
                     <% } %> 
                 </form>
 
-                <%if(orderid.declineReasons){%> 
-                <div class="form-group">
-                    <details open>
-                        <summary>Razones de rechazo: </summary>
-                        <p><%=orderid.declineReasons%></p>
-                    </details>
-                </div>
-                <% } %> 
+                
+                
             </div>
         </div>
           </div>

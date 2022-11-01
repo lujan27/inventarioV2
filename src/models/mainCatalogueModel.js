@@ -5,7 +5,8 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const catalogueSchema = new Schema({
     _id: {type: Number},
     nameProduct: {type: String, required: true, unique: true},
-    descriptionProduct: {type: String, required: true}
+    descriptionProduct: {type: String, required: true},
+    unit: {type: String}
 },{
     _id: false,
     versionKey: false

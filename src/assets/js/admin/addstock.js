@@ -64,15 +64,6 @@ const createOrder = (e) => {
                     </div>
                 </div>
 
-                <div class="col-4 col-lg-5 m-auto py-2">
-                    <div class="form-floating">
-                        <textarea class="form-control prod-notes"
-                            cols="30" rows="10" name="noteOrd"></textarea>
-                        <label>
-                            Notas / Comentarios:
-                        </label>
-                    </div>
-                </div>
             </div>
         `);
 

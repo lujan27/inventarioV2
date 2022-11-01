@@ -7,16 +7,12 @@ function changeStatus(){
     salto = document.getElementById('salto');
     txtArea = document.getElementById('decline');
 
-    if(selected.value == 'Aceptar'){
-        txtArea.setAttribute('disabled', 'disabled');
-    }
-
     if(selected.value != 'No'){
         btn.removeAttribute('disabled', 'disabled');//Quita el atributo disabled del elemento
         label.setAttribute('hidden', 'hidden');
         txtArea.setAttribute('hidden', 'hidden');
         salto.setAttribute('hidden', 'hidden');
-        if(selected.value == 'Rechazar'){
+        if(selected.value == 'Rechazar' || selected.value == 'Aceptar'){
             label.removeAttribute('hidden', 'hidden');
             txtArea.removeAttribute('hidden', 'hidden');
             salto.removeAttribute('hidden', 'hidden');

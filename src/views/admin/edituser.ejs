@@ -43,24 +43,24 @@
                                 
                                 <div class="form-group">
                                     <label>Nombre del empleado: </label>
-                                    <input type="text" class="form-control" name="name" value="<%= edit.name%>">
+                                    <input type="text" class="form-control" name="name" value="<%= edit.name%>" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Apellido del empleado: </label>
-                                    <input type="text" class="form-control" name="lastname" value="<%= edit.lastname%>">
+                                    <input type="text" class="form-control" name="lastname" value="<%= edit.lastname%>" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Nombre de usuario: </label>
-                                    <input type="text" class="form-control" name="username" value="<%= edit.username%>">
+                                    <input type="text" class="form-control" name="username" value="<%= edit.username%>" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Correo electronico: </label>
-                                    <input type="email" class="form-control" name="email" value="<%= edit.email%>">
+                                    <input type="email" class="form-control" name="email" value="<%= edit.email%>" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Contraseña: </label>
-                                    <input autocomplete="new-password" type="password" class="form-control" name="password" value="" placeholder="Ingresa una nueva contraseña....">
+                                    <input autocomplete="new-password" type="password" class="form-control" name="password" value="" placeholder="Ingresa una nueva contraseña...." required>
                                 </div>
                 
                                 <div class="form-group">
@@ -76,10 +76,9 @@
                                     <label>Recinto al que pertenece: </label>
                                     <select class="custom-select" name="ranch" id="" value="<%= edit.ranch%>">
                                         <option value="">Asigna el rancho al que pertenece...</option>
-                                        <option <%= edit.ranch =='Pollitos en fuga' ? "selected" : '' %> value="Pollitos en fuga">Pollitos en fuga</option>
-                                        <option <%= edit.ranch =='UTNA' ? "selected" : '' %> value="UTNA">UTNA</option>
-                                        <option <%= edit.ranch =='puentes' ? "selected" : '' %> value="puentes">Puentes</option>
-                                        <option <%= edit.ranch =='loreto' ? "selected" : '' %> value="loreto">Loreto</option>
+                                        <% ranches.forEach(rancho => { %> 
+                                            <option value="<%=rancho.ranch_name%>"><%=rancho.ranch_name%></option>
+                                        <% }) %> 
                                     </select>
                                 </div>
                                 <% }; %>

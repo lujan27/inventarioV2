@@ -15,10 +15,10 @@ const joinWindowPath = (path) => {
 const createOrder = (e) => {
     const itemID = e.target.dataset.id;
     const formOrder = $('#formOrder'); //Obtienes el div del formulario
-    const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes los valores de la tabla
-    const button = document.getElementById('Gdisabled');
-    // const userRole = document.getElementById('role').value.trim();
-    //console.log(userRole);
+    const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes el nombre de la tabla
+    const unit = $(`.product-unit[data-id="${itemID}"]`)[0].innerHTML; //Obtienes la unidad de la tabla
+    const des = $(`.product-description[data-id="${itemID}"]`)[0].innerHTML;
+    const button = document.getElementById('Gdisabled');    
 
     // Si no existe, añádelo
     if (!$(`#formOrder .row[data-id="${itemID}"]`).length)
@@ -29,7 +29,7 @@ const createOrder = (e) => {
                         <input class="form-control prod-name"
                             type="text" placeholder="." value="${productName.trim()}" name="pdOrd" readonly/>
                         <label>
-                            Nombre
+                            Nombre:
                         </label>
                     </div>
                 </div>
@@ -39,33 +39,37 @@ const createOrder = (e) => {
                         <input class="form-control prod-qty"
                             type="number" placeholder="." value="0" min="0" max="9999" name="qntyOrd"/>
                         <label>
-                            Cantidad
+                            Cantidad:
                         </label>
                     </div>
                 </div>
 
                 <div class="col-4 m-auto py-2">
-                <div class="form-floating">
-                    <select class="form-control prod-unit" name="unitOrd">
-                        <option value="kg">Kilogramo</option>
-                        <option value="g">Gramo</option>
-                        <option value="l">Litro</option>
-                        <option value="ml">Mililitro</option>
-                        <option value="km">Kilometro</option>
-                        <option value="m">Metro</option>
-                    </select>
-                    <label>
-                        Unidad de medida
-                    </label>
+                    <div class="form-floating">
+                        <input class="form-control prod-unit"
+                            type="text" placeholder="." value="${unit.trim()}" name="unitOrd" readonly/>
+                        <label>
+                            Unidad de medida:
+                        </label>
+                    </div>
                 </div>
-            </div>
+
+                <div class="col-4 m-auto py-2">
+                    <div class="form-floating">
+                        <input class="form-control prod-des"
+                            type="text" placeholder="." value="${des.trim()}" name="desOrd" readonly/>
+                        <label>
+                            Descripción:
+                        </label>
+                    </div>
+                </div>
 
                 <div class="col-4 col-lg-5 m-auto py-2">
                     <div class="form-floating">
                         <textarea class="form-control prod-notes"
                             cols="30" rows="10" name="noteOrd"></textarea>
                         <label>
-                            Notas / Comentarios
+                            Notas / Comentarios:
                         </label>
                     </div>
                 </div>
@@ -73,16 +77,12 @@ const createOrder = (e) => {
         `);
 
         if(productName){
-             button.removeAttribute('disabled', 'disabled');
-         }
+            button.removeAttribute('disabled', 'disabled');
+        }
 }
 
 if (buttonsOrder.length)
     buttonsOrder.on('click', createOrder);
-
-
-
-
 
 // $('#Gdisabled').on('click', (e) => {
 //     var items = [];
@@ -115,12 +115,16 @@ if (buttonsOrder.length)
         
 //     });
 
+
+    
+
+
 //     $.ajax({
 //         type: 'POST',
 //         url: window.location.origin + '/add-order',
 //         contentType: 'application/json', // Important thing don't delete 💀
 //         dataType: 'json', // Also this is important 👻
-//         data: JSON.stringify({ items: items, module: 'Coordinador' }),
+//         data: JSON.stringify({ items: items, module: 'Usuario' }),
 //         async: true,
 //         /** _--* Parámetros útiles 101 *--_
 //          * result: resultado 👁👄👁
@@ -136,3 +140,10 @@ if (buttonsOrder.length)
 //         }
 //     });
 // })
+
+
+
+
+
+
+

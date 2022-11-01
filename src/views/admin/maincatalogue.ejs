@@ -42,16 +42,33 @@
                         <form action="/admin/addmaincatalogue" method="POST">                    
                             <div class="form-group">
                                 <label>Nombre Producto: </label>
-                                <input type="text" class="form-control" name="nameProduct" placeholder="Nombre Producto....">
+                                <input type="text" class="form-control" name="nameProduct" placeholder="Nombre Producto...." required>
                             </div>
                             <div class="form-group">
-                                <label>Descripcion: </label>
-                                <input type="text" class="form-control" name="descriptionProduct" placeholder="Descripcion....">
-                            </div>                            
+                                <label>Descripción: </label>
+                                <input type="text" class="form-control" name="descriptionProduct" placeholder="Descripcion...." required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Unidad de medida: </label>
+                                <select class="form-control prod-unit" name="unit">
+                                    <option value="">Seleccione la unidad</option>
+                                    <option value="pza">Pieza</option>
+                                    <option value="kg">Kilogramo</option>
+                                    <option value="g">Gramo</option>
+                                    <option value="t">Tonelada</option>
+                                    <option value="l">Litro</option>
+                                    <option value="ml">Mililitro</option>
+                                    <option value="km">Kilometro</option>
+                                    <option value="m">Metro</option>
+                                    <option value="cm">Centimetro</option>
+                                </select>
+                            </div>
                             
                             <div class="form-group">
                                 <button class="btn btn-dark btn-block" id="Gdisabled">Guardar</button>
                             </div>
+                            
                         </form>
                     </div>
                 </div>
