@@ -16,8 +16,6 @@
               </div>
             </div>
           </nav>
-
-    <%};%>
         
 
     <div class="container mt-2">
@@ -66,7 +64,8 @@
                     <% catalogue.forEach((prod, i) => { %> 
                     <tr>
                         <td class="product-name" data-id="<%=i%>"><%= prod.nameProduct %></td>
-                        <td class="product-description"><%= prod.descriptionProduct%></td>
+                        <td class="product-description" data-id="<%=i%>"><%= prod.descriptionProduct%></td>
+                        <td class="product-unit" data-id="<%=i%>"><%= prod.unit%></td>
                         <td><button class="btn btn-success btnOrder" data-id="<%=i%>">Agregar</button></td>
                     </tr>
                     <% }); %>
