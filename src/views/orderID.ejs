@@ -2,6 +2,8 @@
 <%- include('includes/header.ejs') %>
 
 <body>
+    <section class="home-section">
+        <%- include('includes/nav.ejs') %>
 
     <div class="container mt-4">
 
@@ -123,7 +125,7 @@
                     
 
                     <div class="form-group">
-                        <button class="btn btn-dark btn-block" id="Gdisabled" disabled>Guardar</button>
+                        <button class="btn btn-outline-primary btn-block" id="Gdisabled" disabled>Guardar</button>
                     </div>                    
                     <% } %> 
                 </form>
@@ -138,8 +140,10 @@
 </div> 
 
 </div>
+<br>
+<%- include('includes/foot.ejs') %>
 
-</body>
+    </section>
 
 <%- include('includes/scripts.ejs') %>
 

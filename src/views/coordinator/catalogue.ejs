@@ -2,7 +2,8 @@
 <%- include('../includes/header.ejs') %>
 
 <body>
-    <section class="home-section py-4 my-4">
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
         <div class="container mt-2">
             <%- include('../includes/alerts.ejs') %>
 
@@ -10,20 +11,6 @@
                 <h2>Catalogo de productos</h2>
             </div>
             
-            <!-- Añadir las diferentes rutas para el coordinador como usuarios, inventario etc. -->
-            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="/coordinator">Coordinador</a></li>    
-            </ul>
-
-            <!-- div class="container-fluid row">
-                <div class="col-2 mx-auto">
-                    <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
-                        <i class='bx bx-spa'></i>
-                        Agregar producto al catalogo
-                    </a>
-                </div>
-            </div -->
-
             <div class="row">
                 <div class="col-12">
                     <h3>Realizar Pedidos</h3>
@@ -32,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col col-md-6 col-lg-4 mx-auto form-group">
-                    <button class="btn btn-dark btn-block d-none" id="orderNow">Realizar Orden</button>
+                    <button class="btn btn-outline-primary btn-block d-none" id="orderNow">Realizar Orden</button>
                 </div>
             </div>
             
@@ -71,8 +58,10 @@
                 </table>
             </div>
         </div>
+        <br>
+        <%- include('../includes/foot.ejs') %>
     </section>
-</body>
+
 <%- include('../includes/scripts.ejs') %>
 
 <script src="/js/orders.js"></script>

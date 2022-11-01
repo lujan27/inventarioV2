@@ -3,28 +3,11 @@
 
 
 <body>
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
 
-<section class="home-section pt-4 mt-4">
-    <div class="container mt-2">
+    <div class="container mt-4">
         <%- include('../includes/alerts.ejs') %>
-
-        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-            <li class="nav-item"><a class="nav-link" href="/admin/allusers">Usuarios</a></li>
-            <li class="nav-item"><a class="nav-link" href="/admin">Inventario principal</a></li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
-                <ul class="dropdown-menu">
-
-                <% RanchsBD.forEach(rancho => { %>
-
-                <li><a class="dropdown-item" href="/admin/ranchos/<%=rancho._id%>"><%= rancho.ranch_name %></a></li>
-
-                <% }); %>
-
-                </ul>
-            </li>
-
-        </ul>
 
 
         <div class="row pt-4 mt-4">
@@ -83,9 +66,10 @@
         
             </div>
         </div>
+        <br>
+        <%- include('../includes/foot.ejs') %>
 
     </section>
-</body>
 <%- include('../includes/scripts.ejs') %>
 <script src="/js/admin/addstock.js"></script>
 <%- include('../includes/footer.ejs') %>

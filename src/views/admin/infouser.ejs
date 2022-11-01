@@ -2,16 +2,10 @@
 <%- include('../includes/header.ejs') %>
 <%- include('../includes/alerts.ejs') %>
 
-
-    <section class="home-section">
-                    <% if(user){%>
-        
-
-        <div class="container">
-            <ul class="nav nav-tabs mb-4 pb-2" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="/infouser/<%= user._id%>">Información</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">...</a></li>
-            </ul>
+<body>
+<section class="home-section">
+    <%- include('../includes/nav.ejs') %>
+        <% if(user){%>
 
             <form action="">
             <div class="row align-item-center">
@@ -66,6 +60,8 @@
             </div>
         </form>
         </div>
+        <br>
+        <%- include('../includes/foot.ejs') %>
     </section>    
 
 <%- include('../includes/scripts.ejs') %>

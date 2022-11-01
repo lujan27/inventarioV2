@@ -2,10 +2,11 @@
 <%- include('includes/header.ejs') %>
 
 <body>
-
-    <div class="container mt-4">
+    <section class="home-section">
+        <%- include('includes/nav.ejs') %>
 
 <div class="container-fluid pt-4 mt-4">
+    <div class="container mt-4">
     <div class="subcontenedor">
         <div class="bloque activo">
           <div class="justify-content-center row">
@@ -32,10 +33,14 @@
                                 <td><%= data.userOrder %> </td>
                                 <td><%= data.userRanch %> </td>
                                 <td><%= data.order_date %> </td>
-                                <td><%= data.status %> </td>
+                                <td <%if(data.status == "Pendiente a revisión"){%> 
+                                    id="pen"
+                                    <%}else if(data.status == "Aceptada"){%> id="aceptado"
+                                    <%}else if(data.status == "Solicitado"){%> id="sol"
+                                    <%}else if(data.status == "Rechazada"){%> id="den"<%};%>;><h5><%= data.status %><h5></td>
                                 
                                 <td>
-                                    <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" href="/orders-done/<%=data._id%>">
+                                    <a id="orderItem" class="btn btn-outline-primary btnOrder" type="button" href="/orders-done/<%=data._id%>">
                                         <ion-icon name="receipt-outline" class="pr-1"></ion-icon>Ver información
                                     </a>
                                 </td>
@@ -55,8 +60,9 @@
 </div> 
 
 </div>
-
-</body>
+<br>
+<%- include('includes/foot.ejs') %>
+    </section>
 
 <%- include('includes/scripts.ejs') %>
 

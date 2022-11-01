@@ -2,17 +2,10 @@
 <%- include('../includes/header.ejs') %>
 
 <body>
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
 
-<section class="home-section pt-4 mt-4">
     <%- include('../includes/alerts.ejs') %>
-    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-            
-        <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
-
-    </ul>
-    
-    <h1>Inicio Coordinador</h1>
-    <h3 class="mx-auto">Stock disponible para pedidos</h3>
 
     <div class="container mt-4">
     <button id="btn-modal-confirm" type="button" class="d-none" data-bs-toggle="modal"
@@ -158,17 +151,17 @@
                         
                             <td>
                                 <% if(datos.quantity == 0) {%>
-                                    <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%= i %>" disabled>
+                                    <button id="orderItem" class="btn btn-outline-primary btnOrder" type="button" data-id="<%= i %>" disabled>
                                         <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Usos
                                     </button>
                                 <% } else { %> 
-                                <a id="orderItem" class="btn btn-outline-dark btnOrder" type="button" href="uses/<%=datos._id%>">
+                                <a id="orderItem" class="btn btn-outline-primary btnOrder" type="button" href="uses/<%=datos._id%>">
                                     <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Usos
                                 </a>
                                 <% } %> 
                             </td>
                             <td>
-                                <button id="orderItem" class="btn btn-outline-dark btnOrder" type="button" data-id="<%=i%>">
+                                <button id="orderItem" class="btn btn-outline-primary my-2 my-sm-0 btnOrder" type="button" data-id="<%=i%>">
                                     <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                                 </button>
                             </td>
@@ -212,7 +205,7 @@
                 </tbody>
             </table>
         </div>
-
+<br>
         <div class="row">
             <form class="mb-5 pb-5" action="/add-order" method="post">
                 <h3>Realizar Pedidos</h3>
@@ -231,9 +224,9 @@
 
 
 </div>
+<br>
+<%- include('../includes/foot.ejs') %>
 </section> 
-
-</body>
 
 <%- include('../includes/scripts.ejs') %>
 <script src="/js/admin/order.js"></script>
