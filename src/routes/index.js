@@ -586,24 +586,4 @@ router.get('/uses-historic', async (req, res) => {
     });
 });
 
-// router.put('/update/:id', async(req, res)=>{
-//     console.log("HERE I AM");
-//     var {status} = req.body;
-    //console.log(req.body);
-    // var okok = await Order.findById(req.params.id);
-    /*for (i=0; i<okok.items.length;i++){
-
-    }*/
-    // console.log(okok.items[0].status)
-    
-    // await Order.findByIdAndUpdate(req.params.id, {$set:{"items.status.$[0]": {status}}},{new:true})
-    // .then(()=>{
-    //     console.log("aqui")
-        
-    // }).catch(e=>console.log(e))
-
-    //req.flash('success_msg', 'Status Actualizado');
-        //res.redirect('/orders-done');
-// });
-
 module.exports = router;

@@ -32,7 +32,7 @@
                       style="background-image: #fff"
                     >
                       <i class="fas fa-bell"></i>
-                      <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                      <span class="badge rounded-pill badge-notification bg-danger"><%=contAdmin[0].status%> </span>
                     </a>
                   </li>
                   <!-- Notification dropdown -->
@@ -56,6 +56,24 @@
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
             <li class="nav-item"><a class="nav-link" href="/users">user</a></li>
+        </ul>
+        <ul class="navbar-nav" style="padding: left 100px;">
+          <!-- Notification dropdown -->
+          <li>
+            <a
+              class="nav-link hidden-arrow "
+              href="/orders-done"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+              style="background-image: #fff"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="badge rounded-pill badge-notification bg-danger"><%=contAdmin[0].status%> </span>
+            </a>
+          </li>
+          <!-- Notification dropdown -->
         </ul>
         <div style="padding-left: 10cm;">
           <h5><%= doc_title %></h5>

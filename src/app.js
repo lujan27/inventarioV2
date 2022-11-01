@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 require('dotenv').config();
 
+const ordersModel = require('./models/ordersModel');
+
 // Initializations
 const app = express();
 require('./config/passport');
@@ -41,11 +43,34 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 //Global variables
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.success_msg = req.flash('success_msg');
     res.locals.danger_msg = req.flash('danger_msg');
     res.locals.user = req.user || null;
+    res.locals.contAdmin = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': {
+              '$ne': 'Solicitado'
+            }
+          }
+        }, {
+          '$match': {
+            'status': {
+              '$ne': 'Rechazada'
+            }
+          }
+        }, {
+          '$match': {
+            'status': {
+              '$ne': 'Aceptada'
+            }
+          }
+        }, {
+          '$count': 'status'
+        }
+      ]);
     next();
 });
 
