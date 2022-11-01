@@ -222,7 +222,7 @@ i.fa-solid {
 /*footer*/
 .site-footer
 {
-  background-color:#479fb9;
+  background-color:#6B858E;
   padding:45px 0 20px;
   font-size:15px;
   line-height:24px;
@@ -251,7 +251,7 @@ i.fa-solid {
 }
 .site-footer a:hover
 {
-  color:#3366cc;
+  color:#6B858E;
   text-decoration:none;
 }
 .footer-links
@@ -265,11 +265,11 @@ i.fa-solid {
 }
 .footer-links a
 {
-  color:#fff
+  color:#fff;
 }
 .footer-links a:active,.footer-links a:focus,.footer-links a:hover
 {
-  color:#3366cc;
+  color:#6B858E;
   text-decoration:none;
 }
 .footer-links.inline li
@@ -288,7 +288,7 @@ i.fa-solid {
   margin-left:6px;
   margin-right:0;
   border-radius:100%;
-  background-color:#1b8eb1
+  background-color:#6B858E
 }
 .copyright-text
 {
@@ -389,7 +389,7 @@ i.fa-solid {
 
 .bodycolor {
   margin:0;
-  background: #fff;
+  background: #F6F8F9;
 }
 
 h1 {
@@ -494,7 +494,7 @@ p {
 
 /* colores de botones */
 .navcolor{
-  background-color: #1b8eb1;
+  background-color: #1d6a88;   
   color: #fff;
   font-size: 120%;
 }
@@ -506,7 +506,7 @@ color: #fff;
 
 .thead{
 color: #fff;
-background-color: #467aeb;
+background-color: #317CBF;  
 
 }
 

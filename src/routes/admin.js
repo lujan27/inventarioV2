@@ -109,7 +109,7 @@ router.get('/infouser/:id', async(req, res)=>{
         const ranches = await ranchModel.find();
         const user = await userModel.findById(req.params.id);
         res.render('admin/infouser' , {
-            doc_title: 'Administrador', 
+            doc_title: 'Información del usuario', 
             user,
             ranches
         });
@@ -232,7 +232,7 @@ router.post('/admin/adduser', isAuthAdmin, async (req, res) => {
 
 // View add new ranch
 router.get('/admin/addranch', isAuthAdmin, async (req, res) => {
-    const RanchsBD = await ranchModel.aggregate([
+    const ranches = await ranchModel.aggregate([
         {
             '$match': {
                 ranch_name: {$ne: 'Rancho Principal'}
@@ -242,7 +242,7 @@ router.get('/admin/addranch', isAuthAdmin, async (req, res) => {
 
     res.render('admin/addranch', {
         doc_title: 'Añadir Rancho',
-        RanchsBD
+        ranches
     });
 });
 

@@ -19,7 +19,7 @@
                   <% }); %>
   
                 </ul>
-                <ul class="navbar-nav"">
+                <ul class="navbar-nav" style="padding: left 100px;">
                   <!-- Notification dropdown -->
                   <li>
                     <a
@@ -39,14 +39,14 @@
                 </ul>
                   </ul>
                 </li>
+              </div>
               <div style="padding-left: 10cm;">
                 <h5><%= doc_title %></h5>
-              </div>
               </div>
             </div>
           </nav>
 <%} else if(user.role=="coordinador"){%>
-<nav class="navbar navbar-expand-lg" style="background-color: #e0dede;">
+<nav class="navbar navcolor navbar-expand-lg">
     <div class="container-fluid">
         <a class="nav-link" href="/coordinator">Catalogo Principal</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,21 +57,24 @@
             <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
             <li class="nav-item"><a class="nav-link" href="/users">user</a></li>
         </ul>
+        <div style="padding-left: 10cm;">
+          <h5><%= doc_title %></h5>
+        </div>
       </div>
     </div>
   </nav>
 <%}else if(user.role=="usuario"){%>
 
-    <nav class="navbar navbar-expand-lg" style="background-color: #e0dede;">
-        <div class="container-fluid">
-            <li class="nav-item"><a class="nav-link" href="/catalogue">Catalogo Principal</a></li>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-          </div>
-        </div>
+    <nav class="navbar navcolor navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="nav-link" href="/user">Inicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div style="padding-left: 10cm;">
+        <h5><%= doc_title %></h5>
+      </div>
+    </div>
       </nav>
 
 <%};%>
