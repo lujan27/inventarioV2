@@ -514,9 +514,18 @@ background-color: #317CBF;
 
   background-color: #fff;
   color: #120907;
-  border-radius: 13%;
-  
+  border-radius: 45%;
+  display:block;
+  margin-right:0;
+  font-weight:600;
 }
+
+#namecolor{
+  background-color: #1A3760;
+  color: #fff;
+  border-radius: 45%;
+}
+
 
 .color1 {color: #120907;}
 .color2 {color: #252642;}

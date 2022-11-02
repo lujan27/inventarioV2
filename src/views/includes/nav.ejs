@@ -2,11 +2,16 @@
     <% if(user.role =="administrador"){%>
         <nav class="navbar navcolor navbar-expand-lg">
             <div class="container-fluid">
-                <a class="nav-link" href="/catalogue" <%if(doc_title == "Catalogo principal"){style: "background-color: #1A3760;"}%>>Catalogo Principal</a>
               <div class="collapse  navbar-collapse" id="navbarNavDropdown" >
-              <a class="nav-link" href="/admin/allusers">Usuarios</a>
-              <a class="nav-link" href="/admin">Inventario principal</a>
-          
+              <div>
+              <a class="nav-link" href="/catalogue" <%if(doc_title == "Catalogo principal"){%> id="namecolor" <%}%>>Catalogo Principal</a>
+            </div>
+            <div>
+              <a class="nav-link" href="/admin/allusers"  <%if(doc_title == "Usuarios"){%> id="namecolor" <%}%>>Usuarios</a>
+            </div>
+            <div>
+              <a class="nav-link" href="/admin"  <%if(doc_title == "Inventario principal"){%> id="namecolor" <%}%>>Inventario principal</a>
+            </div>
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
                 <ul class="dropdown-menu">
 
@@ -27,7 +32,7 @@
                       role="button"
                       data-mdb-toggle="dropdown"
                       aria-expanded="false"
-                      style="background-image: #fff"
+                      style="background-image: #fff; "
                     >
                       <i class="fas fa-bell"></i>
                       <span class="badge rounded-pill badge-notification bg-danger"><%=contAdmin[0].status%> </span>

@@ -6,7 +6,6 @@ const stockModel = require('../models/stockModel');
 const mainCatModel = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
 const {isAuthAdmin} = require('../config/sessionAdmin');
-const {isAuthLogged} = require('../config/sessionOn');
 
 // Main view of admin
 router.get('/admin', isAuthAdmin, async(req, res) => {
@@ -39,7 +38,7 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
     ]);
 
     res.render('admin/adminhome',{
-        doc_title: 'Administrador',
+        doc_title: 'Inventario principal',
         usuarios,
         ranches,
         stockPrin
@@ -106,11 +105,11 @@ router.get('/HomeGraphics', async(req, res)=>{
 });
 
 //Ruta vista info del usuario
-router.get('/infouser/:id', isAuthLogged, async(req, res)=>{
+router.get('/infouser/:id', async(req, res)=>{
         const ranches = await ranchModel.find();
         const user = await userModel.findById(req.params.id);
         res.render('admin/infouser' , {
-            doc_title: 'Información del usuario', 
+            doc_title: 'Información', 
             user,
             ranches
         });
@@ -345,6 +344,10 @@ router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
             res.redirect('/admin/addstock');
         }
     }
+
+    
+
+    
 });
 
 // view add main catalogue
