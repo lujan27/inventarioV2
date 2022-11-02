@@ -510,6 +510,14 @@ background-color: #317CBF;
 
 }
 
+.nav-link:hover{
+
+  background-color: #fff;
+  color: #120907;
+  border-radius: 13%;
+  
+}
+
 .color1 {color: #120907;}
 .color2 {color: #252642;}
 .color3 {color: #605f95;}

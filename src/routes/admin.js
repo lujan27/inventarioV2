@@ -352,11 +352,11 @@ router.post('/admin/addstock', isAuthAdmin, async (req, res) => {
 
 // view add main catalogue
 router.get('/admin/maincatalogue', isAuthAdmin, async (req, res) => {
-    const RanchsBD = await ranchModel.find();
+    const ranches = await ranchModel.find();
 
     res.render('admin/maincatalogue', {
         doc_title: 'Main catalogue',
-        RanchsBD
+        ranches
     });
 })
 

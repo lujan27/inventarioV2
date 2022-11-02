@@ -11,6 +11,7 @@ const {isAuthLogged} = require('../config/sessionOn');
 const ordersModel = require('../models/ordersModel');
 const stockModel = require('../models/stockModel');
 const userModel = require('../models/users/userModel');
+const ranchModel = require('../models/ranchModel');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -245,11 +246,13 @@ router.post('/add-order', async (req, res) => {
 });
 
 router.get('/orders-done/:id', async (req, res) => {
+    const ranches = await ranchModel.find();
     const orderid = await Order.findById(req.params.id);
     //console.log(orderid.items.length);
     res.render('orderID', {
         doc_title: 'Informacion del pedido',
-        orderid
+        orderid, 
+        ranches
     });
 });
 
