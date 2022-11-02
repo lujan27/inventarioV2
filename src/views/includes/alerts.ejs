@@ -23,6 +23,11 @@
             <h6 id="msg"><%=danger_msg%></h6>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+
+        <script>
+            var msg = document.getElementById('msg')
+            swal('Error!',msg.innerHTML, 'error');
+        </script>
     <% } %>
     
     <!-- Success message -->
@@ -31,9 +36,9 @@
             <h6 id="msg"><%= success_msg %></h6>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <% } %>
 
-    <script>
-        var msg = document.getElementById('msg')
-        alert(msg.innerHTML);
-    </script>
+        <script>
+            var msg = document.getElementById('msg')
+            swal('Listo!', msg.innerHTML, 'success');
+        </script>
+    <% } %>
