@@ -50,7 +50,7 @@ router.post('/', passport.authenticate('local', {
 });
 
 // view Order Main Catalogue
-router.get('/catalogue', async (req, res) => {
+router.get('/catalogue', isAuthLogged, async (req, res) => {
     const ranches = await Ranch.find();
     const catalogue = await MainCat.find();
 
@@ -245,7 +245,7 @@ router.post('/add-order', async (req, res) => {
 
 });
 
-router.get('/orders-done/:id', async (req, res) => {
+router.get('/orders-done/:id', isAuthLogged, async (req, res) => {
     const ranches = await ranchModel.find();
     const orderid = await Order.findById(req.params.id);
     //console.log(orderid.items.length);
@@ -461,7 +461,7 @@ router.put('/editstatus/:id', async(req, res)=>{
 
 
 //Ruta para material gastado
-router.get('/uses/:id', async (req, res) => {
+router.get('/uses/:id', isAuthLogged, async (req, res) => {
     
     const uso = await stock.findById(req.params.id);
     // console.log(uso);
@@ -510,7 +510,7 @@ router.put('/uses/:id', async (req, res) => {
 });
 
 //Ruta vista Historial
-router.get('/orders-done', async(req, res)=>{
+router.get('/orders-done', isAuthLogged, async(req, res)=>{
     const ranches = await Ranch.find();
     switch(req.user.role){
         case 'administrador':
@@ -571,7 +571,7 @@ router.get('/orders-done', async(req, res)=>{
 
 });
 
-router.get('/uses-historic', async (req, res) => {
+router.get('/uses-historic', isAuthLogged, async (req, res) => {
     const ranches = await Ranch.find();
     const uses = await usesModel.aggregate([
         {

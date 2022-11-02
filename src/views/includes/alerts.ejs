@@ -9,7 +9,7 @@
             <div class="mx-auto">
 
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <%= error %>
+                    <h6 id="msg"><%= error %></h6>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
@@ -19,16 +19,21 @@
     
     <!-- Error message -->
     <% if (danger_msg[0]) { %>
-        <div class="header alert alert-danger alert-dismissible">
-            <%= danger_msg %> 
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+        <div class="header alert alert-danger alert-dismissible fade show" role="alert">
+            <h6 id="msg"><%=danger_msg%></h6>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
     
     <!-- Success message -->
     <% if (success_msg[0]) { %>
-        <div class="header alert alert-success alert-dismissible">
-            <%= success_msg %> 
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+        <div class="header alert alert-success alert-dismissible fade show" role="alert">
+            <h6 id="msg"><%= success_msg %></h6>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
+
+    <script>
+        var msg = document.getElementById('msg')
+        alert(msg.innerHTML);
+    </script>

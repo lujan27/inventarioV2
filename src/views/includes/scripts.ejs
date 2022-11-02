@@ -13,7 +13,11 @@
 <!-- Boton de sidebar -->
 <script type="text/javascript" src="/js/navbar.js"></script>
 <!--Data tables-->
+<% if(doc_title == 'Pedidos Realizados' || doc_title == 'Historial'){ %> 
 <script src="/js/datatables.js"></script>
+<% } else { %> 
+<script src="/js/datatables_others.js"></script>
+<% } %> 
 
 <% if(doc_title == 'Pedidos Realizados' || doc_title == 'Historial Material') {%> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
