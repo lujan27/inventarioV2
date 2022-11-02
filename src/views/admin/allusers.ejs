@@ -14,23 +14,17 @@
                                 
                                     <div class="container-fluid row">
                                         <div class="col-2">
-                                            <a href="/admin/adduser" class="btn btn-outline-info mb-4">
+                                            <a href="/admin/adduser" class="btn btn-outline-info mb-4" data-toggle="tooltip" title="Agrega un nuevo usuario">
                                                 <i class='bx bxs-user-plus' ></i>
                                                 Nuevo Usuario
                                             </a>
                                         </div>
                                         <div class="col-2">
-                                            <a href="/admin/addranch" class="btn btn-outline-success mb-4">
+                                            <a href="/admin/addranch" class="btn btn-outline-success mb-4" data-toggle="tooltip" title="Agrega un nuevo rancho">
                                                 <i class='bx bx-spa'></i>
                                                 Nuevo Rancho
                                             </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <a href="/admin/addstock" class="btn btn btn-outline-dark mb-4">
-                                                <i class='bx bxs-cart-add' ></i>
-                                                Nueva Materia prima
-                                            </a>
-                                        </div>
+                                        </div>                                        
                                     </div>
 
                                 <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-lg table-striped">
@@ -63,22 +57,16 @@
                                             <td>
                                                 <div class="btn-group dropstart">
                                                     <button type="button" class="btn btn-color my-2 my-sm-0 dropdown-toggle opts"
-                                                        data-bs-toggle="dropdown" aria-expanded="false" >
+                                                        data-bs-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" title="Clic para desplegar las opciones">
                                                         <i class="fa-solid fa-list"></i>
                                                     </button>
                                                     
-                                                    <ul class="dropdown-menu">
-                                                        <center>
-                                                        <li>
-                                                            <a type="button" style="text-align:center" class="btn btn-outline-success my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
-                                                            <input type="hidden" name="_method" value="delete">
-                                                        </li>
-                                                        </center>
+                                                    <ul class="dropdown-menu">                                                    
                                                         
                                                         <li><hr class="dropdown-divider"></li>
                                                         <center>
                                                         <li>
-                                                            <a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/edituser/<%= usuario._id%>"><i class='bx bxs-edit' ></i>Editar</a>
+                                                            <a type="button" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/edituser/<%= usuario._id%>" data-toggle="tooltip" title="Editar la información de <%=usuario.username%> "><i class='bx bxs-edit' ></i>Editar</a>
                                                             <input type="hidden" name="_method" value="delete">
                                                         </li>
                                                         </center>
@@ -86,7 +74,7 @@
                                                         <center>
                                                         <li>
                                                             <form action="deleteuser/<%= usuario._id%>?_method=delete" method="post">
-                                                                <button type="submit" class="btn btn-outline-danger my-2 my-sm-0"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
+                                                                <button type="submit" class="btn btn-outline-danger my-2 my-sm-0" data-toggle="tooltip" title="Eliminar usuario <%=usuario.username%> "><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
                                                             </form>
                                                         </li>
                                                         </center>

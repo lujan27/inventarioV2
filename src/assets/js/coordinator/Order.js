@@ -15,9 +15,9 @@ const joinWindowPath = (path) => {
 const createOrder = (e) => {
     const itemID = e.target.dataset.id;
     const formOrder = $('#formOrder'); //Obtienes el div del formulario
-    const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerHTML; //Obtienes el nombre de la tabla
-    const unit = $(`.product-unit[data-id="${itemID}"]`)[0].innerHTML; //Obtienes la unidad de la tabla
-    const des = $(`.product-description[data-id="${itemID}"]`)[0].innerHTML;
+    const productName = $(`.product-name[data-id="${itemID}"]`)[0].innerText; //Obtienes el nombre de la tabla
+    const unit = $(`.product-unit[data-id="${itemID}"]`)[0].innerText; //Obtienes la unidad de la tabla
+    const des = $(`.product-description[data-id="${itemID}"]`)[0].innerText;
     const button = document.getElementById('Gdisabled');    
 
     // Si no existe, añádelo
@@ -34,7 +34,7 @@ const createOrder = (e) => {
                     </div>
                 </div>
 
-                <div class="col-3 col-lg-2 m-auto py-2">
+                <div class="col-4 col-lg-2 m-auto py-2">
                     <div class="form-floating">
                         <input class="form-control prod-qty"
                             type="number" placeholder="." value="0" min="0" max="9999" name="qntyOrd"/>
@@ -54,7 +54,7 @@ const createOrder = (e) => {
                     </div>
                 </div>
 
-                <div class="col-4 m-auto py-2">
+                <div class="col-6 m-auto py-2">
                     <div class="form-floating">
                         <input class="form-control prod-des"
                             type="text" placeholder="." value="${des.trim()}" name="desOrd" readonly/>
@@ -64,7 +64,7 @@ const createOrder = (e) => {
                     </div>
                 </div>
 
-                <div class="col-4 col-lg-5 m-auto py-2">
+                <div class="col-6 col-lg-5 m-auto py-2">
                     <div class="form-floating">
                         <textarea class="form-control prod-notes"
                             cols="30" rows="10" name="noteOrd"></textarea>

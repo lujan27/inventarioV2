@@ -128,7 +128,9 @@ router.post('/add-order', async (req, res) => {
                         userOrder: req.user.username, 
                         userRanch: req.user.ranch, 
                         status: estatus, 
-                        unit: unitOrd
+                        unit: unitOrd,
+                        description: desOrd,
+                        order_date: Date.now()
                     });
                        await one.save();
                        req.flash("success_msg", "Orden creada!");
@@ -163,7 +165,8 @@ router.post('/add-order', async (req, res) => {
                             userRanch: req.user.ranch, 
                             status: estatus, 
                             unit: unitOrd,
-                            description: desOrd
+                            description: desOrd,                            
+                            order_date: Date.now()
                         });
                            await oneOrder.save();
                            req.flash("success_msg", "Orden creada!");
@@ -197,9 +200,9 @@ router.post('/add-order', async (req, res) => {
                      console.log('Esto tiene errorsQnty:'+errorsQnty);
                     //  console.log(errors.length);
                      if(errors.length >= 1){
-                        req.flash('danger_msg', 'No hay estos materiales: '+errors+' .Contacte a su supervisor');
+                        req.flash('danger_msg', 'No hay estos materiales: '+errors.join(', ')+' .Contacte a su supervisor');
                      } else if(errorsQnty.length >= 1){
-                        req.flash('danger_msg', 'No hay suficiente material en: '+errorsQnty+' .Contacte a su supervisor');
+                        req.flash('danger_msg', 'No hay suficiente material en: '+errorsQnty.join(', ')+' .Contacte a su supervisor');
                      } else {
                         for(let j = 0; j<cont.length; j++){
                             let two = new ordersModel({
@@ -210,7 +213,8 @@ router.post('/add-order', async (req, res) => {
                                 userRanch: req.user.ranch, 
                                 status: estatus, 
                                 unit: unitOrd[j],
-                                description: desOrd[j]
+                                description: desOrd[j],
+                                order_date: Date.now()
                             });
                             await two.save();
                         }
@@ -289,16 +293,16 @@ router.put('/editstatus/:id', async(req, res)=>{
         console.log(updStatus);
 
         if(updStatus == 'Pendiente a revisión'){
-            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsCoord: reasons, statusCoord: req.user.username});
+            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsCoord: reasons, statusCoord: req.user.username, order_date: Date.now()});
             req.flash('success_msg', 'Estatus actualizado: ' + updStatus);
             res.redirect('/orders-done');
         } else if(updStatus == 'Rechazada' && req.user.role == 'coordinador'){
-            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsCoord: reasons, statusCoord: req.user.username});
-            req.flash('danger_msg', 'Estatus actualizado: ' + updStatus);
+            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsCoord: reasons, statusCoord: req.user.username, order_date: Date.now()});
+            req.flash('success_msg', 'Estatus actualizado: ' + updStatus);
             res.redirect('/orders-done');
         } else if(updStatus == 'Rechazada' && req.user.role == 'administrador'){
-            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username});
-            req.flash('danger_msg', 'Estatus actualizado por administrador: ' + updStatus);
+            await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username, order_date: Date.now()});
+            req.flash('success_msg', 'Estatus actualizado por administrador: ' + updStatus);
             res.redirect('/orders-done');
         } else {
 
@@ -318,7 +322,7 @@ router.put('/editstatus/:id', async(req, res)=>{
                     });
 
                     await newStock.save();
-                    await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username});
+                    await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username, order_date: Date.now()});
                     req.flash('success_msg', 'Stock registrado');
                     res.redirect('/orders-done');
                 } else {
@@ -327,7 +331,7 @@ router.put('/editstatus/:id', async(req, res)=>{
                     var new_quantity = actual_qnty + req_qnty;
                     console.log('Se actualiza desde admin:' + new_quantity);
 
-                    await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username});
+                    await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username, order_date: Date.now()});
                     await stockPrin.updateOne({quantity: new_quantity});
                     req.flash('success_msg', 'Stock actualizado');
                     res.redirect('/orders-done');
@@ -440,7 +444,7 @@ router.put('/editstatus/:id', async(req, res)=>{
                             await receipt_Uses.save();
                         }
                         
-                        await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username});
+                        await ordersModel.findByIdAndUpdate(req.params.id, {status: updStatus, reasonsAdmin: reasons, statusAdmin: req.user.username, order_date: Date.now()});
         
                         if(updStatus == 'Aceptada' ){
                             req.flash('success_msg', 'Estatus actualizado: ' + updStatus + '\n');

@@ -30,7 +30,7 @@
         <div class="container-fluid row">
             
             <div class="col-2">
-                <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
+                <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4" data-toggle="tooltip" title="Agrega un nuevo producto al catalogo">
                     <i class='bx bx-spa'></i>
                     Agregar producto al catalogo
                 </a>
@@ -55,7 +55,11 @@
                         <td class="product-name" data-id="<%=i%>"><%= prod.nameProduct %></td>
                         <td class="product-description" data-id="<%=i%>"><%= prod.descriptionProduct%></td>
                         <td class="product-unit" data-id="<%=i%>"><%= prod.unit%></td>
-                        <td><button class="btn btn-success btnOrder" data-id="<%=i%>">Agregar</button></td>
+                        <td>
+                            <button id="orderItem" class="btn btn-outline-primary my-2 my-sm-0 btnOrder" type="button" data-id="<%=i%>" data-toggle="tooltip" title="Agrega <%=prod.nameProduct%> al pedido">
+                                <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
+                            </button>
+                        </td>
                     </tr>
                     <% }); %>
                 </tbody>

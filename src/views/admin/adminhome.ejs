@@ -13,6 +13,14 @@
             <div class="container-fluid pt-4 mt-4">
                 <div class="subcontenedor">
                     <div class="bloque activo">
+
+                        <div class="col-2">
+                            <a href="/admin/addstock" class="btn btn btn-outline-dark mb-4" data-toggle="tooltip" title="Agregar material a los ranchos">
+                                <i class='bx bxs-cart-add' ></i>
+                                Nueva Materia prima                               
+                            </a>                            
+                        </div>
+                        
                       <div class="justify-content-center row">
 
                         <h2>Inventario Rancho Principal:</h2>
@@ -36,7 +44,7 @@
                                             <td><%= stock.quantity %> </td>
                                             <td class="product-unit" data-id="<%=i%>"><%= stock.unit %> </td>                                            
                                             <td>
-                                                <button id="orderItem" class="btn btn-outline-primary my-2 my-sm-0 btnOrder" type="button" data-id="<%= i %>">
+                                                <button id="orderItem" class="btn btn-outline-primary my-2 my-sm-0 btnOrder" type="button" data-id="<%=i%>" data-toggle="tooltip" title="Agrega <%=stock.name%> al pedido">
                                                     <ion-icon name="receipt-outline" class="pr-1"></ion-icon> Pedido
                                                 </button>
                                             </td>
