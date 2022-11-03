@@ -497,6 +497,7 @@ p {
   background-color: #1d6a88;   
   color: #fff;
   font-size: 120%;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,0.2));
 }
 
 .btn-color{
@@ -514,16 +515,18 @@ background-color: #317CBF;
 
   background-color: #fff;
   color: #120907;
-  border-radius: 45%;
+  border-radius: 12px;
   display:block;
   margin-right:0;
   font-weight:600;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #namecolor{
   background-color: #1A3760;
   color: #fff;
-  border-radius: 45%;
+  border-radius: 12px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 

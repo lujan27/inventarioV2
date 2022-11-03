@@ -32,7 +32,7 @@ router.get('/user', isAuthUser, async (req, res) => {
         }
     ]);
     res.render('user/userhome', {
-        doc_title: 'Usuario',
+        doc_title: 'Catalogo principal',
         usuarios,
         ranches,
         stockPrin
