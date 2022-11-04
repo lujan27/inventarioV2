@@ -1,99 +1,52 @@
 <%- include('../includes/sidebar.ejs') %>
 <%- include('../includes/header.ejs') %>
 
-<body>
+<body class="bodycolor">
     <section class="home-section">
         <%- include('../includes/nav.ejs') %>
-        <div class="container mt-2">
+        <div class="container mt-4">
             <%- include('../includes/alerts.ejs') %>
 
-    
+                    <div class="container-fluid pt-4 mt-4">
+                        <div class="subcontenedor">                       
+                            <div class="bloque activo">
+                            <div class="justify-content-center">                    
 
-            <div class="row text-center mx-auto">
-                <h2>Lista de empleados</h2>
-            </div>
-
-            <!-- div class="container-fluid row">
-                <div class="col-2 mx-auto">
-                    <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4">
-                        <i class='bx bx-spa'></i>
-                        Agregar producto al catalogo
-                    </a>
-                </div>
-            </div -->
-
-            <div class="content-fluid">
-                <div class="col-2 text-center">
-                    <button id="btn-modal-user" type="button" class="btn btn-primary register-mode" data-bs-toggle="modal"
-                        data-bs-target="#modal-user">
-                        Registrar usuario
-                    </button>
-                </div>
-                <br>
-            <div class="row text-center pb-sm-5">
-                <table id="inventoryTable" data-column-orderable="1, 0, 1, 0, 0, 0" class="w-100 data-table table table-lg table-striped">
-                    <thead class="thead">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Usuario</th>
-                        <th>E-mail</th>
-                        <th>Rol</th>
-                        <th>Rancho</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% if(data != null) { 
-                    for(let i in data) { %>
-                    <tr id="id-<%= data[i]._id %>">
-                        <td class="name"><%= data[i].name %></td>
-                        <td class="lastname"><%= data[i].lastname %></td>
-                        <td class="username"><%= data[i].username %></td>
-                        <td class="email"><%= data[i].email %></td>
-                        <td class="role"><%= data[i].role %></td>
-                        <td class="ranch"><%= data[i].ranch %></td>
-                        <td>
-                            <div class="btn-group dropstart">
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle opts"
-                                    data-bs-toggle="dropdown" aria-expanded="false" >
-                                    <i class="fa-solid fa-list"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <center>
-                                        <li>
-                                            <a type="button" style="text-align:center" class="btn btn-outline-primary my-2 my-sm-0" href="/admin/adduser"><i class='bx bxs-edit' ></i>Agregar</a>
-                                            <input type="hidden" name="_method" value="delete">
-                                        </li>
-                                        </center>
-                                    <li>
-                                        <button type="button" class="btn rounded-0 dropdown-item py-2 text-center edit-mode"
-                                            data-bs-toggle="modal" data-bs-target="#modal-user" data-id="<%= data[i]._id %>">
-                                            <i class="pe-1 text-warning fa-solid fa-pen-to-square"></i> Editar registro
-                                        </button>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <button type="button" class="btn rounded-0 dropdown-item py-2 text-center delete-mode"
-                                            data-bs-toggle="modal" data-bs-target="#modal-confirm" data-id="<%= data[i]._id %>">
-                                            <i class="pe-1 text-danger fa-solid fa-user-xmark"></i> Dar de baja
-                                        </button>
-                                    </li>
-                                </ul>
+                                <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0" class="w-100 data-table table table-lg table-striped">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Rol</th>
+                                            <th scope="col">Rancho</th>                                            
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% usuarios.forEach(usuario => { %>
+                                        <tr>
+                                            <td><%= usuario.name %> </td>
+                                            <td><%= usuario.lastname %> </td>
+                                            <td><%= usuario.username %> </td>
+                                            <td><%= usuario.email %> </td>
+                                            <td><%= usuario.role %> </td>
+                                            <td><%= usuario.ranch %> </td>                                            
+                                        </tr>
+                                        <% }); %>
+                                   
+                                    </tbody>
+                                    <caption class="pl-2">Lista de usuarios</caption>
+                                </table>
                             </div>
-                        </td>
-                    </tr>
-                <% } } %>
-                </tbody>
-            </table>
-        
-            </div>
+                            </div>
+                        </div>        
+                    </div>
         </div>
         <br>
         <%- include('../includes/foot.ejs') %>
     </section>
+
 <%- include('../includes/scripts.ejs') %>
-
-<script src="/js/orders.js"></script>
-
 <%- include('../includes/footer.ejs') %>

@@ -5,33 +5,26 @@
         <i class='bx bx-menu' id="btn" ></i>
     </div>
 
-    <ul class="nav-list">
-                <li class="side">
-                    <a href="/infouser/<%= user._id%>">
-                        <i class='bx bxs-home'></i>
-                        <span class="links_name">Inicio</span>
-                    </a>
-                        <span class="tooltip">Inicio</span>
-                </li>
+    <ul class="nav-list">                
                 <li class="side">
                     <% if(user.role == 'administrador'){ %>
                         <a href="/admin">
-                            <i class='bx bxs-component'></i>
-                            <span class="links_name">Mi Inventario</span>
+                            <i class='bx bxs-home'></i>
+                        <span class="links_name">Inicio</span>
                         </a>
-                        <span class="tooltip">Mi Inventario</span>
+                        <span class="tooltip">Inicio</span>
                         <% } else if(user.role == 'coordinador'){ %> 
                             <a href="/coordinator">
-                                <i class='bx bxs-component'></i>
-                                <span class="links_name">Mi Inventario</span>
+                                <i class='bx bxs-home'></i>
+                        <span class="links_name">Inicio</span>
                             </a>
-                            <span class="tooltip">Mi Inventario</span>
+                            <span class="tooltip">Inicio</span>
                             <% } else if(user.role == 'usuario'){ %> 
                                 <a href="/user">
-                                    <i class='bx bxs-component'></i>
-                                    <span class="links_name">Mi Inventario</span>
+                                    <i class='bx bxs-home'></i>
+                        <span class="links_name">Inicio</span>
                                 </a>
-                                <span class="tooltip">Mi Inventario</span>
+                                <span class="tooltip">Inicio</span>
                                 <% } %> 
                     
                 </li>

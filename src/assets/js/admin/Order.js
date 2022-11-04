@@ -24,6 +24,7 @@ const createOrder = (e) => {
     if (!$(`#formOrder .row[data-id="${itemID}"]`).length)
         formOrder.append(`
             <div class="row order-item" data-id="${itemID}">
+            <h4>Pedido <strong>${productName}</strong></h4>
                 <div class="col-4 m-auto">
                     <div class="form-floating">
                         <input class="form-control prod-name"

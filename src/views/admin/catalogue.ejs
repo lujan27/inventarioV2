@@ -10,7 +10,7 @@
     <div class="container mt-2">
         <%- include('../includes/alerts.ejs') %>
 
-        <h2>Catalogo de productos</h2>
+        
         <% switch(user.role){
             case 'administrador': %> 
 
@@ -25,9 +25,8 @@
             <!-- Hacer lo mismo que con el coordinador -->
         <%break
          } %> 
-
         <% if (user.role == 'administrador') { %> 
-        <div class="container-fluid row">
+        <div class="container-fluid row" style="padding-top: 1cm;">
             
             <div class="col-2">
                 <a href="/admin/maincatalogue" class="btn btn-outline-success mb-4" data-toggle="tooltip" title="Agrega un nuevo producto al catalogo">
@@ -38,6 +37,8 @@
 
         </div>
         <% } %> 
+
+        <h2>Catalogo de productos</h2>
         
         <div class="text-center">
             <table id="inventoryTable" data-column-orderable="1, 1, 1,0" class="w-100 data-table table table-lg table-striped">

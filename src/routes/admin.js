@@ -6,6 +6,7 @@ const stockModel = require('../models/stockModel');
 const mainCatModel = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
 const {isAuthAdmin} = require('../config/sessionAdmin');
+const {isAuthLogged} = require('../config/sessionOn');
 
 // Main view of admin
 router.get('/admin', isAuthAdmin, async(req, res) => {
@@ -38,7 +39,7 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
     ]);
 
     res.render('admin/adminhome',{
-        doc_title: 'Inventario principal',
+        doc_title: 'Administrador',
         usuarios,
         ranches,
         stockPrin
@@ -57,7 +58,7 @@ router.get('/admin', isAuthAdmin, async(req, res) => {
 // });
 
 // Route for edit users
-router.get('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
+router.get('/admin/edituser/:id', isAuthLogged, async(req, res)=>{
     const ranches = await ranchModel.aggregate([
         {
             '$match': {
@@ -105,7 +106,7 @@ router.get('/HomeGraphics', async(req, res)=>{
 });
 
 //Ruta vista info del usuario
-router.get('/infouser/:id', async(req, res)=>{
+router.get('/infouser/:id', isAuthLogged, async(req, res)=>{
         const ranches = await ranchModel.find();
         const user = await userModel.findById(req.params.id);
         res.render('admin/infouser' , {
@@ -117,7 +118,7 @@ router.get('/infouser/:id', async(req, res)=>{
 
 
 // Route type PUT for edit users
-router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
+router.put('/admin/edituser/:id', async(req, res)=>{
     var {name, lastname, username, email, password, role, ranch} = req.body;
     if(role == ''){
         req.flash('danger_msg', 'Tiene que asignar un rol');
@@ -135,7 +136,7 @@ router.put('/admin/edituser/:id', isAuthAdmin, async(req, res)=>{
 });
 
 // Route for delete users
-router.delete('/admin/deleteuser/:id', isAuthAdmin, async(req, res)=>{
+router.delete('/admin/deleteuser/:id', isAuthLogged, async(req, res)=>{
     await userModel.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Usuario Eliminado');
     res.redirect('/admin');

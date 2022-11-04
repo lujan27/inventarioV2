@@ -5,6 +5,7 @@ const router = Router();
 const inventoryController = require('../controllers/coordinator/inventoryController');
 const userController = require('../controllers/coordinator/userController');
 const ordersController = require('../controllers/ordersController');
+const userModel = require('../models/users/userModel');
 
 router
 
@@ -13,7 +14,26 @@ router
 .post('/coordinator/delete-items', isAuthCoord, inventoryController.deleteItems)
 .post('/coordinator/modify-items', isAuthCoord, inventoryController.modifyItems)
 
-.get('/coordinator/employees', isAuthCoord, userController.main)
+// .get('/coordinator/employees', isAuthCoord, userController.main)
+.get('/coordinator/employees', isAuthCoord, async (req, res) => {
+    const usuarios = await userModel.aggregate([
+        {
+            '$match': {
+                'ranch': req.user.ranch
+            }
+        },
+        {
+            '$match': {
+                'role': 'usuario'
+            }
+        }
+    ])
+
+    res.render('coordinator/users', {
+        doc_title: 'Usuarios',
+        usuarios
+    })
+})
 .post('/coordinator/employees/get-users', isAuthCoord, userController.getUsers)
 .post('/coordinator/employees/add-users', isAuthCoord, userController.addUsers)
 .post('/coordinator/employees/delete-users', isAuthCoord, userController.deleteUsers)
