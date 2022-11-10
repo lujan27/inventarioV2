@@ -1,15 +1,18 @@
 const { Router } = require('express');
 const { isAuthCoord } = require('../config/sessionCoord');
+const countOrdersCtrl = require('../controllers/coordinator/countOrdersCtrl');
 const router = Router();
 
 const inventoryController = require('../controllers/coordinator/inventoryController');
 const userController = require('../controllers/coordinator/userController');
 const ordersController = require('../controllers/ordersController');
+
+const ordersModel = require('../models/ordersModel');
 const userModel = require('../models/users/userModel');
 
 router
 
-.get('/coordinator', isAuthCoord, inventoryController.main)
+.get('/coordinator', isAuthCoord, inventoryController.principal)
 .post('/coordinator/add-items', isAuthCoord, inventoryController.addItems)
 .post('/coordinator/delete-items', isAuthCoord, inventoryController.deleteItems)
 .post('/coordinator/modify-items', isAuthCoord, inventoryController.modifyItems)
@@ -29,9 +32,25 @@ router
         }
     ])
 
+    const contCoord = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);  
+
     res.render('coordinator/users', {
         doc_title: 'Usuarios',
-        usuarios
+        usuarios,
+        contCoord
     })
 })
 .post('/coordinator/employees/get-users', isAuthCoord, userController.getUsers)

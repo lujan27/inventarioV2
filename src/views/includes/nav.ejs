@@ -4,17 +4,17 @@
             <div class="container-fluid">
               <div class="collapse  navbar-collapse" id="navbarNavDropdown" >
                 <div>
-                  <a class="nav-link" href="/admin"  <%if(doc_title == "Administrador"){%> id="namecolor" <%}%>>Inventario principal</a>
+                  <a class="nav-link" href="/admin"  data-toggle="tooltip" title="Ventana de inicio" <%if(doc_title == "Administrador"){%> id="namecolor" <%}%>>Inventario principal</a>
                 </div>
               
             <div>
-              <a class="nav-link" href="/admin/allusers"  <%if(doc_title == "Usuarios"){%> id="namecolor" <%}%>>Usuarios</a>
+              <a class="nav-link" href="/admin/allusers" data-toggle="tooltip" title="Ver los usuarios registrados" <%if(doc_title == "Usuarios"){%> id="namecolor" <%}%>>Usuarios</a>
             </div>
             <div>
-              <a class="nav-link" href="/catalogue" <%if(doc_title == "Catalogo principal"){%> id="namecolor" <%}%>>Catalogo Principal</a>
+              <a class="nav-link" href="/catalogue" data-toggle="tooltip" title="Ver el catalogo de productos habituales" <%if(doc_title == "Catalogo principal"){%> id="namecolor" <%}%>>Catalogo Principal</a>
             </div>
             <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
+              <a class="nav-link dropdown-toggle" data-toggle="tooltip" title="Ver los inventarios de los ranchos existentes" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ranchos</a>
                 <ul class="dropdown-menu">
 
                   <% ranches.forEach(ranch => { %>
@@ -37,6 +37,7 @@
                   <!-- Notification dropdown -->
                   <li>
                     <a
+                      data-toggle="tooltip" title="ver las ordenes registradas"
                       class="nav-link color-not hidden-arrow "
                       href="/orders-done"
                       id="navbarDropdownMenuLink"
@@ -88,7 +89,7 @@
               aria-expanded="false"
             >
               <i class="fas fa-bell"></i>
-              <span class="badge rounded-pill badge-notification bg-danger"><%=contAdmin[0].status%> </span>
+              <span class="badge rounded-pill badge-notification bg-danger"><%=contCoord[0].status%> </span>
             </a>
           </li>
           <!-- Notification dropdown -->

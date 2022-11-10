@@ -1,5 +1,38 @@
 // const inventoryModel = require('../../models/coordinator/inventoryModel');
+const ordersModel = require('../../models/ordersModel');
 const inventoryModel = require('../../models/stockModel');
+
+async function principal (req, res) {
+    let data = await inventoryModel.aggregate([
+        {
+          '$match': {
+            'ranch_owner': req.user.ranch
+          }
+        }
+    ]);
+    
+    const contCoord = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);
+
+    res.render('coordinator/index', {
+        doc_title: 'Coordinador',
+        data,
+        contCoord
+    });
+
+}
 
 function main (req, res) {
     let data = null;
@@ -24,7 +57,7 @@ function main (req, res) {
     .finally(() => {
         return res.render('coordinator/index', {
             doc_title: 'Coordinador',
-            data: data,
+            data: data,            
         });
     });
 }
@@ -193,6 +226,7 @@ function modifyItems (req, res) {
 }
 
 module.exports = {
+    principal,
     main,
     getItems,
     addItems,

@@ -54,10 +54,29 @@ router.get('/catalogue', isAuthLogged, async (req, res) => {
     const ranches = await Ranch.find();
     const catalogue = await MainCat.find();
 
+    var contCoord
+      const contCoordQuery = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);
+
+    contCoord = contCoordQuery;
+
     res.render('admin/catalogue', {
         doc_title: 'Catalogo principal',
         ranches,
-        catalogue
+        catalogue,
+        contCoord
     });
 });
 
@@ -516,6 +535,7 @@ router.put('/uses/:id', async (req, res) => {
 //Ruta vista Historial
 router.get('/orders-done', isAuthLogged, async(req, res)=>{
     const ranches = await Ranch.find();
+    var contCoord
     switch(req.user.role){
         case 'administrador':
             const ordersAdmin = await Order.aggregate([
@@ -547,6 +567,23 @@ router.get('/orders-done', isAuthLogged, async(req, res)=>{
                 }
             ]);
 
+            const contCoordQuery = await ordersModel.aggregate([
+                {
+                  '$match': {
+                    'status': 'Solicitado'
+                  }
+                }, {
+                  '$match': {
+                    'userRanch': req.user.ranch
+                  }
+                },
+                {
+                  '$count': 'status'
+                }
+              ]);
+
+            contCoord = contCoordQuery;
+
             ordersH= ordersCoord;
             break;
         case 'usuario':
@@ -570,7 +607,8 @@ router.get('/orders-done', isAuthLogged, async(req, res)=>{
     res.render('historic' , {
         doc_title: 'Pedidos Realizados',
         ordersH,
-        ranches
+        ranches,
+        contCoord
     });
 
 });
@@ -584,12 +622,31 @@ router.get('/uses-historic', isAuthLogged, async (req, res) => {
           }
         }
       ]);
+
+      var contCoord
+      const contCoordQuery = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);
+
+    contCoord = contCoordQuery;
     // console.log(uses);
 
     res.render('uses-historic', {
         doc_title: 'Historial Material',
         uses,
-        ranches
+        ranches,
+        contCoord
     });
 });
 

@@ -7,6 +7,7 @@ const mainCatModel = require('../models/mainCatalogueModel');
 const encryption = require('../controllers/encryptionController');
 const {isAuthAdmin} = require('../config/sessionAdmin');
 const {isAuthLogged} = require('../config/sessionOn');
+const ordersModel = require('../models/ordersModel');
 
 // Main view of admin
 router.get('/admin', isAuthAdmin, async(req, res) => {
@@ -109,10 +110,29 @@ router.get('/HomeGraphics', async(req, res)=>{
 router.get('/infouser/:id', isAuthLogged, async(req, res)=>{
         const ranches = await ranchModel.find();
         const user = await userModel.findById(req.params.id);
+
+        var contCoord
+        const contCoordQuery = await ordersModel.aggregate([
+            {
+            '$match': {
+                'status': 'Solicitado'
+            }
+            }, {
+            '$match': {
+                'userRanch': req.user.ranch
+            }
+            },
+            {
+            '$count': 'status'
+            }
+        ]);
+
+    contCoord = contCoordQuery;
         res.render('admin/infouser' , {
             doc_title: 'Información', 
             user,
-            ranches
+            ranches,
+            contCoord
         });
     });
 
