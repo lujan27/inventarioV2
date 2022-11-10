@@ -262,9 +262,9 @@ a:hover{
     font-size: 1.7rem;
     outline: none;
     border: none;
-    background-image: linear-gradient(to right, #475A9A, rgb(63, 96, 197), #1a4ada);
+    background-image: linear-gradient(to right, rgba(84,58,183,1), #1e2e60, rgba(84,58,183,1));
     color: #fff;
-    text-transform: uppercase;
+    text-transform: uppercase;    
     font-family:'Poppins', sans-serif;
     background-size: 200%;
     transition: .5s;
