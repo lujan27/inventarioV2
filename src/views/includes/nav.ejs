@@ -46,7 +46,7 @@
                       aria-expanded="false"
                     >
                       <i class="fas fa-bell"></i>
-                      <span class="badge rounded-pill badge-notification bg-danger"><%=contAdmin[0].status%> </span>
+                      <span class="badge rounded-pill badge-notification bg-danger"><%if(contAdmin==''){%>0<%} else { %><%=contAdmin[0].status%> <% } %></span>
                     </a>
                   </li>
                   <!-- Notification dropdown -->
@@ -89,7 +89,7 @@
               aria-expanded="false"
             >
               <i class="fas fa-bell"></i>
-              <span class="badge rounded-pill badge-notification bg-danger"><%=contCoord[0].status%> </span>
+              <span class="badge rounded-pill badge-notification bg-danger"><%if(contCoord==''){%>0<%} else { %><%=contCoord[0].status%> <% } %> </span>
             </a>
           </li>
           <!-- Notification dropdown -->

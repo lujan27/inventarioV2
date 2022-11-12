@@ -26,6 +26,8 @@ async function principal (req, res) {
         }
       ]);
 
+    console.log(contCoord);
+
     res.render('coordinator/index', {
         doc_title: 'Coordinador',
         data,

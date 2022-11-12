@@ -271,11 +271,29 @@ router.post('/add-order', async (req, res) => {
 router.get('/orders-done/:id', isAuthLogged, async (req, res) => {
     const ranches = await ranchModel.find();
     const orderid = await Order.findById(req.params.id);
+    var contCoord
+      const contCoordQuery = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);
+
+    contCoord = contCoordQuery;
     //console.log(orderid.items.length);
     res.render('orderID', {
         doc_title: 'Informacion del pedido',
         orderid, 
-        ranches
+        ranches,
+        contCoord
     });
 });
 
@@ -489,9 +507,28 @@ router.get('/uses/:id', isAuthLogged, async (req, res) => {
     const uso = await stock.findById(req.params.id);
     // console.log(uso);
 
+    var contCoord
+      const contCoordQuery = await ordersModel.aggregate([
+        {
+          '$match': {
+            'status': 'Solicitado'
+          }
+        }, {
+          '$match': {
+            'userRanch': req.user.ranch
+          }
+        },
+        {
+          '$count': 'status'
+        }
+      ]);
+
+    contCoord = contCoordQuery;
+
     res.render('uses', {
         doc_title: 'Uso de material',
-        uso
+        uso,
+        contCoord
     });
 });
 

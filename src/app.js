@@ -70,7 +70,7 @@ app.use(async (req, res, next) => {
         }, {
           '$count': 'status'
         }
-      ]);
+      ]) || null;
     next();
 });
 
