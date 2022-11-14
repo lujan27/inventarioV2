@@ -8,8 +8,10 @@
 <script src="https://kit.fontawesome.com/62b2289d52.js" crossorigin="anonymous"></script>
 <!-- Popper -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<!-- Animaciònes login -->
-<script type="text/javascript" src="js/login.js"></script>
+<% if(doc_title === 'Inicio de sesión - Inventario') { %>
+    <!-- Animaciònes login -->
+    <script type="text/javascript" src="js/login.js"></script>
+<% } %>
 <!-- Boton de sidebar -->
 <script type="text/javascript" src="/js/navbar.js"></script>
 <!--Data tables-->
@@ -17,10 +19,4 @@
 <script src="/js/datatables.js"></script>
 <% } else { %> 
 <script src="/js/datatables_others.js"></script>
-<% } %> 
-
-<% if(doc_title == 'Pedidos Realizados' || doc_title == 'Historial Material') {%> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<% } %> 
-<!--Nav central-->
-<script src="/js/nav.js"></script>
+<% } %>

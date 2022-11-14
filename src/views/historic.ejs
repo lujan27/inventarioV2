@@ -32,7 +32,7 @@
                                 <td><%=data._id%> </td>
                                 <td><%= data.userOrder %> </td>
                                 <td><%= data.userRanch %> </td>
-                                <td><%= data.order_date %> </td>
+                                <td><%= moment(data.order_date).format('D MMMM YYYY, h:mm a') %> </td>
                                 <td <%if(data.status == "Pendiente a revisión"){%> 
                                     id="pen"
                                     <%}else if(data.status == "Aceptada"){%> id="aceptado"

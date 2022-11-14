@@ -40,7 +40,7 @@
                                 <td><%=data._id%> </td>
                                 <td><%=data.name%> </td>
                                 <td><%=data.ranch_owner%> </td>
-                                <td><%=data.modify_date%> </td>
+                                <td><%=moment(data.modify_date).format('D MMMM YYYY, h:mm a')%> </td>
                                 <td><%=data.user%> </td>
                                 <td><%=data.unit%> </td>
                                 <td><%=data.old_quantity%> </td>
