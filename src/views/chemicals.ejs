@@ -1,0 +1,105 @@
+<%- include('includes/sidebar.ejs') %>
+<%- include('includes/header.ejs') %>
+
+
+
+<body>
+    <section class="home-section">
+        <%- include('includes/nav.ejs') %>
+
+        <div class="container mt-4">
+        <%- include('includes/alerts.ejs') %>
+
+            <div class="container-fluid pt-4 mt-4">
+                <div class="subcontenedor">
+                    <div class="bloque activo">
+
+                        <div class="col-2">
+                            <a href="/addchemical" class="btn btn btn-outline-dark mb-4" data-toggle="tooltip" title="Agregar agroquimico">
+                                <i class='bx bxs-cart-add' ></i>
+                                Nuevo agroquimico
+                            </a>                            
+                        </div>
+                        
+                      <div class="justify-content-center row">
+
+                        <h2>Agroquimicos:</h2>
+                            <table id="inventoryTable" data-column-orderable="1, 1, 0, 1, 1, 0, 0, 1" class="w-100 data-table table table-striped">
+                                <thead class="thead">
+                                    <tr>
+                                        <th scope="col">Categoria:</th>
+                                        <th scope="col">Nombre:</th>
+                                        <th scope="col">Lote:</th>
+                                        <th scope="col">Cantidad:</th>
+                                        <th scope="col">Fabricación:</th>
+                                        <th scope="col">Caducidad:</th>
+                                        <th scope="col" hidden>Caducidad hidden</th>
+                                        <th scope="col">El producto expira en:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% quimicos.forEach((quimico, i) =>{%> 
+                                    <tr>
+                                        <td><%=quimico.category%></td>
+                                        <td><%=quimico.chemical_name%></td>
+                                        <td><%=quimico.lote%></td>
+                                        <td><%=quimico.quantity%></td>
+                                        <td><%=moment(quimico.created).format('L')%></td>
+                                        <td><%=moment(quimico.caducity).format('L')%></td>
+                                        <td id="limit-<%=i%>" hidden><%=quimico.caducity%></td>
+                                        <td id="clock-<%=i%>">
+                                            <script>
+                                                        var getRemainTime = deadline => {
+                                                        let now = new Date(),
+                                                            remainTime = (new Date(deadline) - now + 1000) / 1000;
+                                                            remainSeconds = ('0' + Math.floor(remainTime % 60)).slice(-2),
+                                                            remainMinutes = ('0' + Math.floor(remainTime / 60 % 60)).slice(-2),
+                                                            remainHours = ('0' + Math.floor(remainTime / 3600 % 24)).slice(-2),
+                                                            remainDays = Math.floor(remainTime / (3600 * 24));
+
+                                                        return {
+                                                            remainTime,
+                                                            remainSeconds,
+                                                            remainMinutes,
+                                                            remainHours,
+                                                            remainDays
+                                                        }
+                                                    };
+
+                                                    var cuentaRegresiva = (deadline, elem, finalMessage) => {
+                                                        const el = document.getElementById(elem);
+                                                        const finish = document.getElementById(deadline);
+
+                                                        const timerUpdate = setInterval( () => {
+                                                            let t = getRemainTime(finish.innerHTML);
+                                                            el.innerHTML = `${t.remainDays} d:${t.remainHours} h:${t.remainMinutes} m:${t.remainSeconds} s`;
+
+                                                            if( t.remainTime <= 1){
+                                                                clearInterval(timerUpdate)
+                                                                el.innerHTML = finalMessage;
+                                                            }
+                                                        }, 1000)
+                                                    }
+
+                                                    cuentaRegresiva('limit-<%=i%>', 'clock-<%=i%>', 'Expirado!')
+                                            </script>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                                <caption class="pl-2">Agroquimicos</caption>
+                            </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+        </div>
+    </div>  
+    <br>
+    <%- include('includes/foot.ejs') %>
+    </section>
+
+<%- include('includes/scripts.ejs') %>

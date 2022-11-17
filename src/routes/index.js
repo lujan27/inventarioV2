@@ -12,6 +12,8 @@ const ordersModel = require('../models/ordersModel');
 const stockModel = require('../models/stockModel');
 const userModel = require('../models/users/userModel');
 const ranchModel = require('../models/ranchModel');
+const chemicalModel = require('../models/chemicalModel');
+const moment = require('moment-timezone');
 
 //Cerrar sesión
 router.get('/admin/Cerrar', async (req, res)=>{
@@ -685,6 +687,48 @@ router.get('/uses-historic', isAuthLogged, async (req, res) => {
         ranches,
         contCoord
     });
+});
+
+router.get('/agroquimicos', async (req, res) => {
+    const quimicos = await chemicalModel.find();
+
+    const ranches = await Ranch.find();
+
+    res.render('chemicals', {
+        doc_title: 'Agroquimicos',
+        quimicos,
+        ranches
+    })
+});
+
+router.get('/addchemical', async (req, res) => {
+    const ranches = await Ranch.find();
+
+    res.render('addchemicals', {
+        doc_title: 'Agregar Agroquimico',
+        ranches
+    })
+});
+
+router.post('/addchemical', async (req, res) => {
+    const {chemical_name, category, lote, quantity, created, caducity} = req.body;    
+    
+    let limit = moment.tz(caducity, 'America/Mexico_City');
+    let creation = moment.tz(created, 'America/Mexico_City');
+    console.log(limit)
+
+    const newChemical = chemicalModel({
+        chemical_name,
+        category,
+        lote,
+        quantity,
+        created: creation,
+        caducity: limit
+    })
+    await newChemical.save();
+    req.flash('success_msg', 'Agroquimico registrado');
+    res.redirect('/agroquimicos');
+    console.log(req.body)
 });
 
 module.exports = router;

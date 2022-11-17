@@ -6,7 +6,8 @@ const path = require('path');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const moment = require('moment');
+const moment = require('moment-timezone');
+
 moment.locale('es-mx');
 
 require('dotenv').config();
