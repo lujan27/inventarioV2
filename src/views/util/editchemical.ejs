@@ -1,0 +1,77 @@
+<%- include('../includes/sidebar.ejs') %>
+<%- include('../includes/header.ejs') %>
+
+
+<body>
+
+    <section class="home-section">
+        <%- include('../includes/nav.ejs') %>
+    <div class="container mt-2" style="font-size: 1.3em;">
+        <%- include('../includes/alerts.ejs') %>
+
+
+        <div class="row pt-4 mt-4">
+            <div class="col-md-8 mx-auto pb-4 mb-4">
+
+                <a href="#" onclick="window.history.back()" class="btn btn-outline-dark btn-sm mb-4">
+                    <i class='bx bx-arrow-back pr-1'></i>Regresar
+                </a>
+
+                <div class="card">
+                    <div class="card-header text-center">
+                        EDITAR AGROQUIMICO
+                    </div>
+                    <div class="card-body">
+                        <form action="/editchemical/<%=quimicos._id%>?_method=PUT" method="POST">
+                            <div class="form-group">
+                                <label>Nombre del agroquimico: </label>
+                                <input type="text" class="form-control" name="chemical_name" placeholder="Nombre del agroquimico...." value="<%=quimicos.chemical_name%>" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <select name="category" id="" class="form-control" required>
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Fertilizante">Fertilizante</option>
+                                    <option value="Insecticida">Insecticida</option>
+                                    <option value="Fungicida">Fungicida</option>
+                                    <option value="Herbicida">Herbicida</option>
+                                    <option value="Estimulante">Estimulante</option>
+                                    <option value="Enraizado">Enraizado</option>
+                                    <option value="Adherente">Adherente</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Lote: </label>
+                                <input type="text" class="form-control" name="lote" placeholder="Lote...." value="<%=quimicos.lote%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad: </label>
+                                <input type="number" class="form-control" name="quantity" placeholder="Cantidad...." value="<%=quimicos.quantity%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha de fabricación: </label>                                                                    
+                                <input type="date" class="form-control" placeholder="Fecha de fabricación" name="created" required>                                
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha de caducidad: </label>
+                                <input type="date" class="form-control" placeholder="Fecha de caducidad" name="caducity" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary my-2 my-sm-0 btn-block" id="Gdisabled">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <%- include('../includes/foot.ejs') %>
+</section>
+
+<%- include('../includes/scripts') %>
+
+<%- include('../includes/footer.ejs') %>
